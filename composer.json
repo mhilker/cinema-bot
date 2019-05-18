@@ -1,7 +1,10 @@
 {
     "require": {
         "ext-dom": "*",
-        "guzzle/guzzle": "^3.9"
+        "ext-intl": "*",
+        "telegram-bot/api": "^2.3",
+        "symfony/console": "^4.2",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master"
@@ -15,5 +18,10 @@
         "psr-4": {
             "CinemaBot\\": "tests/"
         }
+    },
+    "scripts": {
+        "cs-check": "tools/phpcs phpcs.xml src tests",
+        "cs-fix": "tools/phpcbf phpcs.xml src tests",
+        "test": "tools/phpunit"
     }
 }

@@ -18,15 +18,15 @@ class ParserTest extends TestCase
      *
      * @param string $fileName
      * @param string $movieName
-     * @param MovieTimes $expectedTimes
+     * @param MovieTimes $times
      */
-    public function testExtractsTimesForMovieFromHTML(string $fileName, string $movieName, MovieTimes $expectedTimes): void
+    public function testExtractsTimesForMovieFromHTML(string $fileName, string $movieName, MovieTimes $times): void
     {
         $parser = new Parser();
         $movie = $parser->parse($fileName, $movieName);
 
         $this->assertEquals($movieName, $movie->getName());
-        $this->assertEquals($expectedTimes, $movie->getTimes());
+        $this->assertEquals($times, $movie->getTimes());
     }
 
     public function provider(): Generator

@@ -20,4 +20,14 @@ class MovieTime
     {
         return $this->dateTime;
     }
+
+    public function getDay(): string
+    {
+        return $this->dateTime->format('Y-m-d');
+    }
+
+    public function getStartTime(): string
+    {
+        return $this->dateTime->format('H:i');
+    }
 }

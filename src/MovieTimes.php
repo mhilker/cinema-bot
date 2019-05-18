@@ -25,7 +25,7 @@ class MovieTimes implements IteratorAggregate
     }
 
     /**
-     * @return Traversable | MovieTime
+     * @return Traversable | MovieTime[]
      */
     public function getIterator(): Traversable
     {
