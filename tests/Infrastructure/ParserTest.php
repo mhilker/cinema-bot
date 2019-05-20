@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Infrastructure;
 
+use CinemaBot\Domain\MovieTime;
+use CinemaBot\Domain\MovieTimes;
+use CinemaBot\Infrastructure\DOMParser;
 use DateTimeImmutable;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Parser
+ * @covers \CinemaBot\Infrastructure\DOMParser
  */
 class ParserTest extends TestCase
 {
@@ -22,8 +25,10 @@ class ParserTest extends TestCase
      */
     public function testExtractsTimesForMovieFromHTML(string $fileName, string $movieName, MovieTimes $times): void
     {
-        $parser = new Parser();
-        $movie = $parser->parse($fileName, $movieName);
+        $parser = new DOMParser();
+        $movies = $parser->parse($fileName);
+
+        $movie = $movies->getByName($movieName);
 
         $this->assertEquals($movieName, $movie->getName());
         $this->assertEquals($times, $movie->getTimes());
@@ -32,7 +37,7 @@ class ParserTest extends TestCase
     public function provider(): Generator
     {
         yield [
-            'file_name' => __DIR__ . '/kinoprogramm.html',
+            'file_name' => __DIR__ . '/_files/kinoprogramm.html',
             'movie_name' => '(3D) Pokémon Meisterdetektiv Pikachu',
             'expected_times' => new MovieTimes([
                 new MovieTime(new DateTimeImmutable('2019-05-18T14:20+02:00')),
@@ -54,7 +59,7 @@ class ParserTest extends TestCase
         ];
 
         yield [
-            'file_name' => __DIR__ . '/kinoprogramm-week-ahead.html',
+            'file_name' => __DIR__ . '/_files/kinoprogramm-week-ahead.html',
             'movie_name' => '(3D) Godzilla 2: King of the Monsters',
             'expected_times' => new MovieTimes([
                 new MovieTime(new DateTimeImmutable('2019-05-29T20:15+02:00')),
@@ -62,7 +67,7 @@ class ParserTest extends TestCase
         ];
 
         yield [
-            'file_name' => __DIR__ . '/kinoprogramm-week-ahead.html',
+            'file_name' => __DIR__ . '/_files/kinoprogramm-week-ahead.html',
             'movie_name' => 'Rocketman',
             'expected_times' => new MovieTimes([
                 new MovieTime(new DateTimeImmutable('2019-05-29T20:20+02:00')),

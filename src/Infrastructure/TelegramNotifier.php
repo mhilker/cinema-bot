@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Infrastructure;
 
+use CinemaBot\Domain\Movie;
+use CinemaBot\Domain\Notifier;
 use DateTimeImmutable;
 use IntlDateFormatter;
 use TelegramBot\Api\BotApi;
 
-class Notifier
+class TelegramNotifier implements Notifier
 {
     /** @var BotApi */
     private $telegram;

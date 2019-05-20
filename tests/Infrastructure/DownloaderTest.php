@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Infrastructure;
 
+use CinemaBot\Infrastructure\CopyDownloader;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Downloader
+ * @covers \CinemaBot\Infrastructure\CopyDownloader
  */
 class DownloaderTest extends TestCase
 {
@@ -15,7 +16,7 @@ class DownloaderTest extends TestCase
     {
         $url = 'https://example.com';
 
-        $downloader = new Downloader();
+        $downloader = new CopyDownloader();
         $fileName = $downloader->download($url);
 
         $this->assertFileExists($fileName);

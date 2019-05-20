@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Application\Command;
 
+use CinemaBot\Infrastructure\CopyDownloader;
+use CinemaBot\Infrastructure\DOMParser;
+use CinemaBot\Infrastructure\TelegramNotifier;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,17 +21,22 @@ class CrawlSiteCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): ?int
     {
-        $downloader = new Downloader();
-        $fileName = $downloader->download('https://www.cinemotion-kino.de/hameln/kinoprogramm');
-
-        $parser = new Parser();
-        $movie = $parser->parse($fileName, 'John Wick: Kapitel 3');
-
         $token = getenv('TELEGRAM_TOKEN');
         $chatId = getenv('TELEGRAM_CHAT_ID');
 
+        $downloader = new CopyDownloader();
+        $fileName = $downloader->download('https://www.cinemotion-kino.de/hameln/kinoprogramm');
+
+        $parser = new DOMParser();
+        $movies = $parser->parse($fileName);
+
+        $movie = $movies->getByName('John Wick: Kapitel 3');
+        if (!$movie) {
+            return null;
+        }
+
         $telegram = new BotApi($token);
-        $notifier = new Notifier($telegram);
+        $notifier = new TelegramNotifier($telegram);
         $notifier->send($movie, $chatId);
 
         return null;

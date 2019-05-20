@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Infrastructure;
 
-class Downloader
+use CinemaBot\Domain\Downloader;
+
+class CopyDownloader implements Downloader
 {
     public function download(string $url): string
     {

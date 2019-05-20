@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Domain;
 
 use DateTimeImmutable;
 

@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace CinemaBot\Domain\Event;
+
+use CinemaBot\Application\CQRS\Event;
+use CinemaBot\Domain\Watchlist\Term;
+
+class TermRemovedEvent implements Event
+{
+    public const TOPIC = 'cinema_bot.term_removed';
+
+    /** @var Term */
+    private $term;
+
+    public function __construct(Term $term)
+    {
+        $this->term = $term;
+    }
+
+    public function getTerm(): Term
+    {
+        return $this->term;
+    }
+
+    public function getTopic(): string
+    {
+        return self::TOPIC;
+    }
+}

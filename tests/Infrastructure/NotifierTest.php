@@ -2,14 +2,18 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Infrastructure;
 
+use CinemaBot\Domain\Movie;
+use CinemaBot\Domain\MovieTime;
+use CinemaBot\Domain\MovieTimes;
+use CinemaBot\Infrastructure\TelegramNotifier;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use TelegramBot\Api\BotApi;
 
 /**
- * @covers \CinemaBot\Notifier
+ * @covers \CinemaBot\Infrastructure\TelegramNotifier
  */
 class NotifierTest extends TestCase
 {
@@ -41,7 +45,7 @@ class NotifierTest extends TestCase
         $telegram = $this->createMock(BotApi::class);
         $telegram->expects($this->once())->method('sendMessage')->with($chatId, $message, 'markdown', true);
 
-        $notifier = new Notifier($telegram);
+        $notifier = new TelegramNotifier($telegram);
         $notifier->send($movie, $chatId);
     }
 }
