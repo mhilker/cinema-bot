@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Application\CQRS;
 
-class DirectEventBus
+class DirectEventBus implements EventBus
 {
     /** @var EventListener[] */
     private $eventListeners = [];

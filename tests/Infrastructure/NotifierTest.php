@@ -7,13 +7,13 @@ namespace CinemaBot\Infrastructure;
 use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieTime;
 use CinemaBot\Domain\MovieTimes;
-use CinemaBot\Infrastructure\TelegramNotifier;
+use CinemaBot\Domain\Notifier\TelegramNotifier;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use TelegramBot\Api\BotApi;
 
 /**
- * @covers \CinemaBot\Infrastructure\TelegramNotifier
+ * @covers \CinemaBot\Domain\Notifier\TelegramNotifier
  */
 class NotifierTest extends TestCase
 {

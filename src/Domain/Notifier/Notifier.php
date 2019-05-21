@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain;
+namespace CinemaBot\Domain\Notifier;
+
+use CinemaBot\Domain\Movie;
 
 interface Notifier
 {

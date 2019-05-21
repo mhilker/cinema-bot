@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace CinemaBot\Domain;
 
 use ArrayIterator;
+use Countable;
 use IteratorAggregate;
 use Traversable;
 
-class Movies implements IteratorAggregate
+class Movies implements IteratorAggregate, Countable
 {
     /** @var Movie[] */
     private $movies = [];
@@ -30,12 +31,9 @@ class Movies implements IteratorAggregate
         $this->movies[] = $movie;
     }
 
-    /**
-     * @return Traversable | Movie[]
-     */
-    public function getIterator(): Traversable
+    public function filter(callable $callable): Movies
     {
-        return new ArrayIterator($this->movies);
+        return self::from(array_filter($this->movies, $callable));
     }
 
     public function getByName(string $movieName): ?Movie
@@ -47,5 +45,18 @@ class Movies implements IteratorAggregate
         }
 
         return null;
+    }
+
+    /**
+     * @return Traversable | Movie[]
+     */
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->movies);
+    }
+
+    public function count(): int
+    {
+        return count($this->movies);
     }
 }

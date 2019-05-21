@@ -9,6 +9,7 @@ use CinemaBot\Domain\Bot;
 use CinemaBot\Domain\Command\AddToWatchlistCommand;
 use CinemaBot\Domain\Command\RemoveFromWatchlistCommand;
 use CinemaBot\Domain\Watchlist\Term;
+use CinemaBot\Domain\Watchlist\WatchlistProjection;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TelegramBot\Api\BotApi;
@@ -18,14 +19,18 @@ class WebHookAction
     /** @var CommandBus */
     private $commandBus;
 
-    public function __construct(CommandBus $commandBus)
+    /** @var WatchlistProjection */
+    private $projection;
+
+    public function __construct(CommandBus $commandBus, WatchlistProjection $projection)
     {
         $this->commandBus = $commandBus;
+        $this->projection = $projection;
     }
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $token = getenv('TELEGRAM_TOKEN');
+        $token = file_get_contents(getenv('TELEGRAM_TOKEN_FILE'));
 
         $body = $request->getParsedBody();
         $text = $body['message']['text'];
@@ -37,7 +42,7 @@ class WebHookAction
 
         preg_match('/\/([a-z]+)( (.*))?/', $text, $matches);
         $command = $matches[1] ?? '';
-        $params = Term::from($matches[2] ?? '');
+        $params = Term::from($matches[3] ?? '');
 
         $bot = new Bot(new BotApi($token));
 
@@ -46,7 +51,8 @@ class WebHookAction
                 $bot->help($chatId);
                 break;
             case 'show':
-                $bot->show($chatId);
+                $watchlist = $this->projection->getAll();
+                $bot->show($chatId, $watchlist);
                 break;
             case 'add':
                 $this->commandBus->dispatch(new AddToWatchlistCommand($params));
@@ -60,7 +66,7 @@ class WebHookAction
 
         $response->getBody()->write(json_encode([
             'command' => $command,
-            'params'  => $params,
+            'params'  => $params->asString(),
         ]));
 
         return $response;

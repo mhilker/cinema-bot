@@ -17,30 +17,51 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    env_file:
-      - .env
     environment:
+      - TELEGRAM_CHAT_ID=-358338485
+      - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_HOST=db
       - DB_PORT=3306
       - DB_USER=cinema_bot
       - DB_NAME=cinema_bot
-      - DB_PASSWORD=1234
+      - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
     volumes:
       - .:/app/
+    secrets:
+      - cinema-bot-db-user-password
+      - cinema-bot-telegram-token
 
   crawler:
     build:
       context: .
       dockerfile: docker/crawler/Dockerfile
-    env_file:
-      - .env
     environment:
+      - TELEGRAM_CHAT_ID=-358338485
+      - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_HOST=db
       - DB_PORT=3306
       - DB_USER=cinema_bot
       - DB_NAME=cinema_bot
+      - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
     volumes:
       - .:/app/
+    secrets:
+      - cinema-bot-db-user-password
+      - cinema-bot-telegram-token
+
+  migrations:
+    build:
+      dockerfile: docker/php/Dockerfile
+      context: .
+      target: migrations
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_NAME=cinema_bot
+      - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-root-password
+    secrets:
+      - cinema-bot-db-root-password
 
   db:
     image: mysql:8.0.15
@@ -48,19 +69,29 @@ services:
       - --default-authentication-plugin=mysql_native_password
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-    env_file:
-      - .env
     environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/cinema-bot-db-root-password
+      - MYSQL_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
       - MYSQL_USER=cinema_bot
       - MYSQL_DATABASE=cinema_bot
     volumes:
       - db-data:/var/lib/mysql
+    secrets:
+      - cinema-bot-db-root-password
+      - cinema-bot-db-user-password
 
   adminer:
     image: adminer
-    restart: always
     ports:
       - "21001:8080"
 
 volumes:
   db-data:
+
+secrets:
+  cinema-bot-db-root-password:
+    file: db-root-password.local
+  cinema-bot-db-user-password:
+    file: db-user-password.local
+  cinema-bot-telegram-token:
+    file: telegram-token.local

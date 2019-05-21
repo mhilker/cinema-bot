@@ -7,7 +7,7 @@ namespace CinemaBot\Domain\Command;
 use CinemaBot\Application\CQRS\Command;
 use CinemaBot\Domain\Watchlist\Term;
 
-class AddToWatchlistCommand implements Command
+final class AddToWatchlistCommand implements Command
 {
     /** @var Term */
     private $term;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Infrastructure;
+namespace CinemaBot\Domain\Notifier;
 
 use CinemaBot\Domain\Movie;
-use CinemaBot\Domain\Notifier;
+use CinemaBot\Domain\Notifier\Notifier;
 use DateTimeImmutable;
 use IntlDateFormatter;
 use TelegramBot\Api\BotApi;
@@ -31,7 +31,7 @@ class TelegramNotifier implements Notifier
     {
         $perDay = [];
         foreach ($movie->getTimes() as $time) {
-            $perDay[$time->getDay()][] = $time;
+            $perDay[$time->getDateTime()->format('Y-m-d')][] = $time;
         }
 
         $formatter = new IntlDateFormatter(

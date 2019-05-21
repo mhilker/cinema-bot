@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\Watchlist;
 
 use ArrayIterator;
+use Countable;
 use IteratorAggregate;
 use Traversable;
 
-class Watchlist implements IteratorAggregate
+class Watchlist implements IteratorAggregate, Countable
 {
     /** @var Term[] */
     private $terms = [];
@@ -27,11 +28,19 @@ class Watchlist implements IteratorAggregate
 
     public function add(Term $term): void
     {
-        $this->terms[] = $term;
+        $this->terms[$term->asString()] = $term;
     }
 
+    /**
+     * @return Traversable | Term[]
+     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->terms);
+    }
+
+    public function count(): int
+    {
+        return count($this->terms);
     }
 }

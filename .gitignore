@@ -3,4 +3,4 @@
 /.phpunit.result.cache
 /tools/
 /infection.log
-/.env
+/*.local

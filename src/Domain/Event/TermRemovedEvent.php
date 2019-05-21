@@ -7,7 +7,7 @@ namespace CinemaBot\Domain\Event;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Domain\Watchlist\Term;
 
-class TermRemovedEvent implements Event
+final class TermRemovedEvent implements Event
 {
     public const TOPIC = 'cinema_bot.term_removed';
 
