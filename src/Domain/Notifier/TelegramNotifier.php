@@ -57,4 +57,9 @@ class TelegramNotifier implements Notifier
 
         return $message;
     }
+
+    public function stfu(string $chatId)
+    {
+        $this->telegram->sendMessage($chatId, 'Jörg halt die Schnauze', 'markdown', true);
+    }
 }

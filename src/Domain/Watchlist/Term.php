@@ -11,6 +11,10 @@ class Term
 
     private function __construct(string $term)
     {
+        if ($term === '') {
+            throw new InvalidTermException();
+        }
+
         $this->value = $term;
     }
 

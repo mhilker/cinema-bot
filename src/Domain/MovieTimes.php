@@ -13,9 +13,9 @@ class MovieTimes implements IteratorAggregate, Countable
 {
     private $values = [];
 
-    public function __construct(array $array)
+    public function __construct(iterable $values)
     {
-        foreach ($array as $value) {
+        foreach ($values as $value) {
             $this->add($value);
         }
     }

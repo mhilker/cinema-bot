@@ -35,12 +35,18 @@ RUN composer install
 
 FROM base as production
 
+RUN apt-get update \
+ && apt-get install -y wait-for-it \
+ && rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /app/ /app/
 
 COPY . /app/
 
-
 COPY ./docker/crawler/crontab /etc/cron.d/crontab
-RUN crontab /etc/cron.d/crontab
 
-CMD ["cron", "-f"]
+COPY ./docker/crawler/start.sh /start.sh
+
+RUN crontab -u app /etc/cron.d/crontab
+
+CMD ["/start.sh"]

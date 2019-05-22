@@ -21,9 +21,9 @@ class Bot
     {
         $message = <<<MESSAGE
         `/help` Show this help.
-        `/show` Show all items on watchlist.
-        `/add text` Add item to watchlist.
-        `/remove text` Remove item from watchlist.
+        `/show` Show all terms on watchlist.
+        `/add [term]` Add term to watchlist.
+        `/remove [term]` Remove term from watchlist.
         MESSAGE;
 
         $this->telegram->sendMessage($chatId, $message, 'markdown', true);
