@@ -6,7 +6,7 @@ namespace CinemaBot\Domain\Watchlist;
 
 use PDO;
 
-class PDOWatchlistProjection implements WatchlistProjection
+final class PDOWatchlistProjection implements WatchlistProjection
 {
     /** @var PDO */
     private $pdo;

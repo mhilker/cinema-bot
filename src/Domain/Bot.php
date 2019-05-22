@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain;
 
+use CinemaBot\Domain\Watchlist\Term;
 use CinemaBot\Domain\Watchlist\Watchlist;
 use TelegramBot\Api\BotApi;
 
@@ -17,19 +18,19 @@ class Bot
         $this->telegram = $telegram;
     }
 
-    public function help(string $chatId): void
+    public function help(ChatID $chatID): void
     {
-        $message = <<<MESSAGE
+        $message = <<< MESSAGE
         `/help` Show this help.
         `/show` Show all terms on watchlist.
         `/add [term]` Add term to watchlist.
         `/remove [term]` Remove term from watchlist.
         MESSAGE;
 
-        $this->telegram->sendMessage($chatId, $message, 'markdown', true);
+        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 
-    public function show(string $chatId, Watchlist $watchlist): void
+    public function show(ChatID $chatID, Watchlist $watchlist): void
     {
         if (count($watchlist) > 0) {
             $message = 'Current watchlist:' . PHP_EOL;
@@ -40,24 +41,20 @@ class Bot
             $message = 'The current watchlist is empty.';
         }
 
-        $this->telegram->sendMessage($chatId, $message, 'markdown', true);
+        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 
-    public function add(string $chatId, string $value): void
+    public function add(ChatID $chatID, Term $term): void
     {
-        $message = <<<MESSAGE
-        Added `{$value}` to watchlist.
-        MESSAGE;
+        $message = 'Added `' . $term->asString() . '` to watchlist.';
 
-        $this->telegram->sendMessage($chatId, $message, 'markdown', true);
+        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 
-    public function remove(string $chatId, string $value): void
+    public function remove(ChatID $chatID, Term $term): void
     {
-        $message = <<<MESSAGE
-        Removed `{$value}` from watchlist.
-        MESSAGE;
+        $message = 'Removed `' . $term->asString() . '` from watchlist.';
 
-        $this->telegram->sendMessage($chatId, $message, 'markdown', true);
+        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 }

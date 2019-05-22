@@ -7,7 +7,7 @@ namespace CinemaBot\Domain\Notifier;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Domain\Event\MoviesFoundEvent;
+use CinemaBot\Domain\Event\ShowAddedEvent;
 
 class MovieNotifier implements EventListener
 {
@@ -29,19 +29,45 @@ class MovieNotifier implements EventListener
     private function dispatchEvents(Event $event): void
     {
         switch ($event->getTopic()) {
-            case MoviesFoundEvent::TOPIC:
-                /** @var MoviesFoundEvent $event */
-                $this->dispatchMoviesFoundEvent($event);
+            case ShowAddedEvent::TOPIC:
+                /** @var ShowAddedEvent $event */
+                $this->dispatchShowAddedEvent($event);
                 break;
         }
     }
 
-    private function dispatchMoviesFoundEvent(MoviesFoundEvent $event): void
+    private function dispatchShowAddedEvent(ShowAddedEvent $event): void
     {
-        $chatId = getenv('TELEGRAM_CHAT_ID');
+//        $watchlist = $this->projection->getAll();
+//        if (count($watchlist) === 0) {
+//            return;
+//        }
+//        $watchlist = $this->projection->getAll();
+//
+//        $movies = $movies->filter(static function (Movie $movie) use ($watchlist) {
+//            foreach ($watchlist as $term) {
+//                if (mb_stripos($movie->getName(), $term->asString()) !== false) {
+//                    return true;
+//                }
+//            }
+//            return false;
+//        });
 
-        foreach ($event->getMovies() as $movie) {
-            $this->notifier->send($movie, $chatId);
-        }
+//        $now = new DateTimeImmutable();
+//
+//        $movies = $movies->filter(static function (Movie $movie) use ($now) {
+//            foreach ($movie->getTimes() as $time) {
+//                if ($time->getValue() <= $now) {
+//                    $movie->getTimes()->remove($time);
+//                }
+//            }
+//            return count($movie->getTimes()) > 0;
+//        });
+
+//        $chatId = getenv('TELEGRAM_CHAT_ID');
+//
+//        foreach ($event->getMovies() as $movie) {
+//            $this->notifier->send($movie, $chatId);
+//        }
     }
 }

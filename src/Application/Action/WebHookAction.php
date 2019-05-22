@@ -28,7 +28,7 @@ class WebHookAction
         $this->projection = $projection;
     }
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $token = file_get_contents(getenv('TELEGRAM_TOKEN_FILE'));
 
@@ -42,7 +42,7 @@ class WebHookAction
 
         preg_match('/\/([a-z]+)( (.*))?/', $text, $matches);
         $command = $matches[1] ?? '';
-        $params = Term::from($matches[3] ?? '');
+        $term = Term::from($matches[3] ?? '');
 
         $bot = new Bot(new BotApi($token));
 
@@ -55,18 +55,18 @@ class WebHookAction
                 $bot->show($chatId, $watchlist);
                 break;
             case 'add':
-                $this->commandBus->dispatch(new AddToWatchlistCommand($params));
-                $bot->add($chatId, $params->asString());
+                $this->commandBus->dispatch(new AddToWatchlistCommand($term));
+                $bot->add($chatId, $term);
                 break;
             case 'remove':
-                $this->commandBus->dispatch(new RemoveFromWatchlistCommand($params));
-                $bot->remove($chatId, $params->asString());
+                $this->commandBus->dispatch(new RemoveFromWatchlistCommand($term));
+                $bot->remove($chatId, $term);
                 break;
         }
 
         $response->getBody()->write(json_encode([
             'command' => $command,
-            'params'  => $params->asString(),
+            'params'  => $term->asString(),
         ]));
 
         return $response;

@@ -6,7 +6,7 @@ namespace CinemaBot\Domain\Watchlist;
 
 use Exception;
 
-class InvalidTermException extends Exception
+final class InvalidTermException extends Exception
 {
 
 }

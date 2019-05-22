@@ -10,7 +10,7 @@ use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Event\TermAddedEvent;
 use CinemaBot\Domain\Event\TermRemovedEvent;
 
-class WatchlistProjector implements EventListener
+final class WatchlistProjector implements EventListener
 {
     /** @var WatchlistProjection */
     private $projection;

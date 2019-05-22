@@ -9,7 +9,7 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
-class Watchlist implements IteratorAggregate, Countable
+final class Watchlist implements IteratorAggregate, Countable
 {
     /** @var Term[] */
     private $terms = [];

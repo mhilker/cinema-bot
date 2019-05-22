@@ -6,19 +6,24 @@ namespace CinemaBot\Domain;
 
 class Movie
 {
-    /** @var string */
+    /** @var MovieName */
     private $name;
 
     /** @var MovieTimes */
     private $times;
 
-    public function __construct(string $name, MovieTimes $times)
+    public function __construct(MovieName $name, MovieTimes $times)
     {
         $this->name = $name;
         $this->times = $times;
     }
 
-    public function getName(): string
+    public static function from(MovieName $name, MovieTimes $times): Movie
+    {
+        return new self($name, $times);
+    }
+
+    public function getName(): MovieName
     {
         return $this->name;
     }

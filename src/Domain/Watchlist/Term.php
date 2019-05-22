@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\Watchlist;
 
-class Term
+final class Term
 {
     /** @var string */
     private $value;
@@ -12,7 +12,7 @@ class Term
     private function __construct(string $term)
     {
         if ($term === '') {
-            throw new InvalidTermException();
+            throw new InvalidTermException(sprintf('Term "%s" is invalid.', $term));
         }
 
         $this->value = $term;

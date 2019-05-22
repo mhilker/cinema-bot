@@ -9,15 +9,25 @@ use DateTimeImmutable;
 class MovieTime
 {
     /** @var DateTimeImmutable */
-    private $dateTime;
+    private $value;
 
-    public function __construct(DateTimeImmutable $dateTime)
+    public function __construct(DateTimeImmutable $value)
     {
-        $this->dateTime = $dateTime;
+        $this->value = $value;
     }
 
-    public function getDateTime(): DateTimeImmutable
+    public static function from(DateTimeImmutable $value): MovieTime
     {
-        return $this->dateTime;
+        return new self($value);
+    }
+
+    public function getValue(): DateTimeImmutable
+    {
+        return $this->value;
+    }
+
+    public function asString(): string
+    {
+        return $this->value->format(DATE_ATOM);
     }
 }

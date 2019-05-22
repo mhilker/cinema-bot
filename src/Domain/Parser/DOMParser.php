@@ -2,25 +2,26 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Infrastructure;
+namespace CinemaBot\Domain\Parser;
 
+use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\Movie;
+use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\MovieTime;
 use CinemaBot\Domain\MovieTimes;
-use CinemaBot\Domain\Parser;
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeZone;
 use DOMDocument;
 use DOMXPath;
 
-class DOMParser implements Parser
+final class DOMParser implements Parser
 {
-    public function parse(string $fileName): Movies
+    public function parse(ExistingFile $fileName): Movies
     {
         $document = new DOMDocument();
-        @$document->loadHTMLFile($fileName);
+        @$document->loadHTMLFile($fileName->asString());
         $xpath = new DOMXPath($document);
 
         return $this->extractMovies($xpath);
@@ -38,7 +39,7 @@ class DOMParser implements Parser
             $movieTimes = new MovieTimes([]);
 
             $result = $xpath->query('td[@class="pmovie"]/h5', $node);
-            $movieName = $result->item(0)->textContent;
+            $movieName = MovieName::from($result->item(0)->textContent);
 
             $days = $xpath->query('td[contains(concat(\' \', @class, \' \'), \' pday \')]', $node);
             foreach ($days as $j => $day) {
@@ -82,7 +83,7 @@ class DOMParser implements Parser
 
     private function parseDateTime(string $content): DateTimeImmutable
     {
-        preg_match('/(\d{2}).(\d{2}).(\d{4}) - \d{2}.\d{2}.\d{4}/', $content, $matches);
+        preg_match('/(\d{2}).(\d{2}).(\d{4})\s+-\s+\d{2}.\d{2}.\d{4}/', $content, $matches);
 
         $dateTime = new DateTimeImmutable();
         $dateTime = $dateTime->setDate((int)$matches[3], (int)$matches[2], (int)$matches[1]);

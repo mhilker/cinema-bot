@@ -20,15 +20,20 @@ class MovieTimes implements IteratorAggregate, Countable
         }
     }
 
+    public static function from(iterable $movies): MovieTimes
+    {
+        return new self($movies);
+    }
+
     public function add(MovieTime $value): void
     {
-        $key = $value->getDateTime()->format(DATE_ATOM);
+        $key = $value->getValue()->format(DATE_ATOM);
         $this->values[$key] = $value;
     }
 
     public function remove(MovieTime $value): void
     {
-        $key = $value->getDateTime()->format(DATE_ATOM);
+        $key = $value->getValue()->format(DATE_ATOM);
         unset($this->values[$key]);
     }
 
