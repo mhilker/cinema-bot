@@ -24,7 +24,9 @@ class TelegramNotifier implements Notifier
     {
         $message = $this->formatMessage($movie);
 
-        $this->telegram->sendMessage($chatId->asString(), $message, 'markdown');
+        echo $message . PHP_EOL;
+
+//        $this->telegram->sendMessage($chatId->asString(), $message, 'markdown');
     }
 
     protected function formatMessage(Movie $movie): string

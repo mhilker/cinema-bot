@@ -8,27 +8,22 @@ use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\ES\StorableEvent;
 use CinemaBot\Domain\Aggregate\AggregateID;
 use CinemaBot\Domain\Cinema\CinemaID;
-use CinemaBot\Domain\MovieName;
-use CinemaBot\Domain\MovieTime;
+use CinemaBot\Domain\URL;
 
-final class ShowAddedEvent implements Event, StorableEvent
+final class CinemaCreatedEvent implements Event, StorableEvent
 {
-    public const TOPIC = 'cinema_bot.cinema.show_added';
+    public const TOPIC = 'cinema_bot.cinema.cinema_created';
 
     /** @var CinemaID */
     private $id;
 
-    /** @var MovieName */
-    private $name;
+    /** @var URL */
+    private $url;
 
-    /** @var MovieTime */
-    private $time;
-
-    public function __construct(CinemaID $id, MovieName $name, MovieTime $time)
+    public function __construct(CinemaID $id, URL $url)
     {
         $this->id = $id;
-        $this->name = $name;
-        $this->time = $time;
+        $this->url = $url;
     }
 
     public function getId(): CinemaID
@@ -36,14 +31,9 @@ final class ShowAddedEvent implements Event, StorableEvent
         return $this->id;
     }
 
-    public function getName(): MovieName
+    public function getUrl(): URL
     {
-        return $this->name;
-    }
-
-    public function getTime(): MovieTime
-    {
-        return $this->time;
+        return $this->url;
     }
 
     public function getTopic(): string
@@ -62,17 +52,15 @@ final class ShowAddedEvent implements Event, StorableEvent
 
         return new self(
             CinemaID::from($payload['id']),
-            MovieName::from($payload['name']),
-            MovieTime::fromString($payload['time'])
+            URL::from($payload['url']),
         );
     }
 
     public function asJSON(): string
     {
         return json_encode([
-            'id'   => $this->id->asString(),
-            'name' => $this->name->asString(),
-            'time' => $this->time->asString(),
+            'id'  => $this->id->asString(),
+            'url' => $this->url->asString(),
         ]);
     }
 }

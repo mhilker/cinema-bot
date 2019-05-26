@@ -6,6 +6,7 @@ namespace CinemaBot\Domain\Aggregate;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\Events;
+use CinemaBot\Domain\Aggregate\AggregateID;
 
 abstract class AbstractAggregate
 {

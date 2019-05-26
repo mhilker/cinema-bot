@@ -21,6 +21,12 @@ class MovieTime
         return new self($value);
     }
 
+    public static function fromString(string $value): MovieTime
+    {
+        $dateTime = new DateTimeImmutable($value);
+        return new self($dateTime);
+    }
+
     public function getValue(): DateTimeImmutable
     {
         return $this->value;

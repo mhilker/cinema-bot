@@ -12,7 +12,7 @@ class DirectEventBus implements EventBus
     public function dispatch(Events $events): void
     {
         foreach ($this->eventListeners as $eventListener) {
-            $eventListener->dispatch($events);
+            $eventListener->handle($events);
         }
     }
 

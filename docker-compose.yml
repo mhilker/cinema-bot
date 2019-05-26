@@ -10,13 +10,11 @@ services:
       - "21000:80"
     volumes:
       - .:/app/
-    links:
-      - php
 
-  php:
+  webhook:
     build:
       context: .
-      dockerfile: docker/php/Dockerfile
+      dockerfile: docker/webhook/Dockerfile
     environment:
       - TELEGRAM_CHAT_ID=-358338485
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
@@ -49,17 +47,18 @@ services:
       - cinema-bot-db-user-password
       - cinema-bot-telegram-token
 
-  migrations:
+  migrate:
     build:
-      dockerfile: docker/php/Dockerfile
+      dockerfile: docker/migrate/Dockerfile
       context: .
-      target: migrations
     environment:
       - DB_HOST=db
       - DB_PORT=3306
       - DB_USER=root
       - DB_NAME=cinema_bot
       - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-root-password
+    volumes:
+      - .:/app/
     secrets:
       - cinema-bot-db-root-password
 

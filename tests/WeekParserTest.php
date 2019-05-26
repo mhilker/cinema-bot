@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace CinemaBot;
 
-use CinemaBot\Domain\Crawler\WeekParser;
+use CinemaBot\Domain\Parser\WeekParser;
 use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\URL;
 use CinemaBot\Domain\URLs;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Domain\Crawler\WeekParser
+ * @covers \CinemaBot\Domain\Parser\WeekParser
  */
 class WeekParserTest extends TestCase
 {
@@ -23,6 +23,7 @@ class WeekParserTest extends TestCase
         $urls = $parser->parse($file);
 
         $expectedUrls = URLs::from([
+            URL::from('https://www.cinemotion-kino.de/hameln/kinoprogramm'),
             URL::from('https://www.cinemotion-kino.de/hameln/kinoprogramm?tx_ppicinemotionshowtime_showtime%5Bdate%5D=2019-05-23&cHash=bfdab51f2903cd2b7d1b424ab7c5caab'),
             URL::from('https://www.cinemotion-kino.de/hameln/kinoprogramm?tx_ppicinemotionshowtime_showtime%5Bdate%5D=2019-05-30&cHash=70b71c83e57313498748ed8af8b5f59b'),
             URL::from('https://www.cinemotion-kino.de/hameln/kinoprogramm?tx_ppicinemotionshowtime_showtime%5Bdate%5D=2019-06-20&cHash=feb5e21175babfd03c8db385287a9a0e'),

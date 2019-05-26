@@ -1,1 +1,0 @@
- * * * * * /usr/local/bin/php /app/bin/cli.php > /proc/1/fd/1 2> /proc/1/fd/2

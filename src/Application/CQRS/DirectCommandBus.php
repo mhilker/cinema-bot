@@ -11,7 +11,16 @@ class DirectCommandBus implements CommandBus
 
     public function dispatch(Command $command): void
     {
-        $this->commandHandlers[get_class($command)]->handle($command);
+        $commandName = get_class($command);
+
+        if (isset($this->commandHandlers[$commandName]) === false) {
+            throw new CommandHandlerNotFoundException(sprintf(
+                'CommandHandler for Command "%s" not found',
+                $commandName
+            ));
+        }
+
+        $this->commandHandlers[$commandName]->handle($command);
     }
 
     public function add(string $commandName, CommandHandler $commandHandler): void

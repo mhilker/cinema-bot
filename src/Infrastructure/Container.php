@@ -5,19 +5,29 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure;
 
 use CinemaBot\Application\Action\WebHookAction;
-use CinemaBot\Application\Command\CrawlSiteCLICommand;
+use CinemaBot\Application\Command\CrawlCinemaSymfonyCommand;
+use CinemaBot\Application\Command\CreateCinemaSymfonyCommand;
 use CinemaBot\Application\CQRS\DirectCommandBus;
 use CinemaBot\Application\CQRS\DirectEventBus;
+use CinemaBot\Application\ES\PDOEventStore;
+use CinemaBot\Domain\CinemaList\CinemaListProjector;
+use CinemaBot\Domain\CinemaList\PDOCinemaListProjection;
 use CinemaBot\Domain\Command\AddToWatchlistCommand;
-use CinemaBot\Domain\Command\CrawlSiteCommand;
+use CinemaBot\Domain\Command\CrawlCinemaCommand;
+use CinemaBot\Domain\Command\CreateCinemaCommand;
 use CinemaBot\Domain\Command\RemoveFromWatchlistCommand;
 use CinemaBot\Domain\CommandHandler\AddToWatchlistCommandHandler;
-use CinemaBot\Domain\CommandHandler\CrawlSiteCommandHandler;
+use CinemaBot\Domain\CommandHandler\CrawlCinemaCommandHandler;
+use CinemaBot\Domain\CommandHandler\CreateCinemaCommandHandler;
 use CinemaBot\Domain\CommandHandler\RemoveFromWatchlistCommandHandler;
-use CinemaBot\Domain\Crawler\Crawler;
-use CinemaBot\Domain\Notifier\MovieNotifier;
+use CinemaBot\Domain\Event\CinemaCreatedEvent;
+use CinemaBot\Domain\Event\ShowAddedEvent;
+use CinemaBot\Domain\Event\TermAddedEvent;
+use CinemaBot\Domain\Event\TermRemovedEvent;
+use CinemaBot\Domain\Parser\Crawler;
+use CinemaBot\Domain\Notifier\NotifierSystem;
 use CinemaBot\Domain\Notifier\TelegramNotifier;
-use CinemaBot\Domain\Repository\EventSourcedCalendarRepository;
+use CinemaBot\Domain\Cinema\EventSourcedCinemaRepository;
 use CinemaBot\Domain\Watchlist\PDOWatchlistProjection;
 use CinemaBot\Domain\Watchlist\WatchlistProjector;
 use PDO;
@@ -31,8 +41,12 @@ class Container
     {
         $commandBus = $this->getCommandBus();
 
+        $pdo = $this->getPDO();
+
         $app = new Application();
-        $app->add(new CrawlSiteCLICommand($commandBus));
+        $app->add(new CrawlCinemaSymfonyCommand($commandBus, new PDOCinemaListProjection($pdo)));
+        $app->add(new CreateCinemaSymfonyCommand($commandBus));
+
         return $app;
     }
 
@@ -42,39 +56,70 @@ class Container
         $projection = new PDOWatchlistProjection($pdo);
         $commandBus = $this->getCommandBus();
 
-        $app = new App([
+        $config = [
             'settings' => [
                 'displayErrorDetails' => true,
             ],
-        ]);
+        ];
+
+        $app = new App($config);
         $app->get('/', new WebHookAction($commandBus, $projection));
         return $app;
     }
 
     public function getCommandBus(): DirectCommandBus
     {
-        $eventBus   = $this->getEventBus();
-        $repository = new EventSourcedCalendarRepository();
+        $pdo = $this->getPDO();
+
+        $eventStore = new PDOEventStore($pdo, [
+            CinemaCreatedEvent::TOPIC => CinemaCreatedEvent::class,
+            ShowAddedEvent::TOPIC     => ShowAddedEvent::class,
+            TermAddedEvent::TOPIC     => TermAddedEvent::class,
+            TermRemovedEvent::TOPIC   => TermRemovedEvent::class,
+        ]);
+
+        $eventBus = $this->getEventBus();
+        $repository = new EventSourcedCinemaRepository($eventStore, $eventBus);
+
         $crawler    = new Crawler();
 
         $commandBus = new DirectCommandBus();
-        $commandBus->add(CrawlSiteCommand::class, new CrawlSiteCommandHandler($eventBus, $repository, $crawler));
+        $commandBus->add(CreateCinemaCommand::class, new CreateCinemaCommandHandler($repository));
+        $commandBus->add(CrawlCinemaCommand::class, new CrawlCinemaCommandHandler($repository, $crawler));
         $commandBus->add(AddToWatchlistCommand::class, new AddToWatchlistCommandHandler($eventBus));
         $commandBus->add(RemoveFromWatchlistCommand::class, new RemoveFromWatchlistCommandHandler($eventBus));
+
         return $commandBus;
     }
 
     public function getEventBus(): DirectEventBus
     {
-        $pdo        = $this->getPDO();
-        $projection = new PDOWatchlistProjection($pdo);
+        $pdo = $this->getPDO();
+
+        $watchlistProjection = new PDOWatchlistProjection($pdo);
+
         $token      = file_get_contents(getenv('TELEGRAM_TOKEN_FILE'));
         $botApi     = new BotApi($token);
         $telegram   = new TelegramNotifier($botApi);
 
+        $cinemaListProjection = new PDOCinemaListProjection($pdo);
+
+        $pdo = $this->getPDO();
+
+        $eventStore = new PDOEventStore($pdo, [
+            CinemaCreatedEvent::TOPIC => CinemaCreatedEvent::class,
+            ShowAddedEvent::TOPIC     => ShowAddedEvent::class,
+            TermAddedEvent::TOPIC     => TermAddedEvent::class,
+            TermRemovedEvent::TOPIC   => TermRemovedEvent::class,
+        ]);
+
         $eventBus = new DirectEventBus();
-        $eventBus->add(new WatchlistProjector($projection));
-        $eventBus->add(new MovieNotifier($telegram));
+
+        $repository = new EventSourcedCinemaRepository($eventStore, $eventBus);
+
+        $eventBus->add(new WatchlistProjector($watchlistProjection));
+        $eventBus->add(new NotifierSystem($watchlistProjection, $telegram, $repository));
+        $eventBus->add(new CinemaListProjector($cinemaListProjection));
 
         return $eventBus;
     }
@@ -86,8 +131,9 @@ class Container
         $password = file_get_contents(getenv('DB_PASSWORD_FILE'));
 
         return new PDO($dsn, $username, $password, [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8;',
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ]);
     }
 }

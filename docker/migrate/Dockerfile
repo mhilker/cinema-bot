@@ -1,18 +1,11 @@
 ########################################################################################################################
-# Stage: composer
-########################################################################################################################
-
-FROM composer:1.8.5 as composer
-
-########################################################################################################################
 # Stage: base
 ########################################################################################################################
 
 FROM php:7.3.5-fpm-stretch as base
 
 RUN apt-get update \
- && apt-get install -y libicu-dev git unzip \
- && docker-php-ext-install -j$(nproc) intl pdo pdo_mysql
+ && docker-php-ext-install -j$(nproc) pdo pdo_mysql
 
 RUN mkdir /app/
 
@@ -21,22 +14,6 @@ RUN adduser --disabled-password --gecos '' app
 RUN chown -R app: /app/
 
 WORKDIR /app/
-
-########################################################################################################################
-# Stage: build
-########################################################################################################################
-
-FROM base as build
-
-COPY --from=composer /usr/bin/composer /usr/bin/composer
-
-COPY composer* /app/
-
-USER app
-
-RUN composer global require hirak/prestissimo
-
-RUN composer install
 
 ########################################################################################################################
 # Stage: tools
@@ -74,20 +51,12 @@ RUN apt-get update \
  && apt-get install -y wait-for-it \
  && rm -rf /var/lib/apt/lists/*
 
-COPY --from=build /app/ /app/
-
 COPY . /app/
 
-COPY docker/php/migrate.sh /app/migrate.sh
+COPY --from=tools /app/ /app/
 
-CMD ["/app/migrate.sh"]
+COPY docker/migrate/migrate.sh /migrate.sh
 
-########################################################################################################################
-# Stage: production
-########################################################################################################################
+RUN ls -lah /app/
 
-FROM base as production
-
-COPY --from=build /app/ /app/
-
-COPY . /app/
+CMD ["/migrate.sh"]

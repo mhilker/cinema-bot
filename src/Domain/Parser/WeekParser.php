@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Crawler;
+namespace CinemaBot\Domain\Parser;
 
 use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\URL;
@@ -20,8 +20,16 @@ class WeekParser
 
         $urls = URLs::from([]);
 
-        $baseURI = rtrim($document->baseURI, '/');
+        $nodes = $document->getElementsByTagName('link');
+        foreach ($nodes as $node) {
+            if ($node->getAttribute('rel') === 'canonical') {
+                $href = $node->getAttribute('href');
+                $urls->add(URL::from($href));
+            }
+        }
 
+
+        $baseURI = rtrim($document->baseURI, '/');
         $nodes = $xpath->query('//*[@id="movieWeekSelect"]/option');
 
         foreach ($nodes as $node) {

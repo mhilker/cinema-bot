@@ -9,7 +9,7 @@ use CinemaBot\Domain\Watchlist\Term;
 
 final class TermAddedEvent implements Event
 {
-    public const TOPIC = 'cinema_bot.term_added';
+    public const TOPIC = 'cinema_bot.watchlist.term_added';
 
     /** @var Term */
     private $term;

@@ -7,7 +7,7 @@ namespace CinemaBot\Domain\Downloader;
 use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\URL;
 
-class CopyDownloader implements Downloader
+final class CopyDownloader implements Downloader
 {
     public function download(URL $url): ExistingFile
     {

@@ -42,7 +42,6 @@ class WebHookAction
 
         preg_match('/\/([a-z]+)( (.*))?/', $text, $matches);
         $command = $matches[1] ?? '';
-        $term = Term::from($matches[3] ?? '');
 
         $bot = new Bot(new BotApi($token));
 
@@ -55,19 +54,16 @@ class WebHookAction
                 $bot->show($chatId, $watchlist);
                 break;
             case 'add':
+                $term = Term::from($matches[3] ?? '');
                 $this->commandBus->dispatch(new AddToWatchlistCommand($term));
                 $bot->add($chatId, $term);
                 break;
             case 'remove':
+                $term = Term::from($matches[3] ?? '');
                 $this->commandBus->dispatch(new RemoveFromWatchlistCommand($term));
                 $bot->remove($chatId, $term);
                 break;
         }
-
-        $response->getBody()->write(json_encode([
-            'command' => $command,
-            'params'  => $term->asString(),
-        ]));
 
         return $response;
     }

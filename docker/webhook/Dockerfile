@@ -8,10 +8,10 @@ FROM composer:1.8.5 as composer
 # Stage: base
 ########################################################################################################################
 
-FROM php:7.3.5-cli-stretch as base
+FROM php:7.3.5-fpm-stretch as base
 
 RUN apt-get update \
- && apt-get install -y libicu-dev git unzip cron \
+ && apt-get install -y libicu-dev git unzip \
  && docker-php-ext-install -j$(nproc) intl pdo pdo_mysql
 
 RUN mkdir /app/
@@ -20,7 +20,7 @@ RUN adduser --disabled-password --gecos '' app
 
 RUN chown -R app: /app/
 
-WORKDIR /app
+WORKDIR /app/
 
 ########################################################################################################################
 # Stage: build
@@ -44,14 +44,6 @@ RUN composer install
 
 FROM base as production
 
-RUN apt-get update \
- && apt-get install -y wait-for-it \
- && rm -rf /var/lib/apt/lists/*
-
 COPY --from=build /app/ /app/
 
 COPY . /app/
-
-COPY ./docker/crawler/start.sh /start.sh
-
-CMD ["/start.sh"]

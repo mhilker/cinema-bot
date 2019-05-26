@@ -2,18 +2,26 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Aggregate;
+namespace CinemaBot\Domain\Cinema;
 
 use CinemaBot\Application\CQRS\Event;
-use CinemaBot\Domain\Event\CalendarCreatedEvent;
+use CinemaBot\Domain\Aggregate\AbstractAggregate;
+use CinemaBot\Domain\Aggregate\AggregateID;
+use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
+use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
+use CinemaBot\Domain\MovieTimes;
+use CinemaBot\Domain\URL;
 
-final class Calendar extends AbstractAggregate
+final class Cinema extends AbstractAggregate
 {
-    /** @var CalendarID */
+    /** @var CinemaID */
     private $id;
+
+    /** @var URL */
+    private $url;
 
     /** @var MovieName[] */
     private $movies = [];
@@ -21,16 +29,22 @@ final class Calendar extends AbstractAggregate
     /** @var array<string<string, MovieTime>> */
     private $calendar = [];
 
-    public static function create(CalendarID $id): Calendar
+    public static function create(CinemaID $id, URL $url): Cinema
     {
-        $calendar = new self(null);
-        $calendar->record(new CalendarCreatedEvent($id));
-        return $calendar;
+        $cinema = new self(null);
+        $cinema->record(new CinemaCreatedEvent($id, $url));
+        return $cinema;
     }
 
-    private function applyCalendarCreatedEvent(CalendarCreatedEvent $event): void
+    public function getShowByName(MovieName $name): Movie
+    {
+        return Movie::from($name, MovieTimes::from($this->calendar[$name->asString()]));
+    }
+
+    private function applyCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {
         $this->id = $event->getId();
+        $this->url = $event->getUrl();
     }
 
     public function addShow(MovieName $name, MovieTime $time): void
@@ -52,9 +66,9 @@ final class Calendar extends AbstractAggregate
     protected function apply(Event $event): void
     {
         switch ($event->getTopic()) {
-            case CalendarCreatedEvent::TOPIC:
-                /** @var CalendarCreatedEvent $event */
-                $this->applyCalendarCreatedEvent($event);
+            case CinemaCreatedEvent::TOPIC:
+                /** @var CinemaCreatedEvent $event */
+                $this->applyCinemaCreatedEvent($event);
                 break;
             case ShowAddedEvent::TOPIC:
                 /** @var ShowAddedEvent $event */
@@ -66,5 +80,10 @@ final class Calendar extends AbstractAggregate
     public function getAggregateId(): AggregateID
     {
         return $this->id;
+    }
+
+    public function getURL(): URL
+    {
+        return $this->url;
     }
 }

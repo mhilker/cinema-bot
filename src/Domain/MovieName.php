@@ -23,4 +23,9 @@ class MovieName
     {
         return $this->value;
     }
+
+    public function containsInsensitive(string $term): bool
+    {
+        return mb_stripos($this->asString(), $term) !== false;
+    }
 }

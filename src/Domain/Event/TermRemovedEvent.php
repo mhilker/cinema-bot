@@ -9,7 +9,7 @@ use CinemaBot\Domain\Watchlist\Term;
 
 final class TermRemovedEvent implements Event
 {
-    public const TOPIC = 'cinema_bot.term_removed';
+    public const TOPIC = 'cinema_bot.watchlist.term_removed';
 
     /** @var Term */
     private $term;

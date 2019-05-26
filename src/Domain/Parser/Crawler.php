@@ -2,28 +2,25 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Crawler;
+namespace CinemaBot\Domain\Parser;
 
 use CinemaBot\Domain\Downloader\CopyDownloader;
 use CinemaBot\Domain\Movies;
-use CinemaBot\Domain\Parser\DOMParser;
 use CinemaBot\Domain\URL;
 
 class Crawler
 {
-    public function crawl(): Movies
+    public function crawl(URL $url): Movies
     {
-        $url = URL::from('https://www.cinemotion-kino.de/hameln/kinoprogramm');
-
         $downloader = new CopyDownloader();
         $fileName = $downloader->download($url);
 
         $weekParser = new WeekParser();
-        $urls = $weekParser->parse($fileName);
+        $parsedUrls = $weekParser->parse($fileName);
 
         $fileNames = [];
-        foreach ($urls as $url) {
-            $fileNames[] = $downloader->download($url);
+        foreach ($parsedUrls as $parsedUrl) {
+            $fileNames[] = $downloader->download($parsedUrl);
         }
 
         $movieList = Movies::from([]);

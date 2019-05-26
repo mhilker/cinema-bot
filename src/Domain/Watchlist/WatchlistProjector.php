@@ -20,33 +20,33 @@ final class WatchlistProjector implements EventListener
         $this->projection = $projection;
     }
 
-    public function dispatch(Events $events): void
+    public function handle(Events $events): void
     {
         foreach ($events as $event) {
-            $this->dispatchEvent($event);
+            $this->handleEvent($event);
         }
     }
 
-    private function dispatchEvent(Event $event): void
+    private function handleEvent(Event $event): void
     {
         switch ($event->getTopic()) {
             case TermAddedEvent::TOPIC:
                 /** @var TermAddedEvent $event */
-                $this->dispatchTermAddedEvent($event);
+                $this->handleTermAddedEvent($event);
                 break;
             case TermRemovedEvent::TOPIC:
                 /** @var TermRemovedEvent $event */
-                $this->dispatchTermRemovedEvent($event);
+                $this->handleTermRemovedEvent($event);
                 break;
         }
     }
 
-    private function dispatchTermAddedEvent(TermAddedEvent $event): void
+    private function handleTermAddedEvent(TermAddedEvent $event): void
     {
         $this->projection->add($event->getTerm());
     }
 
-    private function dispatchTermRemovedEvent(TermRemovedEvent $event): void
+    private function handleTermRemovedEvent(TermRemovedEvent $event): void
     {
         $this->projection->remove($event->getTerm());
     }
