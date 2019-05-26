@@ -57,6 +57,4 @@ COPY --from=tools /app/ /app/
 
 COPY docker/migrate/migrate.sh /migrate.sh
 
-RUN ls -lah /app/
-
 CMD ["/migrate.sh"]
