@@ -30,7 +30,13 @@ class WebHookAction
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $token = file_get_contents(getenv('TELEGRAM_TOKEN_FILE'));
+        $file = getenv('TELEGRAM_TOKEN_FILE');
+
+        if ($file === false) {
+            $token = getenv('TELEGRAM_TOKEN');
+        } else {
+            $token = file_get_contents($file);
+        }
 
         $body = $request->getParsedBody();
         $text = $body['message']['text'];

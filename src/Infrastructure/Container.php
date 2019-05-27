@@ -58,12 +58,12 @@ class Container
 
         $config = [
             'settings' => [
-                'displayErrorDetails' => true,
+                'displayErrorDetails' => getenv('DISPLAY_ERRORS') === 'true',
             ],
         ];
 
         $app = new App($config);
-        $app->get('/', new WebHookAction($commandBus, $projection));
+        $app->get('/webhook/telegram', new WebHookAction($commandBus, $projection));
         return $app;
     }
 
@@ -98,7 +98,7 @@ class Container
 
         $watchlistProjection = new PDOWatchlistProjection($pdo);
 
-        $token      = file_get_contents(getenv('TELEGRAM_TOKEN_FILE'));
+        $token      = $this->getTelegramToken();
         $botApi     = new BotApi($token);
         $telegram   = new TelegramNotifier($botApi);
 
@@ -128,12 +128,38 @@ class Container
     {
         $dsn      = 'mysql:host=' . getenv('DB_HOST') . ';dbname=' . getenv('DB_NAME');
         $username = getenv('DB_USER');
-        $password = file_get_contents(getenv('DB_PASSWORD_FILE'));
+        $password = $this->getDBPassword();
 
         return new PDO($dsn, $username, $password, [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8;',
         ]);
+    }
+
+    public function getTelegramToken(): string
+    {
+        $file = getenv('TELEGRAM_TOKEN_FILE');
+
+        if ($file === false) {
+            $token = getenv('TELEGRAM_TOKEN');
+        } else {
+            $token = file_get_contents($file);
+        }
+
+        return $token;
+    }
+
+    private function getDBPassword(): string
+    {
+        $file = getenv('DB_PASSWORD_FILE');
+
+        if ($file === false) {
+            $token = getenv('DB_PASSWORD');
+        } else {
+            $token = file_get_contents($file);
+        }
+
+        return $token;
     }
 }

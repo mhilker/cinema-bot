@@ -3,15 +3,19 @@ version: '3.7'
 services:
 
   web:
+    image: mhilker/private:cinema-bot-web
     build:
       context: .
       dockerfile: docker/nginx/Dockerfile
+    environment:
+      - PHP_HOSTNAME=webhook
     ports:
       - "21000:80"
     volumes:
       - .:/app/
 
   webhook:
+    image: mhilker/private:cinema-bot-webhook
     build:
       context: .
       dockerfile: docker/webhook/Dockerfile
@@ -23,6 +27,7 @@ services:
       - DB_USER=cinema_bot
       - DB_NAME=cinema_bot
       - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
+      - DISPLAY_ERRORS=true
     volumes:
       - .:/app/
     secrets:
@@ -30,6 +35,7 @@ services:
       - cinema-bot-telegram-token
 
   crawler:
+    image: mhilker/private:cinema-bot-crawler
     build:
       context: .
       dockerfile: docker/crawler/Dockerfile
@@ -48,6 +54,7 @@ services:
       - cinema-bot-telegram-token
 
   migrate:
+    image: mhilker/private:cinema-bot-migrate
     build:
       dockerfile: docker/migrate/Dockerfile
       context: .
