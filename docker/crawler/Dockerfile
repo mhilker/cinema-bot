@@ -11,7 +11,7 @@ FROM composer:1.8.5 as composer
 FROM php:7.3.5-cli-stretch as base
 
 RUN apt-get update \
- && apt-get install -y libicu-dev git unzip cron \
+ && apt-get install -y libicu-dev git unzip \
  && docker-php-ext-install -j$(nproc) intl pdo pdo_mysql
 
 RUN mkdir /app/
@@ -54,4 +54,5 @@ COPY . /app/
 
 COPY ./docker/crawler/start.sh /start.sh
 
-CMD ["/start.sh"]
+ENTRYPOINT ["/start.sh"]
+CMD ["php /app/bin/crawler.php", "crawl-cinema"]
