@@ -27,7 +27,7 @@ class Bot
         `/remove [term]` Remove term from watchlist.
         MESSAGE;
 
-//        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
+        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 
     public function show(ChatID $chatID, Watchlist $watchlist): void
@@ -41,20 +41,20 @@ class Bot
             $message = 'The current watchlist is empty.';
         }
 
-//        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
+        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 
     public function add(ChatID $chatID, Term $term): void
     {
         $message = 'Added `' . $term->asString() . '` to watchlist.';
 
-//        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
+        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 
     public function remove(ChatID $chatID, Term $term): void
     {
         $message = 'Removed `' . $term->asString() . '` from watchlist.';
 
-//        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
+        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 }

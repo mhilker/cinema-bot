@@ -63,7 +63,7 @@ class Container
         ];
 
         $app = new App($config);
-        $app->get('/webhook/telegram', new WebHookAction($commandBus, $projection));
+        $app->post('/webhook/telegram', new WebHookAction($commandBus, $projection));
         return $app;
     }
 

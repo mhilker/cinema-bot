@@ -6,6 +6,7 @@ namespace CinemaBot\Application\Action;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Domain\Bot;
+use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\Command\AddToWatchlistCommand;
 use CinemaBot\Domain\Command\RemoveFromWatchlistCommand;
 use CinemaBot\Domain\Watchlist\Term;
@@ -40,7 +41,7 @@ class WebHookAction
 
         $body = $request->getParsedBody();
         $text = $body['message']['text'];
-        $chatId = $body['message']['chat']['id'];
+        $chatId = ChatID::from((string) $body['message']['chat']['id']);
 
         if (strpos($text, '/') !== 0) {
             return $response;
