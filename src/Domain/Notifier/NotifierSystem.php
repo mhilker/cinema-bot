@@ -94,5 +94,7 @@ class NotifierSystem implements EventListener
                 $this->notifier->send($movie, $chatID);
             }
         }
+
+        $this->data = [];
     }
 }
