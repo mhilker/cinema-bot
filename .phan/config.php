@@ -3,9 +3,11 @@ return [
     'target_php_version' => '7.3',
     'directory_list' => [
         'src/',
+        'vendor/',
     ],
     'exclude_analysis_directory_list' => [
         'vendor/',
+        'src/Infrastructure/Migrations/',
     ],
     'plugins' => [
         'AlwaysReturnPlugin',
@@ -17,7 +19,6 @@ return [
         'NoAssertPlugin',
         'NonBoolBranchPlugin',
         'NonBoolInLogicalArithPlugin',
-        'NumericalComparisonPlugin',
         'PHPUnitNotDeadCodePlugin',
         'PregRegexCheckerPlugin',
         'PrintfCheckerPlugin',
