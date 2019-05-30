@@ -29,7 +29,7 @@ class WeekParser
         }
 
 
-        $baseURI = rtrim($document->baseURI, '/');
+        $baseURI = rtrim((string) $document->baseURI, '/');
         $nodes = $xpath->query('//*[@id="movieWeekSelect"]/option');
 
         foreach ($nodes as $node) {
