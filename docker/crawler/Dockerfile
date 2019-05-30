@@ -52,7 +52,7 @@ COPY --from=build /app/ /app/
 
 COPY . /app/
 
-COPY ./docker/crawler/start.sh /start.sh
+COPY ./docker/crawler/entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/start.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php /app/bin/crawler.php", "crawl-cinema"]

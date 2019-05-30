@@ -55,6 +55,7 @@ COPY . /app/
 
 COPY --from=tools /app/ /app/
 
-COPY docker/migrate/migrate.sh /migrate.sh
+COPY docker/migrate/entrypoint.sh /entrypoint.sh
 
-CMD ["/migrate.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/app/tools/doctrine-migrations", "migrations:migrate"]

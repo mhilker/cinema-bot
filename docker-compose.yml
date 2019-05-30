@@ -39,6 +39,7 @@ services:
     build:
       context: .
       dockerfile: docker/crawler/Dockerfile
+    command: php /app/bin/crawler.php
     environment:
       - TELEGRAM_CHAT_ID=-358338485
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
@@ -70,11 +71,10 @@ services:
       - cinema-bot-db-root-password
 
   db:
-    image: mysql:8.0.15
-    command:
-      - --default-authentication-plugin=mysql_native_password
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
+    image: mhilker/private:cinema-bot-db
+    build:
+      dockerfile: docker/db/Dockerfile
+      context: .
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/cinema-bot-db-root-password
       - MYSQL_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
