@@ -28,11 +28,8 @@ class CinemaListProjector implements EventListener
 
     private function handleEvent(Event $event): void
     {
-        switch ($event->getTopic()) {
-            case CinemaCreatedEvent::TOPIC:
-                /** @var CinemaCreatedEvent $event */
-                $this->handleCinemaCreatedEvent($event);
-                break;
+        if ($event instanceof CinemaCreatedEvent) {
+            $this->handleCinemaCreatedEvent($event);
         }
     }
 

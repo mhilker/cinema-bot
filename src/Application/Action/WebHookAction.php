@@ -43,7 +43,7 @@ class WebHookAction
         $text = $body['message']['text'];
         $chatId = ChatID::from((string) $body['message']['chat']['id']);
 
-        if (strpos($text, '/') !== 0) {
+        if (strpos($text, '/') != 0) {
             return $response;
         }
 

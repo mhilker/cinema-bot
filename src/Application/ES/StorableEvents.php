@@ -31,7 +31,7 @@ class StorableEvents implements IteratorAggregate
     }
 
     /**
-     * @return Traversable | StorableEvent[]
+     * @return Traversable<StorableEvent>
      */
     public function getIterator(): Traversable
     {

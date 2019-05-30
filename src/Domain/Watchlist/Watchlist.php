@@ -32,7 +32,7 @@ final class Watchlist implements IteratorAggregate, Countable
     }
 
     /**
-     * @return Traversable | Term[]
+     * @return Traversable<Term>
      */
     public function getIterator(): Traversable
     {

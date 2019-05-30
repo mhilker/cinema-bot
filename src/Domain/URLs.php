@@ -31,7 +31,7 @@ class URLs implements IteratorAggregate
     }
 
     /**
-     * @return Traversable | URL
+     * @return Traversable<URL>
      */
     public function getIterator(): Traversable
     {

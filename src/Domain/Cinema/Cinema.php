@@ -26,7 +26,7 @@ final class Cinema extends AbstractAggregate
     /** @var MovieName[] */
     private $movies = [];
 
-    /** @var array<string<string, MovieTime>> */
+    /** @var array<string, array<string, MovieTime>> */
     private $calendar = [];
 
     public static function create(CinemaID $id, URL $url): Cinema
@@ -65,15 +65,11 @@ final class Cinema extends AbstractAggregate
 
     protected function apply(Event $event): void
     {
-        switch ($event->getTopic()) {
-            case CinemaCreatedEvent::TOPIC:
-                /** @var CinemaCreatedEvent $event */
-                $this->applyCinemaCreatedEvent($event);
-                break;
-            case ShowAddedEvent::TOPIC:
-                /** @var ShowAddedEvent $event */
-                $this->applyShowAddedEvent($event);
-                break;
+        if ($event instanceof CinemaCreatedEvent) {
+            $this->applyCinemaCreatedEvent($event);
+        }
+        if ($event instanceof ShowAddedEvent) {
+            $this->applyShowAddedEvent($event);
         }
     }
 

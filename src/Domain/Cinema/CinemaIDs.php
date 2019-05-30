@@ -31,7 +31,7 @@ class CinemaIDs implements IteratorAggregate
     }
 
     /**
-     * @return Traversable | CinemaID[]
+     * @return Traversable<CinemaID>
      */
     public function getIterator(): Traversable
     {

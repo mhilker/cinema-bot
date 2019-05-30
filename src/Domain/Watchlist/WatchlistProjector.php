@@ -29,15 +29,11 @@ final class WatchlistProjector implements EventListener
 
     private function handleEvent(Event $event): void
     {
-        switch ($event->getTopic()) {
-            case TermAddedEvent::TOPIC:
-                /** @var TermAddedEvent $event */
-                $this->handleTermAddedEvent($event);
-                break;
-            case TermRemovedEvent::TOPIC:
-                /** @var TermRemovedEvent $event */
-                $this->handleTermRemovedEvent($event);
-                break;
+        if ($event instanceof TermAddedEvent) {
+            $this->handleTermAddedEvent($event);
+        }
+        if ($event instanceof TermRemovedEvent) {
+            $this->handleTermRemovedEvent($event);
         }
     }
 

@@ -11,7 +11,6 @@ use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\Cinema\CinemaID;
 use CinemaBot\Domain\Cinema\CinemaRepository;
 use CinemaBot\Domain\Event\ShowAddedEvent;
-use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Watchlist\WatchlistProjection;
 use DateTimeImmutable;
 
@@ -46,11 +45,8 @@ class NotifierSystem implements EventListener
 
     private function handleEvents(Event $event): void
     {
-        switch ($event->getTopic()) {
-            case ShowAddedEvent::TOPIC:
-                /** @var ShowAddedEvent $event */
-                $this->handleShowAddedEvent($event);
-                break;
+        if ($event instanceof ShowAddedEvent) {
+            $this->handleShowAddedEvent($event);
         }
     }
 

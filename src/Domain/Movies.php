@@ -26,7 +26,7 @@ class Movies implements IteratorAggregate, Countable
         return new self($movies);
     }
 
-    public function add($movie): void
+    public function add(Movie $movie): void
     {
         $this->movies[] = $movie;
     }
@@ -48,7 +48,7 @@ class Movies implements IteratorAggregate, Countable
     }
 
     /**
-     * @return Traversable | Movie[]
+     * @return Traversable<Movie>
      */
     public function getIterator(): Traversable
     {

@@ -12,9 +12,13 @@ class PDOEventStore implements EventStore
     /** @var PDO */
     private $pdo;
 
-    /** @var array */
+    /** @var array<string,string> */
     private $eventMap;
 
+    /**
+     * @param PDO $pdo
+     * @param array<string,string> $eventMap
+     */
     public function __construct(PDO $pdo, array $eventMap)
     {
         $this->pdo = $pdo;
