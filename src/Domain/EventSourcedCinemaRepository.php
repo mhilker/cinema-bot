@@ -6,11 +6,9 @@ namespace CinemaBot\Domain;
 
 use CinemaBot\Application\CQRS\EventBus;
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Application\ES\StorableEvents;
 use CinemaBot\Application\ES\EventStore;
+use CinemaBot\Application\ES\StorableEvents;
 use CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase;
-use CinemaBot\Domain\CinemaID;
-use CinemaBot\Domain\CinemaRepository;
 
 final class EventSourcedCinemaRepository implements CinemaRepository
 {
