@@ -6,7 +6,7 @@ namespace CinemaBot\Application\CQRS;
 
 use Exception;
 
-class InvalidCommandHandlerException extends Exception
+final class InvalidCommandHandlerException extends Exception
 {
 
 }
