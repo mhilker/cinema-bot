@@ -9,24 +9,24 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
-final class Watchlist implements IteratorAggregate, Countable
+final class Terms implements IteratorAggregate, Countable
 {
     /** @var Term[] */
     private $terms = [];
 
-    public function __construct(iterable $terms)
+    private function __construct(iterable $terms)
     {
         foreach ($terms as $term) {
             $this->add($term);
         }
     }
 
-    public static function from(iterable $terms): Watchlist
+    public static function from(iterable $terms): Terms
     {
         return new self($terms);
     }
 
-    public function add(Term $term): void
+    private function add(Term $term): void
     {
         $this->terms[$term->asString()] = $term;
     }

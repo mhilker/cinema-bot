@@ -16,19 +16,19 @@ final class PDOWatchlistProjection implements WatchlistProjection
         $this->pdo = $pdo;
     }
 
-    public function getAll(): Watchlist
+    public function getAll(): Terms
     {
         $sql = 'SELECT * FROM `watchlist`;';
 
         $statement = $this->pdo->query($sql);
 
-        $watchlist = Watchlist::from([]);
+        $terms = [];
 
         while (($row = $statement->fetch()) !== false) {
-            $watchlist->add(Term::from($row['term']));
+            $terms[] = Term::from($row['term']);
         }
 
-        return $watchlist;
+        return Terms::from($terms);
     }
 
     public function add(Term $term): void

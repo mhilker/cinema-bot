@@ -6,7 +6,7 @@ namespace CinemaBot\Domain\AddShowToCinema\Watchlist;
 
 interface WatchlistProjection
 {
-    public function getAll(): Watchlist;
+    public function getAll(): Terms;
 
     public function add(Term $value): void;
 

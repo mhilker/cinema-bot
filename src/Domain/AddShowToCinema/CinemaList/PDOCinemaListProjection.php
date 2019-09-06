@@ -29,13 +29,13 @@ final class PDOCinemaListProjection implements CinemaListProjection
 
         $statement = $this->pdo->query($sql);
 
-        $list = CinemaIDs::from([]);
+        $list = [];
 
         while (($row = $statement->fetch()) !== false) {
-            $list->add(CinemaID::from($row['cinema_id']));
+            $list[] = CinemaID::from($row['cinema_id']);
         }
 
-        return $list;
+        return CinemaIDs::from($list);
     }
 
     public function insert(CinemaID $id): void

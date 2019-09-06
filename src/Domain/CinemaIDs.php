@@ -13,7 +13,7 @@ final class CinemaIDs implements IteratorAggregate
     /** @var CinemaID[] */
     private $values = [];
 
-    public function __construct(iterable $values)
+    private function __construct(iterable $values)
     {
         foreach ($values as $value) {
             $this->add($value);
@@ -25,7 +25,7 @@ final class CinemaIDs implements IteratorAggregate
         return new self($values);
     }
 
-    public function add(CinemaID $value): void
+    private function add(CinemaID $value): void
     {
         $this->values[] = $value;
     }
