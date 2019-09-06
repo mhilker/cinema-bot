@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain;
+namespace CinemaBot\Infrastructure;
 
-use CinemaBot\Domain\Watchlist\Term;
-use CinemaBot\Domain\Watchlist\Watchlist;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\Term;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\Watchlist;
+use CinemaBot\Domain\ChatID;
 use TelegramBot\Api\BotApi;
 
 final class Bot

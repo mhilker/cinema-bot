@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Parser;
+namespace CinemaBot\Domain\AddShowToCinema\Parser;
 
 use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\URL;

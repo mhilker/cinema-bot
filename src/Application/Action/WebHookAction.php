@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace CinemaBot\Application\Action;
 
 use CinemaBot\Application\CQRS\CommandBus;
-use CinemaBot\Domain\Bot;
+use CinemaBot\Infrastructure\Bot;
 use CinemaBot\Domain\ChatID;
-use CinemaBot\Domain\AddTerm\AddToWatchlistCommand;
+use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommand;
 use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommand;
-use CinemaBot\Domain\Watchlist\Term;
-use CinemaBot\Domain\Watchlist\WatchlistProjection;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\Term;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\WatchlistProjection;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TelegramBot\Api\BotApi;
@@ -62,7 +62,7 @@ class WebHookAction
                 break;
             case 'add':
                 $term = Term::from($matches[3] ?? '');
-                $this->commandBus->dispatch(new AddToWatchlistCommand($term));
+                $this->commandBus->dispatch(new AddTermToWatchlistCommand($term));
                 $bot->addTermToWatchlist($chatId, $term);
                 break;
             case 'remove':

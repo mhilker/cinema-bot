@@ -9,7 +9,7 @@ use CinemaBot\Application\CQRS\EventBus;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Event\TermAddedEvent;
 
-final class AddToWatchlistCommandHandler implements CommandHandler
+final class AddTermToWatchlistCommandHandler implements CommandHandler
 {
     /** @var EventBus */
     private $eventBus;
@@ -19,7 +19,7 @@ final class AddToWatchlistCommandHandler implements CommandHandler
         $this->eventBus = $eventBus;
     }
 
-    public function handle(AddToWatchlistCommand $command): void
+    public function handle(AddTermToWatchlistCommand $command): void
     {
         $events = Events::from([
             new TermAddedEvent($command->getTerm()),

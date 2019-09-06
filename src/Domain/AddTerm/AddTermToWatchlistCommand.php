@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\AddTerm;
 
 use CinemaBot\Application\CQRS\Command;
-use CinemaBot\Domain\Watchlist\Term;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\Term;
 
-final class AddToWatchlistCommand implements Command
+final class AddTermToWatchlistCommand implements Command
 {
     /** @var Term */
     private $term;

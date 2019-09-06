@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\Event;
 
 use CinemaBot\Application\CQRS\Event;
-use CinemaBot\Domain\Watchlist\Term;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\Term;
 
 final class TermRemovedEvent implements Event
 {

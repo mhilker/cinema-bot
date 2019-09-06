@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace CinemaBot;
 
-use CinemaBot\Domain\Parser\Crawler;
+use CinemaBot\Domain\AddShowToCinema\Parser\Crawler;
 use CinemaBot\Domain\URL;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Domain\Parser\Crawler
+ * @covers \CinemaBot\Domain\AddShowToCinema\Parser\Crawler
  */
 class CrawlerTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Watchlist;
+namespace CinemaBot\Domain\AddShowToCinema\Watchlist;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Notifier;
+namespace CinemaBot\Domain\AddShowToCinema\Notifier;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;
@@ -11,7 +11,7 @@ use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\CinemaRepository;
 use CinemaBot\Domain\Event\ShowAddedEvent;
-use CinemaBot\Domain\Watchlist\WatchlistProjection;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\WatchlistProjection;
 use DateTimeImmutable;
 
 final class NotifierSystem implements EventListener
@@ -64,7 +64,7 @@ final class NotifierSystem implements EventListener
 
         $match = false;
         foreach ($watchlist as $term) {
-            if ($event->getName()->containsInsensitive($term->asString())) {
+            if ($event->getName()->containsInsensitiveTerm($term->asString())) {
                 $match = true;
                 break;
             }

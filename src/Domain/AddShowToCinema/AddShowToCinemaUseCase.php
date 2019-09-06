@@ -12,7 +12,6 @@ use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
-use CinemaBot\Domain\URL;
 
 final class AddShowToCinemaUseCase extends AbstractAggregate
 {
@@ -24,13 +23,6 @@ final class AddShowToCinemaUseCase extends AbstractAggregate
 
     /** @var array<string, array<string, MovieTime>> */
     private $calendar = [];
-
-    public static function createNew(CinemaID $id, URL $url): AddShowToCinemaUseCase
-    {
-        $cinema = new self(null);
-        $cinema->record(new CinemaCreatedEvent($id, $url));
-        return $cinema;
-    }
 
     private function applyCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {

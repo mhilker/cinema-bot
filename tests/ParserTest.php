@@ -10,13 +10,13 @@ use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\MovieTime;
 use CinemaBot\Domain\MovieTimes;
-use CinemaBot\Domain\Parser\DOMParser;
+use CinemaBot\Domain\AddShowToCinema\Parser\DOMParser;
 use DateTimeImmutable;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Domain\Parser\DOMParser
+ * @covers \CinemaBot\Domain\AddShowToCinema\Parser\DOMParser
  */
 class ParserTest extends TestCase
 {

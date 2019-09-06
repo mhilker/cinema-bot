@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\RemoveTerm;
 
 use CinemaBot\Application\CQRS\Command;
-use CinemaBot\Domain\Watchlist\Term;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\Term;
 
 final class RemoveFromWatchlistCommand implements Command
 {

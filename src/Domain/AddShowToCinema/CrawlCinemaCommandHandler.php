@@ -6,7 +6,7 @@ namespace CinemaBot\Domain\AddShowToCinema;
 
 use CinemaBot\Application\CQRS\CommandHandler;
 use CinemaBot\Domain\CinemaRepository;
-use CinemaBot\Domain\Parser\Crawler;
+use CinemaBot\Domain\AddShowToCinema\Parser\Crawler;
 
 final class CrawlCinemaCommandHandler implements CommandHandler
 {

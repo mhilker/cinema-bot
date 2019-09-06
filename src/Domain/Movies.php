@@ -36,17 +36,6 @@ final class Movies implements IteratorAggregate, Countable
         return self::from(array_filter($this->movies, $callable));
     }
 
-    public function getByName(string $movieName): ?Movie
-    {
-        foreach ($this->movies as $movie) {
-            if ($movieName === $movie->getName()) {
-                return $movie;
-            }
-        }
-
-        return null;
-    }
-
     /**
      * @return Traversable<Movie>
      */

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace CinemaBot;
 
-use CinemaBot\Domain\Parser\WeekParser;
+use CinemaBot\Domain\AddShowToCinema\Parser\WeekParser;
 use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\URL;
 use CinemaBot\Domain\URLs;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Domain\Parser\WeekParser
+ * @covers \CinemaBot\Domain\AddShowToCinema\Parser\WeekParser
  */
 class WeekParserTest extends TestCase
 {
