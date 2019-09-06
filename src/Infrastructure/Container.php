@@ -35,7 +35,7 @@ use Slim\App;
 use Symfony\Component\Console\Application;
 use TelegramBot\Api\BotApi;
 
-class Container
+final class Container
 {
     public function getCLIApp(): Application
     {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\AddShowToCinema;
 
 use CinemaBot\Application\CQRS\Event;
-use CinemaBot\Domain\Aggregate\AbstractAggregate;
-use CinemaBot\Domain\Aggregate\AggregateID;
+use CinemaBot\Application\Aggregate\AbstractAggregate;
+use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;

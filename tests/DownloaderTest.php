@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace CinemaBot;
 
-use CinemaBot\Domain\Downloader\CopyDownloader;
+use CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader;
 use CinemaBot\Domain\URL;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Domain\Downloader\CopyDownloader
+ * @covers \CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader
  */
 class DownloaderTest extends TestCase
 {

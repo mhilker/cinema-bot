@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Application\ES;
 
 use CinemaBot\Application\CQRS\Event;
-use CinemaBot\Domain\Aggregate\AggregateID;
+use CinemaBot\Application\Aggregate\AggregateID;
 
 interface StorableEvent extends Event
 {

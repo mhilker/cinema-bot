@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Aggregate;
+namespace CinemaBot\Application\Aggregate;
 
+use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\Events;
 

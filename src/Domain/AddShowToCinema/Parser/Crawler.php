@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\AddShowToCinema\Parser;
 
-use CinemaBot\Domain\Downloader\CopyDownloader;
+use CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\URL;
 

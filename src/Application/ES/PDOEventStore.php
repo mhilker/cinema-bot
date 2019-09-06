@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Application\ES;
 
-use CinemaBot\Domain\Aggregate\AggregateID;
+use CinemaBot\Application\Aggregate\AggregateID;
 use PDO;
 
 final class PDOEventStore implements EventStore

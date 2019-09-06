@@ -6,7 +6,7 @@ namespace CinemaBot\Domain\Event;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\ES\StorableEvent;
-use CinemaBot\Domain\Aggregate\AggregateID;
+use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\URL;
 

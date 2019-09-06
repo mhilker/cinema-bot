@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Aggregate;
+namespace CinemaBot\Application\Aggregate;
 
 interface AggregateID
 {
