@@ -81,7 +81,7 @@ class Container
         $eventBus = $this->getEventBus();
         $repository = new EventSourcedCinemaRepository($eventStore, $eventBus);
 
-        $crawler    = new Crawler();
+        $crawler = new Crawler();
 
         $commandBus = new DirectCommandBus();
         $commandBus->add(CreateCinemaCommand::class, new CreateCinemaCommandHandler($repository));

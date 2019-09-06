@@ -8,7 +8,7 @@ use ArrayIterator;
 use IteratorAggregate;
 use Traversable;
 
-class StorableEvents implements IteratorAggregate
+final class StorableEvents implements IteratorAggregate
 {
     /** @var StorableEvent[] */
     private $events = [];

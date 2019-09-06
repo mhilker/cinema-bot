@@ -10,7 +10,7 @@ use CinemaBot\Domain\URLs;
 use DOMDocument;
 use DOMXPath;
 
-class WeekParser
+final class WeekParser
 {
     public function parse(ExistingFile $fileName): URLs
     {

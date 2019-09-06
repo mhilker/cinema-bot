@@ -8,7 +8,7 @@ use CinemaBot\Domain\Downloader\CopyDownloader;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\URL;
 
-class Crawler
+final class Crawler
 {
     public function crawl(URL $url): Movies
     {

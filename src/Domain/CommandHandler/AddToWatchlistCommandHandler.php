@@ -10,7 +10,7 @@ use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Command\AddToWatchlistCommand;
 use CinemaBot\Domain\Event\TermAddedEvent;
 
-class AddToWatchlistCommandHandler implements CommandHandler
+final class AddToWatchlistCommandHandler implements CommandHandler
 {
     /** @var EventBus */
     private $eventBus;

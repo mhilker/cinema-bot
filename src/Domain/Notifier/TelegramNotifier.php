@@ -10,7 +10,7 @@ use DateTimeImmutable;
 use IntlDateFormatter;
 use TelegramBot\Api\BotApi;
 
-class TelegramNotifier implements Notifier
+final class TelegramNotifier implements Notifier
 {
     /** @var BotApi */
     private $telegram;

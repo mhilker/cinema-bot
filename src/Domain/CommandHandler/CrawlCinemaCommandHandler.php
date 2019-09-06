@@ -9,7 +9,7 @@ use CinemaBot\Domain\Command\CrawlCinemaCommand;
 use CinemaBot\Domain\Parser\Crawler;
 use CinemaBot\Domain\Cinema\CinemaRepository;
 
-class CrawlCinemaCommandHandler implements CommandHandler
+final class CrawlCinemaCommandHandler implements CommandHandler
 {
     /** @var CinemaRepository */
     private $repository;

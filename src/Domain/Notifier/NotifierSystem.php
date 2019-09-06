@@ -14,7 +14,7 @@ use CinemaBot\Domain\Event\ShowAddedEvent;
 use CinemaBot\Domain\Watchlist\WatchlistProjection;
 use DateTimeImmutable;
 
-class NotifierSystem implements EventListener
+final class NotifierSystem implements EventListener
 {
     /** @var WatchlistProjection */
     private $projection;

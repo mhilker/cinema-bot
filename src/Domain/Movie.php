@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain;
 
-class Movie
+final class Movie
 {
     /** @var MovieName */
     private $name;

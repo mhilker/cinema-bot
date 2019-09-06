@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain;
 
-class URL
+final class URL
 {
     /** @var string */
     private $value;

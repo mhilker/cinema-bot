@@ -8,7 +8,7 @@ use CinemaBot\Domain\Cinema\CinemaID;
 use CinemaBot\Domain\Cinema\CinemaIDs;
 use PDO;
 
-class PDOCinemaListProjection implements CinemaListProjection
+final class PDOCinemaListProjection implements CinemaListProjection
 {
     /** @var PDO */
     private $pdo;

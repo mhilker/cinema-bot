@@ -9,7 +9,7 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
-class MovieTimes implements IteratorAggregate, Countable
+final class MovieTimes implements IteratorAggregate, Countable
 {
     private $values = [];
 

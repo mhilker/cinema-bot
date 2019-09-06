@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain;
 
-class ChatID
+final class ChatID
 {
     /** @var string */
     private $value;

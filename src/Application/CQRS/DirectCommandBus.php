@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Application\CQRS;
 
-class DirectCommandBus implements CommandBus
+final class DirectCommandBus implements CommandBus
 {
     /** @var CommandHandler[] */
     private $commandHandlers = [];

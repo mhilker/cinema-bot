@@ -8,7 +8,7 @@ use ArrayIterator;
 use IteratorAggregate;
 use Traversable;
 
-class CinemaIDs implements IteratorAggregate
+final class CinemaIDs implements IteratorAggregate
 {
     /** @var CinemaID[] */
     private $values = [];

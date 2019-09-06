@@ -8,7 +8,7 @@ use CinemaBot\Domain\Watchlist\Term;
 use CinemaBot\Domain\Watchlist\Watchlist;
 use TelegramBot\Api\BotApi;
 
-class Bot
+final class Bot
 {
     /** @var BotApi */
     private $telegram;

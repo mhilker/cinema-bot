@@ -6,7 +6,7 @@ namespace CinemaBot\Domain\Exception;
 
 use Exception;
 
-class FileMissingException extends Exception
+final class FileMissingException extends Exception
 {
 
 }

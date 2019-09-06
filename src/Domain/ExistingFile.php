@@ -6,7 +6,7 @@ namespace CinemaBot\Domain;
 
 use CinemaBot\Domain\Exception\FileMissingException;
 
-class ExistingFile
+final class ExistingFile
 {
     /** @var string */
     private $value;

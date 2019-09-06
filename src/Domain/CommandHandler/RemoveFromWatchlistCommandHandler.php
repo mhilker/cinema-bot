@@ -10,7 +10,7 @@ use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Command\RemoveFromWatchlistCommand;
 use CinemaBot\Domain\Event\TermRemovedEvent;
 
-class RemoveFromWatchlistCommandHandler implements CommandHandler
+final class RemoveFromWatchlistCommandHandler implements CommandHandler
 {
     /** @var EventBus */
     private $eventBus;

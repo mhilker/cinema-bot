@@ -6,7 +6,7 @@ namespace CinemaBot\Domain;
 
 use DateTimeImmutable;
 
-class MovieTime
+final class MovieTime
 {
     /** @var DateTimeImmutable */
     private $value;

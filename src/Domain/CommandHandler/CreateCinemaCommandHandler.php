@@ -9,7 +9,7 @@ use CinemaBot\Domain\Cinema\Cinema;
 use CinemaBot\Domain\Cinema\CinemaRepository;
 use CinemaBot\Domain\Command\CreateCinemaCommand;
 
-class CreateCinemaCommandHandler implements CommandHandler
+final class CreateCinemaCommandHandler implements CommandHandler
 {
     /** @var CinemaRepository */
     private $repository;

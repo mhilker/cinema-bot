@@ -9,7 +9,7 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
-class Movies implements IteratorAggregate, Countable
+final class Movies implements IteratorAggregate, Countable
 {
     /** @var Movie[] */
     private $movies = [];

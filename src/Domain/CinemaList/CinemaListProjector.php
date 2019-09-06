@@ -9,7 +9,7 @@ use CinemaBot\Application\CQRS\EventListener;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 
-class CinemaListProjector implements EventListener
+final class CinemaListProjector implements EventListener
 {
     /** @var CinemaListProjection */
     private $projection;

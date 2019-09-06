@@ -8,7 +8,7 @@ use ArrayIterator;
 use IteratorAggregate;
 use Traversable;
 
-class URLs implements IteratorAggregate
+final class URLs implements IteratorAggregate
 {
     /** @var URL[] */
     private $values = [];
