@@ -33,7 +33,6 @@ class CinemaTest extends TestCase
         $calendar->addShow(MovieName::from('Test 3'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00')));
 
         $expectedEvents = Events::from([
-            new CinemaCreatedEvent($id, $url),
             new ShowAddedEvent($id, MovieName::from('Test 1'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00'))),
             new ShowAddedEvent($id, MovieName::from('Test 2'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00'))),
             new ShowAddedEvent($id, MovieName::from('Test 3'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00'))),
