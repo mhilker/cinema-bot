@@ -27,7 +27,7 @@ use CinemaBot\Domain\Event\TermRemovedEvent;
 use CinemaBot\Domain\AddShowToCinema\Parser\Crawler;
 use CinemaBot\Domain\AddShowToCinema\Notifier\NotifierSystem;
 use CinemaBot\Domain\AddShowToCinema\Notifier\TelegramNotifier;
-use CinemaBot\Domain\EventSourcedCinemaRepository;
+use CinemaBot\Domain\AddShowToCinema\EventSourcedCinemaRepository;
 use CinemaBot\Domain\AddShowToCinema\Watchlist\PDOWatchlistProjection;
 use CinemaBot\Domain\AddShowToCinema\Watchlist\WatchlistProjector;
 use PDO;

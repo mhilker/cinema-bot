@@ -9,7 +9,7 @@ use CinemaBot\Application\CQRS\EventListener;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\CinemaID;
-use CinemaBot\Domain\CinemaRepository;
+use CinemaBot\Domain\AddShowToCinema\CinemaRepository;
 use CinemaBot\Domain\Event\ShowAddedEvent;
 use CinemaBot\Domain\AddShowToCinema\Watchlist\WatchlistProjection;
 use DateTimeImmutable;
