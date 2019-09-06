@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CinemaBot;
 
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Domain\Cinema\Cinema;
-use CinemaBot\Domain\Cinema\CinemaID;
+use CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase;
+use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
 use CinemaBot\Domain\MovieName;
@@ -16,7 +16,7 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Domain\Cinema\Cinema
+ * @covers \CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase
  */
 class CinemaTest extends TestCase
 {
@@ -25,7 +25,7 @@ class CinemaTest extends TestCase
         $id = CinemaID::from('123');
         $url = URL::from('https://example.com/');
 
-        $calendar = Cinema::createNew($id, $url);
+        $calendar = AddShowToCinemaUseCase::createNew($id, $url);
         $calendar->addShow(MovieName::from('Test 1'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00')));
         $calendar->addShow(MovieName::from('Test 2'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00')));
         $calendar->addShow(MovieName::from('Test 3'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00')));

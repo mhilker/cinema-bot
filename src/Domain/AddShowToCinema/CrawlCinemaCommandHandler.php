@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\CommandHandler;
+namespace CinemaBot\Domain\AddShowToCinema;
 
 use CinemaBot\Application\CQRS\CommandHandler;
-use CinemaBot\Domain\Command\CrawlCinemaCommand;
+use CinemaBot\Domain\AddShowToCinema\CrawlCinemaCommand;
 use CinemaBot\Domain\Parser\Crawler;
-use CinemaBot\Domain\Cinema\CinemaRepository;
+use CinemaBot\Domain\CinemaRepository;
 
 final class CrawlCinemaCommandHandler implements CommandHandler
 {

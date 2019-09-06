@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Cinema;
+namespace CinemaBot\Domain;
 
 use CinemaBot\Domain\Aggregate\AggregateID;
 

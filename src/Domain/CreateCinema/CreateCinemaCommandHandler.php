@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\CommandHandler;
+namespace CinemaBot\Domain\CreateCinema;
 
 use CinemaBot\Application\CQRS\CommandHandler;
-use CinemaBot\Domain\Cinema\Cinema;
-use CinemaBot\Domain\Cinema\CinemaRepository;
-use CinemaBot\Domain\Command\CreateCinemaCommand;
+use CinemaBot\Domain\CinemaRepository;
 
 final class CreateCinemaCommandHandler implements CommandHandler
 {
@@ -24,7 +22,7 @@ final class CreateCinemaCommandHandler implements CommandHandler
         $id = $command->getID();
         $url = $command->getURL();
 
-        $cinema = Cinema::createNew($id, $url);
+        $cinema = CreateCinemaUseCase::createNew($id, $url);
 
         $this->repository->save($cinema);
     }

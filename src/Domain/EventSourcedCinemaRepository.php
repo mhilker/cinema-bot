@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Cinema;
+namespace CinemaBot\Domain;
 
 use CinemaBot\Application\CQRS\EventBus;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Application\ES\StorableEvents;
 use CinemaBot\Application\ES\EventStore;
+use CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase;
+use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\CinemaRepository;
 
 final class EventSourcedCinemaRepository implements CinemaRepository
 {
@@ -23,15 +26,15 @@ final class EventSourcedCinemaRepository implements CinemaRepository
         $this->eventBus = $eventBus;
     }
 
-    public function load(CinemaID $cinemaID): Cinema
+    public function load(CinemaID $cinemaID): AddShowToCinemaUseCase
     {
         $storableEvents = $this->eventStore->load($cinemaID);
         $events = Events::from($storableEvents);
 
-        return new Cinema($events);
+        return new AddShowToCinemaUseCase($events);
     }
 
-    public function save(Cinema $cinema): void
+    public function save(AddShowToCinemaUseCase $cinema): void
     {
         $events = $cinema->extractEvents();
 

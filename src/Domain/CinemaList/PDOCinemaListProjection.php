@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\CinemaList;
 
-use CinemaBot\Domain\Cinema\CinemaID;
-use CinemaBot\Domain\Cinema\CinemaIDs;
+use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\CinemaIDs;
 use PDO;
 
 final class PDOCinemaListProjection implements CinemaListProjection

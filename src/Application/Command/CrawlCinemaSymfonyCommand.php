@@ -6,7 +6,7 @@ namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Domain\CinemaList\CinemaListProjection;
-use CinemaBot\Domain\Command\CrawlCinemaCommand;
+use CinemaBot\Domain\AddShowToCinema\CrawlCinemaCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

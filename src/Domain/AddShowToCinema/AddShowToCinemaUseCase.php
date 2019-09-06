@@ -2,27 +2,22 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Cinema;
+namespace CinemaBot\Domain\AddShowToCinema;
 
 use CinemaBot\Application\CQRS\Event;
-use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Aggregate\AbstractAggregate;
 use CinemaBot\Domain\Aggregate\AggregateID;
+use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
-use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
-use CinemaBot\Domain\MovieTimes;
 use CinemaBot\Domain\URL;
 
-final class Cinema extends AbstractAggregate
+final class AddShowToCinemaUseCase extends AbstractAggregate
 {
     /** @var CinemaID */
     private $id;
-
-    /** @var URL */
-    private $url;
 
     /** @var MovieName[] */
     private $movies = [];
@@ -30,9 +25,9 @@ final class Cinema extends AbstractAggregate
     /** @var array<string, array<string, MovieTime>> */
     private $calendar = [];
 
-    public static function createNew(CinemaID $id, URL $url): Cinema
+    public static function createNew(CinemaID $id, URL $url): AddShowToCinemaUseCase
     {
-        $cinema = self::fromEvents(Events::from([]));
+        $cinema = new self(null);
         $cinema->record(new CinemaCreatedEvent($id, $url));
         return $cinema;
     }
@@ -40,7 +35,6 @@ final class Cinema extends AbstractAggregate
     private function applyCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {
         $this->id = $event->getID();
-        $this->url = $event->getURL();
     }
 
     public function addShow(MovieName $name, MovieTime $time): void
@@ -69,18 +63,8 @@ final class Cinema extends AbstractAggregate
         }
     }
 
-    public function getShowByName(MovieName $name): Movie
-    {
-        return Movie::from($name, MovieTimes::from($this->calendar[$name->asString()]));
-    }
-
     public function getAggregateId(): AggregateID
     {
         return $this->id;
-    }
-
-    public function getURL(): URL
-    {
-        return $this->url;
     }
 }

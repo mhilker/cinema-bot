@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\CommandHandler;
+namespace CinemaBot\Domain\AddTerm;
 
 use CinemaBot\Application\CQRS\CommandHandler;
 use CinemaBot\Application\CQRS\EventBus;
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Domain\Command\AddToWatchlistCommand;
+use CinemaBot\Domain\AddTerm\AddToWatchlistCommand;
 use CinemaBot\Domain\Event\TermAddedEvent;
 
 final class AddToWatchlistCommandHandler implements CommandHandler

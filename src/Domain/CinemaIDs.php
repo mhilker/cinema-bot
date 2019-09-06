@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Cinema;
+namespace CinemaBot\Domain;
 
 use ArrayIterator;
+use CinemaBot\Domain\CinemaID;
 use IteratorAggregate;
 use Traversable;
 

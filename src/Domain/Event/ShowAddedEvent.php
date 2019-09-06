@@ -7,7 +7,7 @@ namespace CinemaBot\Domain\Event;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\ES\StorableEvent;
 use CinemaBot\Domain\Aggregate\AggregateID;
-use CinemaBot\Domain\Cinema\CinemaID;
+use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
 

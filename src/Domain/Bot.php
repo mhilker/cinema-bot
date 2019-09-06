@@ -30,7 +30,7 @@ final class Bot
         $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 
-    public function show(ChatID $chatID, Watchlist $watchlist): void
+    public function showWatchlist(ChatID $chatID, Watchlist $watchlist): void
     {
         if (count($watchlist) > 0) {
             $message = 'Current watchlist:' . PHP_EOL;
@@ -44,14 +44,14 @@ final class Bot
         $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 
-    public function add(ChatID $chatID, Term $term): void
+    public function addTermToWatchlist(ChatID $chatID, Term $term): void
     {
         $message = 'Added `' . $term->asString() . '` to watchlist.';
 
         $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
     }
 
-    public function remove(ChatID $chatID, Term $term): void
+    public function removeTermFromWatchlist(ChatID $chatID, Term $term): void
     {
         $message = 'Removed `' . $term->asString() . '` from watchlist.';
 

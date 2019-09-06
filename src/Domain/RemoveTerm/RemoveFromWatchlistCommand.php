@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Command;
+namespace CinemaBot\Domain\RemoveTerm;
 
 use CinemaBot\Application\CQRS\Command;
 use CinemaBot\Domain\Watchlist\Term;

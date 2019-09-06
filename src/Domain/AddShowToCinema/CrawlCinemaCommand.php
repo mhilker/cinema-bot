@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Command;
+namespace CinemaBot\Domain\AddShowToCinema;
 
 use CinemaBot\Application\CQRS\Command;
-use CinemaBot\Domain\Cinema\CinemaID;
+use CinemaBot\Domain\CinemaID;
 
 final class CrawlCinemaCommand implements Command
 {

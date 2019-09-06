@@ -7,8 +7,8 @@ namespace CinemaBot\Application\Action;
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Domain\Bot;
 use CinemaBot\Domain\ChatID;
-use CinemaBot\Domain\Command\AddToWatchlistCommand;
-use CinemaBot\Domain\Command\RemoveFromWatchlistCommand;
+use CinemaBot\Domain\AddTerm\AddToWatchlistCommand;
+use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommand;
 use CinemaBot\Domain\Watchlist\Term;
 use CinemaBot\Domain\Watchlist\WatchlistProjection;
 use Psr\Http\Message\ResponseInterface;
@@ -58,17 +58,17 @@ class WebHookAction
                 break;
             case 'show':
                 $watchlist = $this->projection->getAll();
-                $bot->show($chatId, $watchlist);
+                $bot->showWatchlist($chatId, $watchlist);
                 break;
             case 'add':
                 $term = Term::from($matches[3] ?? '');
                 $this->commandBus->dispatch(new AddToWatchlistCommand($term));
-                $bot->add($chatId, $term);
+                $bot->addTermToWatchlist($chatId, $term);
                 break;
             case 'remove':
                 $term = Term::from($matches[3] ?? '');
                 $this->commandBus->dispatch(new RemoveFromWatchlistCommand($term));
-                $bot->remove($chatId, $term);
+                $bot->removeTermFromWatchlist($chatId, $term);
                 break;
         }
 

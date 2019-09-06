@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain;
 
-use CinemaBot\Domain\Exception\FileMissingException;
+use CinemaBot\Domain\FileMissingException;
 
 final class ExistingFile
 {
