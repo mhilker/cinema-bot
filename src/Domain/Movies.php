@@ -37,7 +37,7 @@ final class Movies implements IteratorAggregate, Countable
     }
 
     /**
-     * @return Traversable<Movie>
+     * @return Traversable | Movie[]
      */
     public function getIterator(): Traversable
     {
