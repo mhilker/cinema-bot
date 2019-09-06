@@ -43,8 +43,8 @@ final class Cinema extends AbstractAggregate
 
     private function applyCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {
-        $this->id = $event->getId();
-        $this->url = $event->getUrl();
+        $this->id = $event->getID();
+        $this->url = $event->getURL();
     }
 
     public function addShow(MovieName $name, MovieTime $time): void

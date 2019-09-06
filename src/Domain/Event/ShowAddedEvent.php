@@ -31,7 +31,7 @@ final class ShowAddedEvent implements Event, StorableEvent
         $this->time = $time;
     }
 
-    public function getId(): CinemaID
+    public function getID(): CinemaID
     {
         return $this->id;
     }

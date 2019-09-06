@@ -25,7 +25,7 @@ final class CrawlCinemaCommandHandler implements CommandHandler
 
     public function handle(CrawlCinemaCommand $command): void
     {
-        $cinema = $this->repository->load($command->getId());
+        $cinema = $this->repository->load($command->getID());
 
         $movies = $this->crawler->crawl($cinema->getURL());
 

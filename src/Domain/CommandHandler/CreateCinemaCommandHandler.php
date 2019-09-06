@@ -21,7 +21,7 @@ final class CreateCinemaCommandHandler implements CommandHandler
 
     public function handle(CreateCinemaCommand $command): void
     {
-        $id = $command->getId();
+        $id = $command->getID();
         $url = $command->getURL();
 
         $cinema = Cinema::create($id, $url);

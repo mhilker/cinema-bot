@@ -16,11 +16,11 @@ final class Crawler
         $fileName = $downloader->download($url);
 
         $weekParser = new WeekParser();
-        $parsedUrls = $weekParser->parse($fileName);
+        $parsedURLs = $weekParser->parse($fileName);
 
         $fileNames = [];
-        foreach ($parsedUrls as $parsedUrl) {
-            $fileNames[] = $downloader->download($parsedUrl);
+        foreach ($parsedURLs as $parsedURL) {
+            $fileNames[] = $downloader->download($parsedURL);
         }
 
         $movieList = Movies::from([]);

@@ -26,12 +26,12 @@ final class CinemaCreatedEvent implements Event, StorableEvent
         $this->url = $url;
     }
 
-    public function getId(): CinemaID
+    public function getID(): CinemaID
     {
         return $this->id;
     }
 
-    public function getUrl(): URL
+    public function getURL(): URL
     {
         return $this->url;
     }

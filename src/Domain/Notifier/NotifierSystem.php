@@ -74,7 +74,7 @@ final class NotifierSystem implements EventListener
             return;
         }
 
-        $this->data[$event->getId()->asString()][$event->getName()->asString()] = $event->getName();
+        $this->data[$event->getID()->asString()][$event->getName()->asString()] = $event->getName();
     }
 
     private function send(): void
