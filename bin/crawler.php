@@ -9,8 +9,5 @@ require __DIR__ . '/../vendor/autoload.php';
 $container = new Container();
 $app = $container->getCLIApp();
 $app->setAutoExit(false);
-
-while (true) {
-    $app->run();
-    sleep(300);
-}
+$app->run();
+sleep(300);
