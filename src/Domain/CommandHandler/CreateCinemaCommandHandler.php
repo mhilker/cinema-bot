@@ -24,7 +24,7 @@ final class CreateCinemaCommandHandler implements CommandHandler
         $id = $command->getID();
         $url = $command->getURL();
 
-        $cinema = Cinema::create($id, $url);
+        $cinema = Cinema::createNew($id, $url);
 
         $this->repository->save($cinema);
     }

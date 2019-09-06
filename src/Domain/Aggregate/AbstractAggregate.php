@@ -13,13 +13,18 @@ abstract class AbstractAggregate
     /** @var Event[] */
     private $events = [];
 
-    public function __construct(?Events $events)
+    private function __construct(?Events $events)
     {
         if ($events !== null) {
             foreach ($events as $event) {
                 $this->apply($event);
             }
         }
+    }
+
+    public static function fromEvents(Events $events): self
+    {
+        return new static($events);
     }
 
     protected function record(Event $event): void

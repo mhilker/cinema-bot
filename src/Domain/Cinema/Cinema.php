@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\Cinema;
 
 use CinemaBot\Application\CQRS\Event;
+use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Aggregate\AbstractAggregate;
 use CinemaBot\Domain\Aggregate\AggregateID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
@@ -29,16 +30,11 @@ final class Cinema extends AbstractAggregate
     /** @var array<string, array<string, MovieTime>> */
     private $calendar = [];
 
-    public static function create(CinemaID $id, URL $url): Cinema
+    public static function createNew(CinemaID $id, URL $url): Cinema
     {
-        $cinema = new self(null);
+        $cinema = self::fromEvents(Events::from([]));
         $cinema->record(new CinemaCreatedEvent($id, $url));
         return $cinema;
-    }
-
-    public function getShowByName(MovieName $name): Movie
-    {
-        return Movie::from($name, MovieTimes::from($this->calendar[$name->asString()]));
     }
 
     private function applyCinemaCreatedEvent(CinemaCreatedEvent $event): void
@@ -71,6 +67,11 @@ final class Cinema extends AbstractAggregate
         if ($event instanceof ShowAddedEvent) {
             $this->applyShowAddedEvent($event);
         }
+    }
+
+    public function getShowByName(MovieName $name): Movie
+    {
+        return Movie::from($name, MovieTimes::from($this->calendar[$name->asString()]));
     }
 
     public function getAggregateId(): AggregateID

@@ -25,7 +25,7 @@ class CinemaTest extends TestCase
         $id = CinemaID::from('123');
         $url = URL::from('https://example.com/');
 
-        $calendar = Cinema::create($id, $url);
+        $calendar = Cinema::createNew($id, $url);
         $calendar->addShow(MovieName::from('Test 1'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00')));
         $calendar->addShow(MovieName::from('Test 2'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00')));
         $calendar->addShow(MovieName::from('Test 3'), MovieTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00')));

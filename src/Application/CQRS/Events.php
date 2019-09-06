@@ -13,7 +13,7 @@ final class Events implements IteratorAggregate
     /** @var Event[] */
     private $events = [];
 
-    public function __construct(iterable $events)
+    private function __construct(iterable $events)
     {
         foreach ($events as $event) {
             $this->add($event);

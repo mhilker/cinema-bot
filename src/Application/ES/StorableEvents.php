@@ -13,7 +13,7 @@ final class StorableEvents implements IteratorAggregate
     /** @var StorableEvent[] */
     private $events = [];
 
-    public function __construct(iterable $events)
+    private function __construct(iterable $events)
     {
         foreach ($events as $event) {
             $this->add($event);
@@ -25,7 +25,7 @@ final class StorableEvents implements IteratorAggregate
         return new self($events);
     }
 
-    public function add(StorableEvent $event): void
+    private function add(StorableEvent $event): void
     {
         $this->events[] = $event;
     }

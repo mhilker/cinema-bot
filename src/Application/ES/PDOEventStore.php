@@ -41,18 +41,17 @@ final class PDOEventStore implements EventStore
             'id' => $id->asString(),
         ]);
 
-        $events = StorableEvents::from([]);
+        $events = [];
 
         while (($row = $statement->fetch()) !== false) {
             $topic = $row['topic'] ?? null;
             $payload = $row['payload'] ?? null;
 
             $class = $this->eventMap[$topic] ?? null;
-            $event = $class::fromJSON($payload);
-            $events->add($event);
+            $events[] = $class::fromJSON($payload);
         }
 
-        return $events;
+        return StorableEvents::from($events);
     }
 
     public function save(StorableEvents $events): void
