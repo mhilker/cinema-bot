@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure;
 
 use CinemaBot\Domain\AddShowToCinema\Watchlist\Term;
-use CinemaBot\Domain\AddShowToCinema\Watchlist\Watchlist;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\Terms;
 use CinemaBot\Domain\ChatID;
 use TelegramBot\Api\BotApi;
 
 final class Bot
 {
+    private const PARSE_MODE = 'markdown';
+
     /** @var BotApi */
     private $telegram;
 
@@ -28,10 +30,10 @@ final class Bot
         `/remove [term]` Remove term from watchlist.
         MESSAGE;
 
-        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
+        $this->telegram->sendMessage($chatID->asString(), $message, self::PARSE_MODE);
     }
 
-    public function showWatchlist(ChatID $chatID, Watchlist $watchlist): void
+    public function showWatchlist(ChatID $chatID, Terms $watchlist): void
     {
         if (count($watchlist) > 0) {
             $message = 'Current watchlist:' . PHP_EOL;
@@ -42,20 +44,20 @@ final class Bot
             $message = 'The current watchlist is empty.';
         }
 
-        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
+        $this->telegram->sendMessage($chatID->asString(), $message, self::PARSE_MODE);
     }
 
     public function addTermToWatchlist(ChatID $chatID, Term $term): void
     {
         $message = 'Added `' . $term->asString() . '` to watchlist.';
 
-        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
+        $this->telegram->sendMessage($chatID->asString(), $message, self::PARSE_MODE);
     }
 
     public function removeTermFromWatchlist(ChatID $chatID, Term $term): void
     {
         $message = 'Removed `' . $term->asString() . '` from watchlist.';
 
-        $this->telegram->sendMessage($chatID->asString(), $message, 'markdown');
+        $this->telegram->sendMessage($chatID->asString(), $message, self::PARSE_MODE);
     }
 }
