@@ -55,4 +55,5 @@ COPY . /app/
 COPY ./docker/crawler/entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
+
 CMD ["php /app/bin/crawler.php", "crawl-cinema"]
