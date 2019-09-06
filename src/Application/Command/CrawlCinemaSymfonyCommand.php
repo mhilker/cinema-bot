@@ -12,7 +12,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CrawlCinemaSymfonyCommand extends Command
+final class CrawlCinemaSymfonyCommand extends Command
 {
     /** @var CommandBus */
     private $commandBus;

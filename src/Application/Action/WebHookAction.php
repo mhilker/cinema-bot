@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TelegramBot\Api\BotApi;
 
-class WebHookAction
+final class WebHookAction
 {
     /** @var CommandBus */
     private $commandBus;
