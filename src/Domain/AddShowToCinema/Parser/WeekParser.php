@@ -18,16 +18,14 @@ final class WeekParser
         @$document->loadHTMLFile($fileName->asString());
         $xpath = new DOMXPath($document);
 
-        $urls = URLs::from([]);
+        $urls = [];
 
         $nodes = $document->getElementsByTagName('link');
         foreach ($nodes as $node) {
             if ($node->getAttribute('rel') === 'canonical') {
-                $href = $node->getAttribute('href');
-                $urls->add(URL::from($href));
+                $urls[] = URL::from($node->getAttribute('href'));
             }
         }
-
 
         $baseURI = rtrim((string) $document->baseURI, '/');
         $nodes = $xpath->query('//*[@id="movieWeekSelect"]/option');
@@ -38,10 +36,9 @@ final class WeekParser
                 continue;
             }
 
-            $url = URL::from($baseURI . $value);
-            $urls->add($url);
+            $urls[] = URL::from($baseURI . $value);
         }
 
-        return $urls;
+        return URLs::from($urls);
     }
 }

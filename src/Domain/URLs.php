@@ -13,7 +13,7 @@ final class URLs implements IteratorAggregate
     /** @var URL[] */
     private $values = [];
 
-    public function __construct(iterable $values)
+    private function __construct(iterable $values)
     {
         foreach ($values as $value) {
             $this->add($value);
@@ -25,7 +25,7 @@ final class URLs implements IteratorAggregate
         return new self($values);
     }
 
-    public function add(URL $value): void
+    private function add(URL $value): void
     {
         $this->values[] = $value;
     }

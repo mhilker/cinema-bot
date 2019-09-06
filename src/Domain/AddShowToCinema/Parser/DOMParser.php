@@ -29,14 +29,12 @@ final class DOMParser implements Parser
 
     protected function extractMovies(DOMXPath $xpath): Movies
     {
-        $movies = Movies::from([]);
-
+        $movies = [];
         $nodes = $xpath->query('//*[@id="program-module"]/table[2]/tbody/tr');
-
         $startDay = $this->extractStartDay($xpath);
 
         foreach ($nodes as $node) {
-            $movieTimes = new MovieTimes([]);
+            $movieTimes = [];
 
             $result = $xpath->query('td[@class="pmovie"]/h5', $node);
             $movieName = MovieName::from($result->item(0)->textContent);
@@ -53,14 +51,14 @@ final class DOMParser implements Parser
                     $dateTime = $dateTime->add(new DateInterval('P'. $j .'D'));
                     $dateTime = $dateTime->setTime((int) $hours, (int) $minutes);
 
-                    $movieTimes->add(new MovieTime($dateTime));
+                    $movieTimes[] = MovieTime::from($dateTime);
                 }
             }
 
-            $movies->add(new Movie($movieName, $movieTimes));
+            $movies[] = Movie::from($movieName, MovieTimes::from($movieTimes));
         }
 
-        return $movies;
+        return Movies::from($movies);
     }
 
     private function extractStartDay(DOMXPath $xpath): DateTimeImmutable

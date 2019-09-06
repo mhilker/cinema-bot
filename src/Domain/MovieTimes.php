@@ -13,7 +13,7 @@ final class MovieTimes implements IteratorAggregate, Countable
 {
     private $values = [];
 
-    public function __construct(iterable $values)
+    private function __construct(iterable $values)
     {
         foreach ($values as $value) {
             $this->add($value);
@@ -25,16 +25,10 @@ final class MovieTimes implements IteratorAggregate, Countable
         return new self($movies);
     }
 
-    public function add(MovieTime $value): void
+    private function add(MovieTime $value): void
     {
         $key = $value->getValue()->format(DATE_ATOM);
         $this->values[$key] = $value;
-    }
-
-    public function remove(MovieTime $value): void
-    {
-        $key = $value->getValue()->format(DATE_ATOM);
-        unset($this->values[$key]);
     }
 
     /**

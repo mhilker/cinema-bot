@@ -11,7 +11,7 @@ final class MovieTime
     /** @var DateTimeImmutable */
     private $value;
 
-    public function __construct(DateTimeImmutable $value)
+    private function __construct(DateTimeImmutable $value)
     {
         $this->value = $value;
     }

@@ -14,7 +14,7 @@ final class Movies implements IteratorAggregate, Countable
     /** @var Movie[] */
     private $movies = [];
 
-    public function __construct(iterable $movies)
+    private function __construct(iterable $movies)
     {
         foreach ($movies as $movie) {
             $this->add($movie);
@@ -26,7 +26,7 @@ final class Movies implements IteratorAggregate, Countable
         return new self($movies);
     }
 
-    public function add(Movie $movie): void
+    private function add(Movie $movie): void
     {
         $this->movies[] = $movie;
     }

@@ -9,7 +9,7 @@ final class URL
     /** @var string */
     private $value;
 
-    public function __construct(string $value)
+    private function __construct(string $value)
     {
         $this->value = $value;
     }

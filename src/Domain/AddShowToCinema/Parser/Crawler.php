@@ -23,16 +23,16 @@ final class Crawler
             $fileNames[] = $downloader->download($parsedURL);
         }
 
-        $movieList = Movies::from([]);
+        $movieList = [];
 
         $parser = new DOMParser();
         foreach ($fileNames as $fileName) {
             $movies = $parser->parse($fileName);
             foreach ($movies as $movie) {
-                $movieList->add($movie);
+                $movieList[] = $movie;
             }
         }
 
-        return $movieList;
+        return Movies::from($movieList);
     }
 }

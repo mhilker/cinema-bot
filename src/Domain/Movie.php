@@ -12,7 +12,7 @@ final class Movie
     /** @var MovieTimes */
     private $times;
 
-    public function __construct(MovieName $name, MovieTimes $times)
+    private function __construct(MovieName $name, MovieTimes $times)
     {
         $this->name = $name;
         $this->times = $times;
