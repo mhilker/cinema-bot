@@ -9,14 +9,14 @@ use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
 use CinemaBot\Domain\MovieTimes;
-use CinemaBot\Domain\AddShowToCinema\Notifier\TelegramNotifier;
+use CinemaBot\Domain\SendNotifications\TelegramNotifier;
 use DateTimeImmutable;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use TelegramBot\Api\BotApi;
 
 /**
- * @covers \CinemaBot\Domain\AddShowToCinema\Notifier\TelegramNotifier
+ * @covers \CinemaBot\Domain\SendNotifications\TelegramNotifier
  */
 class NotifierTest extends TestCase
 {

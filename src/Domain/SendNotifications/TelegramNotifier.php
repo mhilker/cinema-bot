@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\ShowFoundNotifications;
+namespace CinemaBot\Domain\SendNotifications;
 
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\Movie;

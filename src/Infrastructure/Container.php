@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure;
 
 use CinemaBot\Application\Action\WebHookAction;
-use CinemaBot\Application\Command\CrawlCinemaSymfonyCommand;
-use CinemaBot\Application\Command\CreateCinemaSymfonyCommand;
+use CinemaBot\Application\Command\CrawlCinemaCLICommand;
+use CinemaBot\Application\Command\CreateCinemaCLICommand;
 use CinemaBot\Application\CQRS\DirectCommandBus;
 use CinemaBot\Application\CQRS\DirectEventBus;
 use CinemaBot\Application\ES\PDOEventStore;
@@ -25,8 +25,8 @@ use CinemaBot\Domain\Event\ShowAddedEvent;
 use CinemaBot\Domain\Event\TermAddedEvent;
 use CinemaBot\Domain\Event\TermRemovedEvent;
 use CinemaBot\Domain\AddShowToCinema\Parser\Crawler;
-use CinemaBot\Domain\AddShowToCinema\Notifier\NotifierSystem;
-use CinemaBot\Domain\AddShowToCinema\Notifier\TelegramNotifier;
+use CinemaBot\Domain\SendNotifications\NotifierSystem;
+use CinemaBot\Domain\SendNotifications\TelegramNotifier;
 use CinemaBot\Domain\AddShowToCinema\EventSourcedCinemaRepository as EventSourcedCinemaRepositoryAddShowToCinema;
 use CinemaBot\Domain\CreateCinema\EventSourcedCinemaRepository as EventSourcedCinemaRepositoryCreateCinema;
 use CinemaBot\Domain\AddShowToCinema\Watchlist\PDOWatchlistProjection;
@@ -46,8 +46,8 @@ final class Container
         $pdo = $this->getPDO();
 
         $app = new Application();
-        $app->add(new CrawlCinemaSymfonyCommand($commandBus, $eventBus, new PDOCinemaListProjection($pdo)));
-        $app->add(new CreateCinemaSymfonyCommand($commandBus, $eventBus));
+        $app->add(new CrawlCinemaCLICommand($commandBus, $eventBus, new PDOCinemaListProjection($pdo)));
+        $app->add(new CreateCinemaCLICommand($commandBus, $eventBus));
 
         return $app;
     }
