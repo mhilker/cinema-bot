@@ -48,7 +48,7 @@ final class DOMParser implements Parser
 
                     $dateTime = $startDay;
                     $dateTime = $dateTime->setTimezone(new DateTimeZone('Europe/Berlin'));
-                    $dateTime = $dateTime->add(new DateInterval('P'. $j .'D'));
+                    $dateTime = $dateTime->add(new DateInterval('P' . $j . 'D'));
                     $dateTime = $dateTime->setTime((int) $hours, (int) $minutes);
 
                     $movieTimes[] = MovieTime::from($dateTime);

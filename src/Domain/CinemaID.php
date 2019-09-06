@@ -31,7 +31,6 @@ final class CinemaID implements AggregateID
         $id = vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($bytes), 4));
 
         return new self($id);
-
     }
 
     public function asString(): string
