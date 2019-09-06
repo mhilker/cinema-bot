@@ -27,7 +27,7 @@ final class DirectCommandBus implements CommandBus
     {
         if (method_exists($commandHandler, 'handle') === false) {
             throw new InvalidCommandHandlerException(sprintf(
-                'CommandHandler "%s" must provie "handle" method.',
+                'CommandHandler "%s" must provide "handle" method.',
                 get_class($commandHandler)
             ));
         }
