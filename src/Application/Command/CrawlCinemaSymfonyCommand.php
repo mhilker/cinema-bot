@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
-use CinemaBot\Application\CQRS\EventBus;
+use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Domain\AddShowToCinema\CinemaList\CinemaListProjection;
 use CinemaBot\Domain\AddShowToCinema\CrawlCinemaCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,17 +17,17 @@ final class CrawlCinemaSymfonyCommand extends Command
     /** @var CommandBus */
     private $commandBus;
 
-    /** @var EventBus */
-    private $eventBus;
+    /** @var EventDispatcher */
+    private $eventDispatcher;
 
     /** @var CinemaListProjection */
     private $projection;
 
-    public function __construct(CommandBus $commandBus, EventBus $eventBus, CinemaListProjection $projection)
+    public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher, CinemaListProjection $projection)
     {
         parent::__construct();
         $this->commandBus = $commandBus;
-        $this->eventBus = $eventBus;
+        $this->eventDispatcher = $eventDispatcher;
         $this->projection = $projection;
     }
 
@@ -42,7 +42,7 @@ final class CrawlCinemaSymfonyCommand extends Command
 
         foreach ($cinemaIDs as $cinemaID) {
             $this->commandBus->dispatch(new CrawlCinemaCommand($cinemaID));
-            $this->eventBus->dispatch();
+            $this->eventDispatcher->dispatch();
         }
 
         return null;

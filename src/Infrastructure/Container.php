@@ -27,7 +27,8 @@ use CinemaBot\Domain\Event\TermRemovedEvent;
 use CinemaBot\Domain\AddShowToCinema\Parser\Crawler;
 use CinemaBot\Domain\AddShowToCinema\Notifier\NotifierSystem;
 use CinemaBot\Domain\AddShowToCinema\Notifier\TelegramNotifier;
-use CinemaBot\Domain\AddShowToCinema\EventSourcedCinemaRepository;
+use CinemaBot\Domain\AddShowToCinema\EventSourcedCinemaRepository as EventSourcedCinemaRepositoryAddShowToCinema;
+use CinemaBot\Domain\CreateCinema\EventSourcedCinemaRepository as EventSourcedCinemaRepositoryCreateCinema;
 use CinemaBot\Domain\AddShowToCinema\Watchlist\PDOWatchlistProjection;
 use CinemaBot\Domain\AddShowToCinema\Watchlist\WatchlistProjector;
 use PDO;
@@ -81,13 +82,14 @@ final class Container
         ]);
 
         $eventBus = $this->getEventBus();
-        $repository = new EventSourcedCinemaRepository($eventStore, $eventBus);
+        $repository2 = new EventSourcedCinemaRepositoryCreateCinema($eventStore, $eventBus);
+        $repository1 = new EventSourcedCinemaRepositoryAddShowToCinema($eventStore, $eventBus);
 
         $crawler = new Crawler();
 
         $commandBus = new DirectCommandBus();
-        $commandBus->add(CreateCinemaCommand::class, new CreateCinemaCommandHandler($repository));
-        $commandBus->add(CrawlCinemaCommand::class, new CrawlCinemaCommandHandler($repository, $crawler));
+        $commandBus->add(CreateCinemaCommand::class, new CreateCinemaCommandHandler($repository2));
+        $commandBus->add(CrawlCinemaCommand::class, new CrawlCinemaCommandHandler($repository1, $crawler));
         $commandBus->add(AddTermToWatchlistCommand::class, new AddTermToWatchlistCommandHandler($eventBus));
         $commandBus->add(RemoveFromWatchlistCommand::class, new RemoveFromWatchlistCommandHandler($eventBus));
 
@@ -117,7 +119,7 @@ final class Container
 
         $eventBus = new DirectEventBus();
 
-        $repository = new EventSourcedCinemaRepository($eventStore, $eventBus);
+        $repository = new EventSourcedCinemaRepositoryAddShowToCinema($eventStore, $eventBus);
 
         $eventBus->add(new WatchlistProjector($watchlistProjection));
         $eventBus->add(new NotifierSystem($watchlistProjection, $telegram, $repository));

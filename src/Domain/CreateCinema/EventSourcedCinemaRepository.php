@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\CreateCinema;
 
-use CinemaBot\Application\CQRS\EventBus;
+use CinemaBot\Application\CQRS\EventDispatcher;
+use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\ES\EventStore;
 use CinemaBot\Application\ES\StorableEvents;
 
@@ -13,13 +14,13 @@ final class EventSourcedCinemaRepository implements CinemaRepository
     /** @var EventStore */
     private $eventStore;
 
-    /** @var EventBus */
-    private $eventBus;
+    /** @var EventPublisher */
+    private $eventPublisher;
 
-    public function __construct(EventStore $eventStore, EventBus $eventBus)
+    public function __construct(EventStore $eventStore, EventPublisher $eventPublisher)
     {
         $this->eventStore = $eventStore;
-        $this->eventBus = $eventBus;
+        $this->eventPublisher = $eventPublisher;
     }
 
     public function save(CreateCinemaUseCase $cinema): void
@@ -29,6 +30,6 @@ final class EventSourcedCinemaRepository implements CinemaRepository
         $storableEvents = StorableEvents::from($events);
         $this->eventStore->save($storableEvents);
 
-        $this->eventBus->publish($events);
+        $this->eventPublisher->publish($events);
     }
 }

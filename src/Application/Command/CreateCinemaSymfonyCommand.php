@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
-use CinemaBot\Application\CQRS\EventBus;
+use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\CreateCinema\CreateCinemaCommand;
 use CinemaBot\Domain\URL;
@@ -19,14 +19,14 @@ final class CreateCinemaSymfonyCommand extends Command
     /** @var CommandBus */
     private $commandBus;
 
-    /** @var EventBus */
-    private $eventBus;
+    /** @var EventDispatcher */
+    private $eventDispatcher;
 
-    public function __construct(CommandBus $commandBus, EventBus $eventBus)
+    public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher)
     {
         parent::__construct();
         $this->commandBus = $commandBus;
-        $this->eventBus = $eventBus;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     protected function configure(): void
@@ -41,7 +41,7 @@ final class CreateCinemaSymfonyCommand extends Command
         $url = URL::from($input->getOption('url'));
 
         $this->commandBus->dispatch(new CreateCinemaCommand($id, $url));
-        $this->eventBus->dispatch();
+        $this->eventDispatcher->dispatch();
 
         return null;
     }

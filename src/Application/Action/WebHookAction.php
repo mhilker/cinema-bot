@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Application\Action;
 
 use CinemaBot\Application\CQRS\CommandBus;
-use CinemaBot\Application\CQRS\EventBus;
+use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Infrastructure\Bot;
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommand;
@@ -21,16 +21,16 @@ final class WebHookAction
     /** @var CommandBus */
     private $commandBus;
 
-    /** @var EventBus */
-    private $eventBus;
+    /** @var EventDispatcher */
+    private $eventDispatcher;
 
     /** @var WatchlistProjection */
     private $projection;
 
-    public function __construct(CommandBus $commandBus, EventBus $eventBus, WatchlistProjection $projection)
+    public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher, WatchlistProjection $projection)
     {
         $this->commandBus = $commandBus;
-        $this->eventBus = $eventBus;
+        $this->eventDispatcher = $eventDispatcher;
         $this->projection = $projection;
     }
 
@@ -68,13 +68,13 @@ final class WebHookAction
             case 'add':
                 $term = Term::from($matches[3] ?? '');
                 $this->commandBus->dispatch(new AddTermToWatchlistCommand($term));
-                $this->eventBus->dispatch();
+                $this->eventDispatcher->dispatch();
                 $bot->addTermToWatchlist($chatId, $term);
                 break;
             case 'remove':
                 $term = Term::from($matches[3] ?? '');
                 $this->commandBus->dispatch(new RemoveFromWatchlistCommand($term));
-                $this->eventBus->dispatch();
+                $this->eventDispatcher->dispatch();
                 $bot->removeTermFromWatchlist($chatId, $term);
                 break;
         }

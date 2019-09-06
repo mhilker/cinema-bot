@@ -6,7 +6,7 @@ namespace CinemaBot\Application\CQRS;
 
 use SplQueue;
 
-final class DirectEventBus implements EventBus
+final class DirectEventBus implements EventPublisher, EventDispatcher
 {
     /** @var EventListener[] */
     private $eventListeners = [];

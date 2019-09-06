@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\AddTerm;
 
 use CinemaBot\Application\CQRS\CommandHandler;
-use CinemaBot\Application\CQRS\EventBus;
+use CinemaBot\Application\CQRS\EventDispatcher;
+use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Event\TermAddedEvent;
 
 final class AddTermToWatchlistCommandHandler implements CommandHandler
 {
-    /** @var EventBus */
-    private $eventBus;
+    /** @var EventPublisher */
+    private $eventPublisher;
 
-    public function __construct(EventBus $eventBus)
+    public function __construct(EventPublisher $eventPublisher)
     {
-        $this->eventBus = $eventBus;
+        $this->eventPublisher = $eventPublisher;
     }
 
     public function handle(AddTermToWatchlistCommand $command): void
@@ -25,6 +26,6 @@ final class AddTermToWatchlistCommandHandler implements CommandHandler
             new TermAddedEvent($command->getTerm()),
         ]);
 
-        $this->eventBus->publish($events);
+        $this->eventPublisher->publish($events);
     }
 }
