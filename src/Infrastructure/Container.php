@@ -7,6 +7,7 @@ namespace CinemaBot\Infrastructure;
 use CinemaBot\Application\Action\WebHookAction;
 use CinemaBot\Application\Command\CrawlCinemaCLICommand;
 use CinemaBot\Application\Command\CreateCinemaCLICommand;
+use CinemaBot\Application\Command\SendNotificationCLICommand;
 use CinemaBot\Application\CQRS\DirectCommandBus;
 use CinemaBot\Application\CQRS\DirectEventBus;
 use CinemaBot\Application\ES\PDOEventStore;
@@ -48,6 +49,7 @@ final class Container
         $app = new Application();
         $app->add(new CrawlCinemaCLICommand($commandBus, $eventBus, new PDOCinemaListProjection($pdo)));
         $app->add(new CreateCinemaCLICommand($commandBus, $eventBus));
+        $app->add(new SendNotificationCLICommand());
 
         return $app;
     }

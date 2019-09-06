@@ -11,9 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendNotificationCLICommand extends Command
 {
-    /** @var CommandBus */
-    private $commandBus;
-
     public function __construct()
     {
         parent::__construct();
