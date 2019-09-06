@@ -11,7 +11,7 @@ use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\URL;
 
-class CreateCinemaUseCase extends AbstractAggregate
+final class CreateCinemaUseCase extends AbstractAggregate
 {
     /** @var CinemaID */
     private $id;
