@@ -25,6 +25,6 @@ final class RemoveFromWatchlistCommandHandler implements CommandHandler
             new TermRemovedEvent($command->getTerm()),
         ]);
 
-        $this->eventBus->dispatch($events);
+        $this->eventBus->publish($events);
     }
 }

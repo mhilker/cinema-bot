@@ -9,7 +9,7 @@ final class ExistingFile
     /** @var string */
     private $value;
 
-    public function __construct(string $value)
+    private function __construct(string $value)
     {
         if (file_exists($value) === false) {
             throw new FileMissingException(sprintf('File "%s" does not exist.', $value));

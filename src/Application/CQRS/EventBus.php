@@ -6,5 +6,7 @@ namespace CinemaBot\Application\CQRS;
 
 interface EventBus
 {
-    public function dispatch(Events $events): void;
+    public function publish(Events $events): void;
+
+    public function dispatch(): void;
 }

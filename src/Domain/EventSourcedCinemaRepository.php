@@ -39,6 +39,6 @@ final class EventSourcedCinemaRepository implements CinemaRepository
         $storableEvents = StorableEvents::from($events);
         $this->eventStore->save($storableEvents);
 
-        $this->eventBus->dispatch($events);
+        $this->eventBus->publish($events);
     }
 }

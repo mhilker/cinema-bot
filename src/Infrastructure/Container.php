@@ -40,12 +40,13 @@ final class Container
     public function getCLIApp(): Application
     {
         $commandBus = $this->getCommandBus();
+        $eventBus = $this->getEventBus();
 
         $pdo = $this->getPDO();
 
         $app = new Application();
-        $app->add(new CrawlCinemaSymfonyCommand($commandBus, new PDOCinemaListProjection($pdo)));
-        $app->add(new CreateCinemaSymfonyCommand($commandBus));
+        $app->add(new CrawlCinemaSymfonyCommand($commandBus, $eventBus, new PDOCinemaListProjection($pdo)));
+        $app->add(new CreateCinemaSymfonyCommand($commandBus, $eventBus));
 
         return $app;
     }
@@ -55,6 +56,7 @@ final class Container
         $pdo        = $this->getPDO();
         $projection = new PDOWatchlistProjection($pdo);
         $commandBus = $this->getCommandBus();
+        $eventBus   = $this->getEventBus();
 
         $config = [
             'settings' => [
@@ -63,7 +65,7 @@ final class Container
         ];
 
         $app = new App($config);
-        $app->post('/webhook/telegram', new WebHookAction($commandBus, $projection));
+        $app->post('/webhook/telegram', new WebHookAction($commandBus, $eventBus, $projection));
         return $app;
     }
 

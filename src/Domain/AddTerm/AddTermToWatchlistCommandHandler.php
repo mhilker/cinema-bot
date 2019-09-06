@@ -25,6 +25,6 @@ final class AddTermToWatchlistCommandHandler implements CommandHandler
             new TermAddedEvent($command->getTerm()),
         ]);
 
-        $this->eventBus->dispatch($events);
+        $this->eventBus->publish($events);
     }
 }
