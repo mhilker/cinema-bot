@@ -16,9 +16,9 @@ final class Version20190526165842 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $events = $schema->createTable('cinema_list');
-        $events->addColumn('cinema_id', 'string', ['length' => 36, 'fixed' => true,]);
-        $events->setPrimaryKey(['cinema_id']);
+        $cinemaList = $schema->createTable('cinema_list');
+        $cinemaList->addColumn('cinema_id', 'string', ['length' => 36, 'fixed' => true,]);
+        $cinemaList->setPrimaryKey(['cinema_id']);
     }
 
     public function down(Schema $schema): void

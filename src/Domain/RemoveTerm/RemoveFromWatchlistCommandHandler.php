@@ -23,7 +23,7 @@ final class RemoveFromWatchlistCommandHandler implements CommandHandler
     public function handle(RemoveFromWatchlistCommand $command): void
     {
         $events = Events::from([
-            new TermRemovedEvent($command->getTerm()),
+            new TermRemovedEvent($command->getGroupID(), $command->getTerm()),
         ]);
 
         $this->eventPublisher->publish($events);

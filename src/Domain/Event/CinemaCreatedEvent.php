@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\Event;
 
+use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\ES\StorableEvent;
-use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\URL;
 
@@ -15,23 +15,23 @@ final class CinemaCreatedEvent implements Event, StorableEvent
     public const TOPIC = 'cinema_bot.cinema.cinema_created';
 
     /** @var CinemaID */
-    private $id;
+    private $cinemaID;
 
     /** @var URL */
     private $url;
 
-    public function __construct(CinemaID $id, URL $url)
+    public function __construct(CinemaID $cinemaID, URL $url)
     {
-        $this->id = $id;
+        $this->cinemaID = $cinemaID;
         $this->url = $url;
     }
 
-    public function getID(): CinemaID
+    public function getCinemaID(): CinemaID
     {
-        return $this->id;
+        return $this->cinemaID;
     }
 
-    public function getURL(): URL
+    public function getCinemaURL(): URL
     {
         return $this->url;
     }
@@ -43,7 +43,7 @@ final class CinemaCreatedEvent implements Event, StorableEvent
 
     public function getAggregateID(): AggregateID
     {
-        return $this->id;
+        return $this->cinemaID;
     }
 
     public static function fromJSON(string $json): StorableEvent
@@ -59,7 +59,7 @@ final class CinemaCreatedEvent implements Event, StorableEvent
     public function asJSON(): string
     {
         return json_encode([
-            'id'  => $this->id->asString(),
+            'id'  => $this->cinemaID->asString(),
             'url' => $this->url->asString(),
         ]);
     }

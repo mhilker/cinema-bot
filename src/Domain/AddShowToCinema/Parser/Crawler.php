@@ -13,21 +13,21 @@ final class Crawler
     public function crawl(URL $url): Movies
     {
         $downloader = new CopyDownloader();
-        $fileName = $downloader->download($url);
+        $response = $downloader->download($url);
 
         $weekParser = new WeekParser();
-        $parsedURLs = $weekParser->parse($fileName);
+        $parsedURLs = $weekParser->parse($response);
 
-        $fileNames = [];
+        $responses = [];
         foreach ($parsedURLs as $parsedURL) {
-            $fileNames[] = $downloader->download($parsedURL);
+            $responses[] = $downloader->download($parsedURL);
         }
 
         $movieList = [];
 
         $parser = new DOMParser();
-        foreach ($fileNames as $fileName) {
-            $movies = $parser->parse($fileName);
+        foreach ($responses as $response) {
+            $movies = $parser->parse($response);
             foreach ($movies as $movie) {
                 $movieList[] = $movie;
             }

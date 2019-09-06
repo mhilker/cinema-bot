@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema\CinemaList;
+namespace CinemaBot\Domain\CinemaList;
 
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\CinemaIDs;
@@ -20,12 +20,7 @@ final class PDOCinemaListProjection implements CinemaListProjection
 
     public function load(): CinemaIDs
     {
-        $sql = <<< SQL
-        SELECT
-            `cinema_id`
-        FROM
-            `cinema_list`;
-        SQL;
+        $sql = 'SELECT `cinema_id` FROM `cinema_list`;';
 
         $statement = $this->pdo->query($sql);
 
@@ -40,12 +35,7 @@ final class PDOCinemaListProjection implements CinemaListProjection
 
     public function insert(CinemaID $id): void
     {
-        $sql = <<< SQL
-        INSERT INTO 
-            `cinema_list` (`cinema_id`)
-        VALUES
-            (:cinema_id);
-        SQL;
+        $sql = 'INSERT INTO `cinema_list` (`cinema_id`) VALUES (:cinema_id);';
 
         $statement = $this->pdo->prepare($sql);
         $statement->execute([

@@ -6,6 +6,8 @@ namespace CinemaBot;
 
 use CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader;
 use CinemaBot\Domain\URL;
+use DOMDocument;
+use DOMXPath;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,9 +20,19 @@ class DownloaderTest extends TestCase
         $url = URL::from('https://example.com');
 
         $downloader = new CopyDownloader();
-        $fileName = $downloader->download($url);
+        $content = $downloader->download($url);
 
-        $this->assertFileExists($fileName->asString());
-        $this->assertStringStartsWith('/tmp/cinema-bot-', $fileName->asString());
+        $expected = new DOMDocument();
+        $expected->loadHTMLFile(__DIR__ . '/_files/expected-download-response.html');
+        $expectedXpath = new DOMXPath($expected);
+
+        $actual = new DOMDocument();
+        $actual->loadHTML($content);
+        $actualXpath = new DOMXPath($actual);
+
+        $this->assertEquals(
+            $expectedXpath->evaluate('/html/body/div/h1'),
+            $actualXpath->evaluate('/html/body/div/h1'),
+        );
     }
 }

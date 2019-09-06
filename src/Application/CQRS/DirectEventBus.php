@@ -14,6 +14,11 @@ final class DirectEventBus implements EventPublisher, EventDispatcher
     /** @var SplQueue */
     private $events;
 
+    public function __construct()
+    {
+        $this->events = new SplQueue();
+    }
+
     public function publish(Events $events): void
     {
         $this->events->enqueue($events);

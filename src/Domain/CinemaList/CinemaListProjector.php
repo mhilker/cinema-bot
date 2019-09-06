@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema\CinemaList;
+namespace CinemaBot\Domain\CinemaList;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;
@@ -35,6 +35,6 @@ final class CinemaListProjector implements EventListener
 
     private function handleCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {
-        $this->projection->insert($event->getID());
+        $this->projection->insert($event->getCinemaID());
     }
 }

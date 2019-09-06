@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema\Watchlist;
+namespace CinemaBot\Domain\Watchlist;
 
+use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\Term;
+use CinemaBot\Domain\Terms;
 use PDO;
 
 final class PDOWatchlistProjection implements WatchlistProjection
@@ -31,23 +34,25 @@ final class PDOWatchlistProjection implements WatchlistProjection
         return Terms::from($terms);
     }
 
-    public function add(Term $term): void
+    public function add(GroupID $groupID, Term $term): void
     {
-        $sql = 'INSERT INTO `watchlist` (`term`) VALUES (:term);';
+        $sql = 'INSERT INTO `watchlist` (`group_id`, `term`) VALUES (:group_id, :term);';
 
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
-            'term' => $term->asString(),
+            'group_id' => $groupID->asString(),
+            'term'     => $term->asString(),
         ]);
     }
 
-    public function remove(Term $term): void
+    public function remove(GroupID $groupID, Term $term): void
     {
-        $sql = 'DELETE FROM `watchlist` WHERE term = :term;';
+        $sql = 'DELETE FROM `watchlist` WHERE `group_id` = :group_id AND `term` = :term;';
 
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
-            'term' => $term->asString(),
+            'group_id' => $groupID->asString(),
+            'term'     => $term->asString(),
         ]);
     }
 }

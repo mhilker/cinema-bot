@@ -20,7 +20,7 @@ final class CinemaIDs implements IteratorAggregate
         }
     }
 
-    public static function from(iterable $values): CinemaIDs
+    public static function from(iterable $values): self
     {
         return new self($values);
     }

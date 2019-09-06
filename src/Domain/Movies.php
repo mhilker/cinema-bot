@@ -21,7 +21,7 @@ final class Movies implements IteratorAggregate, Countable
         }
     }
 
-    public static function from(iterable $movies): Movies
+    public static function from(iterable $movies): self
     {
         return new self($movies);
     }
@@ -31,7 +31,7 @@ final class Movies implements IteratorAggregate, Countable
         $this->movies[] = $movie;
     }
 
-    public function filter(callable $callable): Movies
+    public function filter(callable $callable): self
     {
         return self::from(array_filter($this->movies, $callable));
     }

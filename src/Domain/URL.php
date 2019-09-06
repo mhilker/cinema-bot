@@ -14,7 +14,7 @@ final class URL
         $this->value = $value;
     }
 
-    public static function from(string $value): URL
+    public static function from(string $value): self
     {
         return new self($value);
     }

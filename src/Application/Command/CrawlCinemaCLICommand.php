@@ -6,7 +6,7 @@ namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
-use CinemaBot\Domain\AddShowToCinema\CinemaList\CinemaListProjection;
+use CinemaBot\Domain\CinemaList\CinemaListProjection;
 use CinemaBot\Domain\AddShowToCinema\CrawlCinemaCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -42,8 +42,8 @@ final class CrawlCinemaCLICommand extends Command
 
         foreach ($cinemaIDs as $cinemaID) {
             $this->commandBus->dispatch(new CrawlCinemaCommand($cinemaID));
-            $this->eventDispatcher->dispatch();
         }
+        $this->eventDispatcher->dispatch();
 
         return null;
     }

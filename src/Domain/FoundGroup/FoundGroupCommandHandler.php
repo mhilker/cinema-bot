@@ -22,7 +22,7 @@ final class FoundGroupCommandHandler implements CommandHandler
     public function handle(FoundGroupCommand $command): void
     {
         $events = Events::from([
-            new GroupFoundedEvent($command->getGroupID()),
+            new GroupFoundedEvent($command->getGroupID(), $command->getChatID()),
         ]);
 
         $this->eventPublisher->publish($events);

@@ -9,6 +9,7 @@ use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
 use CinemaBot\Domain\MovieTimes;
+use CinemaBot\Domain\SendNotifications\MarkdownNotificationFormatter;
 use CinemaBot\Domain\SendNotifications\TelegramNotifier;
 use DateTimeImmutable;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -52,7 +53,7 @@ class NotifierTest extends TestCase
         $telegram = $this->createMock(BotApi::class);
         $telegram->expects($this->once())->method('sendMessage')->with($chatID->asString(), $message, 'markdown');
 
-        $notifier = new TelegramNotifier($telegram);
+        $notifier = new TelegramNotifier($telegram, new MarkdownNotificationFormatter());
         $notifier->send($movie, $chatID);
     }
 }

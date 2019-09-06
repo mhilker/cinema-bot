@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Application\Action;
+namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
-use CinemaBot\Infrastructure\Bot;
-use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommand;
+use CinemaBot\Domain\ChatID;
+use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
 use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommand;
-use CinemaBot\Domain\AddShowToCinema\Watchlist\Term;
-use CinemaBot\Domain\AddShowToCinema\Watchlist\WatchlistProjection;
+use CinemaBot\Domain\Term;
+use CinemaBot\Domain\Watchlist\WatchlistProjection;
+use CinemaBot\Infrastructure\Bot;
+use CinemaBot\Infrastructure\TelegramToken;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TelegramBot\Api\BotApi;
@@ -27,22 +29,20 @@ final class WebHookAction
     /** @var WatchlistProjection */
     private $projection;
 
-    public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher, WatchlistProjection $projection)
+    /** @var ChatGroupProjection */
+    private $chatGroupProjection;
+
+    public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher, WatchlistProjection $projection, ChatGroupProjection $chatGroupProjection)
     {
         $this->commandBus = $commandBus;
         $this->eventDispatcher = $eventDispatcher;
         $this->projection = $projection;
+        $this->chatGroupProjection = $chatGroupProjection;
     }
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $file = getenv('TELEGRAM_TOKEN_FILE');
-
-        if ($file === false) {
-            $token = getenv('TELEGRAM_TOKEN');
-        } else {
-            $token = file_get_contents($file);
-        }
+        $token = TelegramToken::get();
 
         $body = $request->getParsedBody();
         $text = $body['message']['text'];
@@ -67,13 +67,15 @@ final class WebHookAction
                 break;
             case 'add':
                 $term = Term::from($matches[3] ?? '');
-                $this->commandBus->dispatch(new AddTermToWatchlistCommand($term));
+                $groupID = $this->chatGroupProjection->loadGroupIDByChatID($chatId);
+                $this->commandBus->dispatch(new AddTermToWatchlistCommand($groupID, $term));
                 $this->eventDispatcher->dispatch();
                 $bot->addTermToWatchlist($chatId, $term);
                 break;
             case 'remove':
                 $term = Term::from($matches[3] ?? '');
-                $this->commandBus->dispatch(new RemoveFromWatchlistCommand($term));
+                $groupID = $this->chatGroupProjection->loadGroupIDByChatID($chatId);
+                $this->commandBus->dispatch(new RemoveFromWatchlistCommand($groupID, $term));
                 $this->eventDispatcher->dispatch();
                 $bot->removeTermFromWatchlist($chatId, $term);
                 break;

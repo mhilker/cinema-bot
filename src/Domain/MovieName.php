@@ -14,7 +14,7 @@ final class MovieName
         $this->value = $value;
     }
 
-    public static function from(string $value): MovieName
+    public static function from(string $value): self
     {
         return new self($value);
     }

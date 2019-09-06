@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\AddShowToCinema\Parser;
 
-use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\URL;
 use CinemaBot\Domain\URLs;
 use DOMDocument;
@@ -12,10 +11,10 @@ use DOMXPath;
 
 final class WeekParser
 {
-    public function parse(ExistingFile $fileName): URLs
+    public function parse(string $content): URLs
     {
         $document = new DOMDocument();
-        @$document->loadHTMLFile($fileName->asString());
+        @$document->loadHTML($content);
         $xpath = new DOMXPath($document);
 
         $urls = [];

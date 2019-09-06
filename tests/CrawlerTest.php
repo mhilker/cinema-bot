@@ -15,6 +15,7 @@ class CrawlerTest extends TestCase
 {
     public function test(): void
     {
+        $this->markTestIncomplete();
         $url = URL::from('https://example.com/');
 
         $crawler = new Crawler();

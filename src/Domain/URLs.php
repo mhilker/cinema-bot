@@ -20,7 +20,7 @@ final class URLs implements IteratorAggregate
         }
     }
 
-    public static function from(iterable $values): URLs
+    public static function from(iterable $values): self
     {
         return new self($values);
     }

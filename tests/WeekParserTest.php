@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CinemaBot;
 
 use CinemaBot\Domain\AddShowToCinema\Parser\WeekParser;
-use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\URL;
 use CinemaBot\Domain\URLs;
 use PHPUnit\Framework\TestCase;
@@ -15,12 +14,12 @@ use PHPUnit\Framework\TestCase;
  */
 class WeekParserTest extends TestCase
 {
-    public function testParsesUrlsFromHTML(): void
+    public function testParsesUrlsFromHtml(): void
     {
-        $file = ExistingFile::from(__DIR__ . '/_files/kinoprogramm.html');
+        $content = file_get_contents(__DIR__ . '/_files/kinoprogramm.html');
 
         $parser = new WeekParser();
-        $urls = $parser->parse($file);
+        $urls = $parser->parse($content);
 
         $expectedUrls = URLs::from([
             URL::from('https://www.cinemotion-kino.de/hameln/kinoprogramm'),

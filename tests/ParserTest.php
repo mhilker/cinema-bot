@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot;
 
-use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Movies;
@@ -23,13 +22,13 @@ class ParserTest extends TestCase
     /**
      * @dataProvider provider
      *
-     * @param ExistingFile $file
+     * @param string $html
      * @param Movies $expectedMovies
      */
-    public function testExtractsTimesForMovieFromHTML(ExistingFile $file, Movies $expectedMovies): void
+    public function testExtractsTimesForMovieFromHtml(string $html, Movies $expectedMovies): void
     {
         $parser = new DOMParser();
-        $movies = $parser->parse($file);
+        $movies = $parser->parse($html);
 
         $this->assertEquals($expectedMovies, $movies);
     }
@@ -37,7 +36,7 @@ class ParserTest extends TestCase
     public function provider(): Generator
     {
         yield [
-            'file' => ExistingFile::from(__DIR__ . '/_files/kinoprogramm.html'),
+            'file' => file_get_contents(__DIR__ . '/_files/kinoprogramm.html'),
             'movies' => Movies::from([
                 Movie::from(
                     MovieName::from('Asbury Park: Riot, Redemption, Rock N Roll'),
@@ -116,7 +115,7 @@ class ParserTest extends TestCase
         ];
 
         yield [
-            'file' => ExistingFile::from(__DIR__ . '/_files/kinoprogramm-week-ahead.html'),
+            'file' => file_get_contents(__DIR__ . '/_files/kinoprogramm-week-ahead.html'),
             'movies' => Movies::from([
                 Movie::from(
                     MovieName::from('(3D) Godzilla 2: King of the Monsters'),

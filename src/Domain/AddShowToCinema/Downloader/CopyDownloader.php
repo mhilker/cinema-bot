@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\AddShowToCinema\Downloader;
 
-use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\URL;
 
 final class CopyDownloader implements Downloader
 {
-    public function download(URL $url): ExistingFile
+    public function download(URL $url): string
     {
-        $fileName = tempnam('/tmp/', 'cinema-bot-');
-
-        copy($url->asString(), $fileName);
-
-        return ExistingFile::from($fileName);
+        return file_get_contents($url->asString());
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\CreateCinema;
 
-use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\ES\EventStore;
 use CinemaBot\Application\ES\StorableEvents;

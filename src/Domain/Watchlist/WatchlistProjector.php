@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema\Watchlist;
+namespace CinemaBot\Domain\Watchlist;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;
@@ -39,11 +39,11 @@ final class WatchlistProjector implements EventListener
 
     private function handleTermAddedEvent(TermAddedEvent $event): void
     {
-        $this->projection->add($event->getTerm());
+        $this->projection->add($event->getGroupID(), $event->getTerm());
     }
 
     private function handleTermRemovedEvent(TermRemovedEvent $event): void
     {
-        $this->projection->remove($event->getTerm());
+        $this->projection->remove($event->getGroupID(), $event->getTerm());
     }
 }

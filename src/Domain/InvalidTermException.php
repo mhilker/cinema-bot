@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema\Watchlist;
+namespace CinemaBot\Domain;
 
 use Exception;
 

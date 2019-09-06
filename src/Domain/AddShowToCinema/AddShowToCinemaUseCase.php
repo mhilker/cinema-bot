@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\AddShowToCinema;
 
-use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\Aggregate\AbstractAggregate;
-use CinemaBot\Application\Aggregate\AggregateID;
+use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
@@ -18,15 +17,12 @@ final class AddShowToCinemaUseCase extends AbstractAggregate
     /** @var CinemaID */
     private $id;
 
-    /** @var MovieName[] */
-    private $movies = [];
-
     /** @var array<string, array<string, MovieTime>> */
     private $calendar = [];
 
     private function applyCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {
-        $this->id = $event->getID();
+        $this->id = $event->getCinemaID();
     }
 
     public function addShow(MovieName $name, MovieTime $time): void
@@ -38,10 +34,9 @@ final class AddShowToCinemaUseCase extends AbstractAggregate
 
     private function applyShowAddedEvent(ShowAddedEvent $event): void
     {
-        $name = $event->getName();
-        $time = $event->getTime();
+        $name = $event->getMovieName();
+        $time = $event->getMovieTime();
 
-        $this->movies[$name->asString()] = $name;
         $this->calendar[$name->asString()][$time->asString()] = $time;
     }
 
@@ -53,10 +48,5 @@ final class AddShowToCinemaUseCase extends AbstractAggregate
         if ($event instanceof ShowAddedEvent) {
             $this->applyShowAddedEvent($event);
         }
-    }
-
-    public function getAggregateId(): AggregateID
-    {
-        return $this->id;
     }
 }

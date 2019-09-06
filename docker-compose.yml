@@ -20,7 +20,6 @@ services:
       context: .
       dockerfile: docker/webhook/Dockerfile
     environment:
-      - TELEGRAM_CHAT_ID=-377228860
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_HOST=db
       - DB_PORT=3306
@@ -39,9 +38,25 @@ services:
     build:
       context: .
       dockerfile: docker/crawler/Dockerfile
-    command: php /app/bin/crawler.php
     environment:
-      - TELEGRAM_CHAT_ID=-377228860
+      - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=cinema_bot
+      - DB_NAME=cinema_bot
+      - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
+    volumes:
+      - .:/app/
+    secrets:
+      - cinema-bot-db-user-password
+      - cinema-bot-telegram-token
+
+  notifier:
+    image: mhilker/private:cinema-bot-notifier
+    build:
+      context: .
+      dockerfile: docker/notifier/Dockerfile
+    environment:
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_HOST=db
       - DB_PORT=3306

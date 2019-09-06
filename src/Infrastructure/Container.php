@@ -4,34 +4,41 @@ declare(strict_types=1);
 
 namespace CinemaBot\Infrastructure;
 
-use CinemaBot\Application\Action\WebHookAction;
 use CinemaBot\Application\Command\CrawlCinemaCLICommand;
 use CinemaBot\Application\Command\CreateCinemaCLICommand;
+use CinemaBot\Application\Command\FoundGroupCLICommand;
 use CinemaBot\Application\Command\SendNotificationCLICommand;
+use CinemaBot\Application\Command\WebHookAction;
 use CinemaBot\Application\CQRS\DirectCommandBus;
 use CinemaBot\Application\CQRS\DirectEventBus;
 use CinemaBot\Application\ES\PDOEventStore;
-use CinemaBot\Domain\AddShowToCinema\CinemaList\CinemaListProjector;
-use CinemaBot\Domain\AddShowToCinema\CinemaList\PDOCinemaListProjection;
-use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommand;
+use CinemaBot\Domain\CinemaList\CinemaListProjector;
+use CinemaBot\Domain\CinemaList\PDOCinemaListProjection;
 use CinemaBot\Domain\AddShowToCinema\CrawlCinemaCommand;
-use CinemaBot\Domain\CreateCinema\CreateCinemaCommand;
-use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommand;
-use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommandHandler;
 use CinemaBot\Domain\AddShowToCinema\CrawlCinemaCommandHandler;
+use CinemaBot\Domain\AddShowToCinema\EventSourcedCinemaRepository as EventSourcedCinemaRepositoryAddShowToCinema;
+use CinemaBot\Domain\AddShowToCinema\Parser\Crawler;
+use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommand;
+use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommandHandler;
+use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjector;
+use CinemaBot\Domain\ChatIDToGroupIDMap\MySQLChatGroupProjection;
+use CinemaBot\Domain\CreateCinema\CreateCinemaCommand;
 use CinemaBot\Domain\CreateCinema\CreateCinemaCommandHandler;
-use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommandHandler;
+use CinemaBot\Domain\CreateCinema\EventSourcedCinemaRepository as EventSourcedCinemaRepositoryCreateCinema;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
 use CinemaBot\Domain\Event\TermAddedEvent;
 use CinemaBot\Domain\Event\TermRemovedEvent;
-use CinemaBot\Domain\AddShowToCinema\Parser\Crawler;
+use CinemaBot\Domain\FoundGroup\FoundGroupCommand;
+use CinemaBot\Domain\FoundGroup\FoundGroupCommandHandler;
+use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommand;
+use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommandHandler;
+use CinemaBot\Domain\SendNotifications\MarkdownNotificationFormatter;
 use CinemaBot\Domain\SendNotifications\NotifierSystem;
 use CinemaBot\Domain\SendNotifications\TelegramNotifier;
-use CinemaBot\Domain\AddShowToCinema\EventSourcedCinemaRepository as EventSourcedCinemaRepositoryAddShowToCinema;
-use CinemaBot\Domain\CreateCinema\EventSourcedCinemaRepository as EventSourcedCinemaRepositoryCreateCinema;
-use CinemaBot\Domain\AddShowToCinema\Watchlist\PDOWatchlistProjection;
-use CinemaBot\Domain\AddShowToCinema\Watchlist\WatchlistProjector;
+use CinemaBot\Domain\Watchlist\PDOWatchlistProjection;
+use CinemaBot\Domain\Watchlist\WatchlistProjector;
+use mysqli;
 use PDO;
 use Slim\App;
 use Symfony\Component\Console\Application;
@@ -39,6 +46,9 @@ use TelegramBot\Api\BotApi;
 
 final class Container
 {
+    /** @var DirectEventBus */
+    private $eventBus;
+
     public function getCLIApp(): Application
     {
         $commandBus = $this->getCommandBus();
@@ -46,18 +56,29 @@ final class Container
 
         $pdo = $this->getPDO();
 
+        $token    = TelegramToken::get();
+        $botApi   = new BotApi($token);
+        $telegram = new TelegramNotifier($botApi, new MarkdownNotificationFormatter());
+
+        $notifierSystem = new NotifierSystem(new PDOWatchlistProjection($pdo), $telegram);
+
         $app = new Application();
         $app->add(new CrawlCinemaCLICommand($commandBus, $eventBus, new PDOCinemaListProjection($pdo)));
         $app->add(new CreateCinemaCLICommand($commandBus, $eventBus));
-        $app->add(new SendNotificationCLICommand());
+        $app->add(new SendNotificationCLICommand($notifierSystem));
+        $app->add(new FoundGroupCLICommand($commandBus, $eventBus));
 
         return $app;
     }
 
     public function getWebApp(): App
     {
-        $pdo        = $this->getPDO();
-        $projection = new PDOWatchlistProjection($pdo);
+        $pdo   = $this->getPDO();
+        $mysql = $this->getMySQL();
+
+        $watchlistProjection = new PDOWatchlistProjection($pdo);
+        $chatGroupProjection = new MySQLChatGroupProjection($mysql);
+
         $commandBus = $this->getCommandBus();
         $eventBus   = $this->getEventBus();
 
@@ -68,7 +89,7 @@ final class Container
         ];
 
         $app = new App($config);
-        $app->post('/webhook/telegram', new WebHookAction($commandBus, $eventBus, $projection));
+        $app->post('/webhook/telegram', new WebHookAction($commandBus, $eventBus, $watchlistProjection, $chatGroupProjection));
         return $app;
     }
 
@@ -94,40 +115,30 @@ final class Container
         $commandBus->add(CrawlCinemaCommand::class, new CrawlCinemaCommandHandler($repository1, $crawler));
         $commandBus->add(AddTermToWatchlistCommand::class, new AddTermToWatchlistCommandHandler($eventBus));
         $commandBus->add(RemoveFromWatchlistCommand::class, new RemoveFromWatchlistCommandHandler($eventBus));
+        $commandBus->add(FoundGroupCommand::class, new FoundGroupCommandHandler($eventBus));
 
         return $commandBus;
     }
 
     public function getEventBus(): DirectEventBus
     {
+        if ($this->eventBus !== null) {
+            return $this->eventBus;
+        }
+
         $pdo = $this->getPDO();
+        $mysql = $this->getMySQL();
 
         $watchlistProjection = new PDOWatchlistProjection($pdo);
-
-        $token      = $this->getTelegramToken();
-        $botApi     = new BotApi($token);
-        $telegram   = new TelegramNotifier($botApi);
-
         $cinemaListProjection = new PDOCinemaListProjection($pdo);
-
-        $pdo = $this->getPDO();
-
-        $eventStore = new PDOEventStore($pdo, [
-            CinemaCreatedEvent::TOPIC => CinemaCreatedEvent::class,
-            ShowAddedEvent::TOPIC     => ShowAddedEvent::class,
-            TermAddedEvent::TOPIC     => TermAddedEvent::class,
-            TermRemovedEvent::TOPIC   => TermRemovedEvent::class,
-        ]);
+        $chatGroupProjection = new MySQLChatGroupProjection($mysql);
 
         $eventBus = new DirectEventBus();
-
-        $repository = new EventSourcedCinemaRepositoryAddShowToCinema($eventStore, $eventBus);
-
         $eventBus->add(new WatchlistProjector($watchlistProjection));
-        $eventBus->add(new NotifierSystem($watchlistProjection, $telegram, $repository));
         $eventBus->add(new CinemaListProjector($cinemaListProjection));
+        $eventBus->add(new ChatGroupProjector($chatGroupProjection));
 
-        return $eventBus;
+        return $this->eventBus = $eventBus;
     }
 
     public function getPDO(): PDO
@@ -143,19 +154,6 @@ final class Container
         ]);
     }
 
-    public function getTelegramToken(): string
-    {
-        $file = getenv('TELEGRAM_TOKEN_FILE');
-
-        if ($file === false) {
-            $token = getenv('TELEGRAM_TOKEN');
-        } else {
-            $token = file_get_contents($file);
-        }
-
-        return $token;
-    }
-
     private function getDBPassword(): string
     {
         $file = getenv('DB_PASSWORD_FILE');
@@ -167,5 +165,15 @@ final class Container
         }
 
         return $token;
+    }
+
+    private function getMySQL(): mysqli
+    {
+        return new mysqli(
+            getenv('DB_HOST'),
+            getenv('DB_USER'),
+            $this->getDBPassword(),
+            getenv('DB_NAME'),
+        );
     }
 }

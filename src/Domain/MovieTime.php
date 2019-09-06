@@ -16,14 +16,15 @@ final class MovieTime
         $this->value = $value;
     }
 
-    public static function from(DateTimeImmutable $value): MovieTime
+    public static function from(DateTimeImmutable $value): self
     {
         return new self($value);
     }
 
-    public static function fromString(string $value): MovieTime
+    public static function fromString(string $value): self
     {
         $dateTime = new DateTimeImmutable($value);
+
         return new self($dateTime);
     }
 

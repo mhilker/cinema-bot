@@ -11,6 +11,7 @@ use Traversable;
 
 final class MovieTimes implements IteratorAggregate, Countable
 {
+    /** @var MovieTime[] */
     private $values = [];
 
     private function __construct(iterable $values)
@@ -20,9 +21,9 @@ final class MovieTimes implements IteratorAggregate, Countable
         }
     }
 
-    public static function from(iterable $movies): MovieTimes
+    public static function from(iterable $times): self
     {
-        return new self($movies);
+        return new self($times);
     }
 
     private function add(MovieTime $value): void

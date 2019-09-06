@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Application\Aggregate;
 
-use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\Events;
 
@@ -36,6 +35,4 @@ abstract class AbstractAggregate
         $this->events = [];
         return Events::from($events);
     }
-
-    abstract public function getAggregateId(): AggregateID;
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\AddShowToCinema\Parser;
 
-use CinemaBot\Domain\ExistingFile;
 use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Movies;
@@ -18,10 +17,10 @@ use DOMXPath;
 
 final class DOMParser implements Parser
 {
-    public function parse(ExistingFile $fileName): Movies
+    public function parse(string $html): Movies
     {
         $document = new DOMDocument();
-        @$document->loadHTMLFile($fileName->asString());
+        @$document->loadHTML($html);
         $xpath = new DOMXPath($document);
 
         return $this->extractMovies($xpath);
@@ -85,6 +84,7 @@ final class DOMParser implements Parser
 
         $dateTime = new DateTimeImmutable();
         $dateTime = $dateTime->setDate((int)$matches[3], (int)$matches[2], (int)$matches[1]);
+
         return $dateTime;
     }
 }

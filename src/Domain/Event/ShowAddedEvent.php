@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\Event;
 
+use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\ES\StorableEvent;
-use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
@@ -16,34 +16,34 @@ final class ShowAddedEvent implements Event, StorableEvent
     public const TOPIC = 'cinema_bot.cinema.show_added';
 
     /** @var CinemaID */
-    private $id;
+    private $cinemaID;
 
     /** @var MovieName */
-    private $name;
+    private $movieName;
 
     /** @var MovieTime */
-    private $time;
+    private $movieTime;
 
-    public function __construct(CinemaID $id, MovieName $name, MovieTime $time)
+    public function __construct(CinemaID $cinemaID, MovieName $movieName, MovieTime $movieTime)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->time = $time;
+        $this->cinemaID = $cinemaID;
+        $this->movieName = $movieName;
+        $this->movieTime = $movieTime;
     }
 
-    public function getID(): CinemaID
+    public function getCinemaID(): CinemaID
     {
-        return $this->id;
+        return $this->cinemaID;
     }
 
-    public function getName(): MovieName
+    public function getMovieName(): MovieName
     {
-        return $this->name;
+        return $this->movieName;
     }
 
-    public function getTime(): MovieTime
+    public function getMovieTime(): MovieTime
     {
-        return $this->time;
+        return $this->movieTime;
     }
 
     public function getTopic(): string
@@ -53,7 +53,7 @@ final class ShowAddedEvent implements Event, StorableEvent
 
     public function getAggregateID(): AggregateID
     {
-        return $this->id;
+        return $this->cinemaID;
     }
 
     public static function fromJSON(string $json): StorableEvent
@@ -70,9 +70,9 @@ final class ShowAddedEvent implements Event, StorableEvent
     public function asJSON(): string
     {
         return json_encode([
-            'id'   => $this->id->asString(),
-            'name' => $this->name->asString(),
-            'time' => $this->time->asString(),
+            'id'   => $this->cinemaID->asString(),
+            'name' => $this->movieName->asString(),
+            'time' => $this->movieTime->asString(),
         ]);
     }
 }

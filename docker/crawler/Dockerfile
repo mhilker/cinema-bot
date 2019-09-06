@@ -12,7 +12,7 @@ FROM php:7.3.5-cli-stretch as base
 
 RUN apt-get update \
  && apt-get install -y libicu-dev git unzip \
- && docker-php-ext-install -j$(nproc) intl pdo pdo_mysql
+ && docker-php-ext-install -j$(nproc) intl pdo pdo_mysql mysqli
 
 RUN mkdir /app/
 

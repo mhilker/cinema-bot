@@ -18,7 +18,7 @@ final class Movie
         $this->times = $times;
     }
 
-    public static function from(MovieName $name, MovieTimes $times): Movie
+    public static function from(MovieName $name, MovieTimes $times): self
     {
         return new self($name, $times);
     }
