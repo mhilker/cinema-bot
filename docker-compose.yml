@@ -20,7 +20,7 @@ services:
       context: .
       dockerfile: docker/webhook/Dockerfile
     environment:
-      - TELEGRAM_CHAT_ID=-358338485
+      - TELEGRAM_CHAT_ID=-377228860
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_HOST=db
       - DB_PORT=3306
@@ -41,7 +41,7 @@ services:
       dockerfile: docker/crawler/Dockerfile
     command: php /app/bin/crawler.php
     environment:
-      - TELEGRAM_CHAT_ID=-358338485
+      - TELEGRAM_CHAT_ID=-377228860
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_HOST=db
       - DB_PORT=3306
