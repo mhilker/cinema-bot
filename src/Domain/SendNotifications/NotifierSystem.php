@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema\Notifier;
+namespace CinemaBot\Domain\ShowFoundNotifications;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;
 use CinemaBot\Application\CQRS\Events;
+use CinemaBot\Domain\AddShowToCinema\CinemaRepository;
+use CinemaBot\Domain\AddShowToCinema\Watchlist\WatchlistProjection;
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\CinemaID;
-use CinemaBot\Domain\AddShowToCinema\CinemaRepository;
 use CinemaBot\Domain\Event\ShowAddedEvent;
-use CinemaBot\Domain\AddShowToCinema\Watchlist\WatchlistProjection;
 use DateTimeImmutable;
 
 final class NotifierSystem implements EventListener
