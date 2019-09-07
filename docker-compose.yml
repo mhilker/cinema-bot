@@ -95,6 +95,8 @@ services:
       - MYSQL_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
       - MYSQL_USER=cinema_bot
       - MYSQL_DATABASE=cinema_bot
+    ports:
+      - "21002:3306"
     volumes:
       - db-data:/var/lib/mysql
     secrets:
