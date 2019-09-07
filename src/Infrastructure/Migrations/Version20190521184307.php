@@ -11,7 +11,7 @@ final class Version20190521184307 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Create the table "watchlist"';
+        return 'Create the table "watchlist".';
     }
 
     public function up(Schema $schema): void
