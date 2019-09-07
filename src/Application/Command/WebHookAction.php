@@ -48,10 +48,6 @@ final class WebHookAction
         $text = $body['message']['text'];
         $chatId = ChatID::from((string) $body['message']['chat']['id']);
 
-        if (strpos($text, '/') !== 0) {
-            return $response;
-        }
-
         preg_match('/\/([a-z]+)( (.*))?/', $text, $matches);
         $command = $matches[1] ?? '';
 
@@ -62,7 +58,8 @@ final class WebHookAction
                 $bot->help($chatId);
                 break;
             case 'show':
-                $watchlist = $this->projection->getAll();
+                $groupID = $this->chatGroupProjection->loadGroupIDByChatID($chatId);
+                $watchlist = $this->projection->loadByGroupID($groupID);
                 $bot->showWatchlist($chatId, $watchlist);
                 break;
             case 'add':

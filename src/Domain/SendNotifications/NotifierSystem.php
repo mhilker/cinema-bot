@@ -44,7 +44,7 @@ final class NotifierSystem
 
     private function handleShowAddedEvent(ShowAddedEvent $event): void
     {
-        $watchlist = $this->projection->getAll();
+        $watchlist = $this->projection->loadByGroupID();
         if (count($watchlist) === 0) {
             return;
         }

@@ -10,7 +10,7 @@ use CinemaBot\Domain\Terms;
 
 interface WatchlistProjection
 {
-    public function getAll(): Terms;
+    public function loadByGroupID(GroupID $groupID): Terms;
 
     public function add(GroupID $groupID, Term $value): void;
 

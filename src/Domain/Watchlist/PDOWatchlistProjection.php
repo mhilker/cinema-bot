@@ -19,9 +19,9 @@ final class PDOWatchlistProjection implements WatchlistProjection
         $this->pdo = $pdo;
     }
 
-    public function getAll(): Terms
+    public function loadByGroupID(GroupID $groupID): Terms
     {
-        $sql = 'SELECT * FROM `watchlist`;';
+        $sql = 'SELECT * FROM `watchlist` WHERE `group_id` = :group_id;';
 
         $statement = $this->pdo->query($sql);
 
