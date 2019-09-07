@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase
  */
-class CinemaTest extends TestCase
+final class CinemaTest extends TestCase
 {
     public function testAddsShowsToCalendar(): void
     {

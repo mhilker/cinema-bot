@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader
  */
-class DownloaderTest extends TestCase
+final class DownloaderTest extends TestCase
 {
     public function testDownloadsFiles(): void
     {

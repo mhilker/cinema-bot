@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \CinemaBot\Domain\AddShowToCinema\Parser\DOMParser
  */
-class ParserTest extends TestCase
+final class ParserTest extends TestCase
 {
     /**
      * @dataProvider provider

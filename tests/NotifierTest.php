@@ -19,7 +19,7 @@ use TelegramBot\Api\BotApi;
 /**
  * @covers \CinemaBot\Domain\SendNotifications\TelegramNotifier
  */
-class NotifierTest extends TestCase
+final class NotifierTest extends TestCase
 {
     public function testFormatsAndSendsMessage(): void
     {

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \CinemaBot\Domain\SendNotifications\MarkdownNotificationFormatter
  */
-class MarkdownNotificationFormatterTest extends TestCase
+final class MarkdownNotificationFormatterTest extends TestCase
 {
     public function testFormatsMovieToMarkdown(): void
     {

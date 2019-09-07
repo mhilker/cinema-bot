@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \CinemaBot\Domain\AddShowToCinema\Parser\Crawler
  */
-class CrawlerTest extends TestCase
+final class CrawlerTest extends TestCase
 {
     public function test(): void
     {

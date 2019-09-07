@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \CinemaBot\Domain\AddShowToCinema\Parser\WeekParser
  */
-class WeekParserTest extends TestCase
+final class WeekParserTest extends TestCase
 {
     public function testParsesUrlsFromHtml(): void
     {
