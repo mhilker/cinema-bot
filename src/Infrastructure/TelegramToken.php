@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Infrastructure;
 
-class TelegramToken
+final class TelegramToken
 {
     public static function get(): string
     {
