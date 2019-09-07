@@ -6,6 +6,7 @@ namespace CinemaBot\Domain\CinemaList;
 
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\CinemaIDs;
+use CinemaBot\Domain\URL;
 use PDO;
 
 final class PDOCinemaListProjection implements CinemaListProjection
@@ -33,13 +34,14 @@ final class PDOCinemaListProjection implements CinemaListProjection
         return CinemaIDs::from($list);
     }
 
-    public function insert(CinemaID $id): void
+    public function insert(CinemaID $id, URL $url): void
     {
-        $sql = 'INSERT INTO `cinema_list` (`cinema_id`) VALUES (:cinema_id);';
+        $sql = 'INSERT INTO `cinema_list` (`cinema_id`, `url`) VALUES (:cinema_id, :url);';
 
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
             'cinema_id' => $id->asString(),
+            'url'       => $url->asString(),
         ]);
     }
 }
