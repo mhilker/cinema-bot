@@ -23,7 +23,10 @@ final class PDOWatchlistProjection implements WatchlistProjection
     {
         $sql = 'SELECT * FROM `watchlist` WHERE `group_id` = :group_id;';
 
-        $statement = $this->pdo->query($sql);
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'group_id' => $groupID->asString(),
+        ]);
 
         $terms = [];
 
