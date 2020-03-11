@@ -23,7 +23,7 @@ final class MySQLChatGroupProjection implements ChatGroupProjection
         $sql = 'INSERT INTO `chat_id_to_group_id_map` (`chat_id`, `group_id`) VALUES (?, ?);';
 
         $statement = $this->mysql->prepare($sql);
-        $statement->bind_param('ss', $chatID->asString(), $groupID->asString());
+        $statement->bind_param('ss', $_ = $chatID->asString(), $_ = $groupID->asString());
         $statement->execute();
         $statement->close();
     }
@@ -33,7 +33,7 @@ final class MySQLChatGroupProjection implements ChatGroupProjection
         $sql = 'SELECT `group_id` FROM `chat_id_to_group_id_map` WHERE `chat_id` = ? LIMIT 1;';
 
         $statement = $this->mysql->prepare($sql);
-        $statement->bind_param('s', $chatID->asString());
+        $statement->bind_param('s', $_ = $chatID->asString());
         $statement->bind_result($groupID);
         $statement->execute();
         $statement->fetch();

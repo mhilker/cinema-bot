@@ -38,11 +38,13 @@ use CinemaBot\Domain\SendNotifications\NotifierSystem;
 use CinemaBot\Domain\SendNotifications\TelegramNotifier;
 use CinemaBot\Domain\Watchlist\PDOWatchlistProjection;
 use CinemaBot\Domain\Watchlist\WatchlistProjector;
+use CinemaBot\Infrastructure\Telegram\TelegramToken;
 use mysqli;
 use PDO;
 use Slim\App;
 use Symfony\Component\Console\Application;
 use TelegramBot\Api\BotApi;
+use TelegramBot\Api\Client;
 
 final class Container
 {
@@ -53,14 +55,14 @@ final class Container
     {
         $commandBus = $this->getCommandBus();
         $eventBus = $this->getEventBus();
-
         $pdo = $this->getPDO();
 
-        $token    = TelegramToken::get();
-        $botApi   = new BotApi($token);
-        $telegram = new TelegramNotifier($botApi, new MarkdownNotificationFormatter());
+        $botApi     = new BotApi(TelegramToken::get());
+        $formatter  = new MarkdownNotificationFormatter();
+        $telegram   = new TelegramNotifier($botApi, $formatter);
+        $projection = new PDOWatchlistProjection($pdo);
 
-        $notifierSystem = new NotifierSystem(new PDOWatchlistProjection($pdo), $telegram);
+        $notifierSystem = new NotifierSystem($projection, $telegram);
 
         $app = new Application();
         $app->add(new CrawlCinemaCLICommand($commandBus, $eventBus, new PDOCinemaListProjection($pdo)));
@@ -82,6 +84,9 @@ final class Container
         $commandBus = $this->getCommandBus();
         $eventBus   = $this->getEventBus();
 
+        $bot = new Client(TelegramToken::get());
+        $bot->on()
+
         $config = [
             'settings' => [
                 'displayErrorDetails' => getenv('DISPLAY_ERRORS') === 'true',
@@ -89,7 +94,7 @@ final class Container
         ];
 
         $app = new App($config);
-        $app->post('/webhook/telegram', new WebHookAction($commandBus, $eventBus, $watchlistProjection, $chatGroupProjection));
+        $app->post('/webhook/telegram', new WebHookAction($bot));
         return $app;
     }
 

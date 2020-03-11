@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Infrastructure;
+namespace CinemaBot\Infrastructure\Telegram;
 
 final class TelegramToken
 {
