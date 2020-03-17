@@ -1,6 +1,7 @@
-/.idea/
-/vendor/
-/.phpunit.result.cache
-/tools/
-/infection.log
 /*.local
+/.git/
+/.idea/
+/.phpunit.result.cache
+/infection.log
+/tools/
+/vendor/
