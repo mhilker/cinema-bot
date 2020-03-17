@@ -11,7 +11,7 @@ use Traversable;
 final class Events implements IteratorAggregate
 {
     /** @var Event[] */
-    private $events = [];
+    private array $events = [];
 
     private function __construct(iterable $events)
     {

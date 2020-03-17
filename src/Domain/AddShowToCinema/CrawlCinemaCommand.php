@@ -9,8 +9,7 @@ use CinemaBot\Domain\CinemaID;
 
 final class CrawlCinemaCommand implements Command
 {
-    /** @var CinemaID */
-    private $id;
+    private CinemaID $id;
 
     public function __construct(CinemaID $id)
     {

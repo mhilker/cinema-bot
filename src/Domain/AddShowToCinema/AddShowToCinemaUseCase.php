@@ -14,11 +14,10 @@ use CinemaBot\Domain\MovieTime;
 
 final class AddShowToCinemaUseCase extends AbstractAggregate
 {
-    /** @var CinemaID */
-    private $id;
+    private CinemaID $id;
 
     /** @var array<string, array<string, MovieTime>> */
-    private $calendar = [];
+    private array $calendar = [];
 
     private function applyCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {

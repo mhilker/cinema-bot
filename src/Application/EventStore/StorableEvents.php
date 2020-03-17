@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Application\ES;
+namespace CinemaBot\Application\EventStore;
 
 use ArrayIterator;
 use IteratorAggregate;
@@ -11,7 +11,7 @@ use Traversable;
 final class StorableEvents implements IteratorAggregate
 {
     /** @var StorableEvent[] */
-    private $events = [];
+    private array $events = [];
 
     private function __construct(iterable $events)
     {

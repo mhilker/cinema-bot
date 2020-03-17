@@ -8,8 +8,7 @@ use CinemaBot\Application\CQRS\CommandHandler;
 
 final class CreateCinemaCommandHandler implements CommandHandler
 {
-    /** @var CinemaRepository */
-    private $repository;
+    private CinemaRepository $repository;
 
     public function __construct(CinemaRepository $repository)
     {

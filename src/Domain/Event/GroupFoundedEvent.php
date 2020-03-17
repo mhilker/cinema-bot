@@ -12,11 +12,8 @@ final class GroupFoundedEvent implements Event
 {
     public const TOPIC = 'cinema_bot.group.group_founded';
 
-    /** @var GroupID */
-    private $groupID;
-
-    /** @var ChatID */
-    private $chatID;
+    private GroupID $groupID;
+    private ChatID $chatID;
 
     public function __construct(GroupID $groupID, ChatID $chatID)
     {

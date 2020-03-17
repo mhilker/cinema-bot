@@ -9,11 +9,8 @@ use CinemaBot\Domain\AddShowToCinema\Parser\Crawler;
 
 final class CrawlCinemaCommandHandler implements CommandHandler
 {
-    /** @var CinemaRepository */
-    private $repository;
-
-    /** @var Crawler */
-    private $crawler;
+    private CinemaRepository $repository;
+    private Crawler $crawler;
 
     public function __construct(CinemaRepository $repository, Crawler $crawler)
     {

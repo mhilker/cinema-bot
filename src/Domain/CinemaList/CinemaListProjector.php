@@ -11,8 +11,7 @@ use CinemaBot\Domain\Event\CinemaCreatedEvent;
 
 final class CinemaListProjector implements EventListener
 {
-    /** @var CinemaListProjection */
-    private $projection;
+    private CinemaListProjection $projection;
 
     public function __construct(CinemaListProjection $projection)
     {

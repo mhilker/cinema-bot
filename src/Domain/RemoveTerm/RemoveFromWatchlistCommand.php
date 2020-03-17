@@ -10,11 +10,8 @@ use CinemaBot\Domain\Term;
 
 final class RemoveFromWatchlistCommand implements Command
 {
-    /** @var GroupID */
-    private $groupID;
-
-    /** @var Term */
-    private $term;
+    private GroupID $groupID;
+    private Term $term;
 
     public function __construct(GroupID $groupID, Term $term)
     {

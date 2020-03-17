@@ -9,10 +9,9 @@ use SplQueue;
 final class DirectEventBus implements EventPublisher, EventDispatcher
 {
     /** @var EventListener[] */
-    private $eventListeners = [];
+    private array $eventListeners = [];
 
-    /** @var SplQueue */
-    private $events;
+    private SplQueue $events;
 
     public function __construct()
     {

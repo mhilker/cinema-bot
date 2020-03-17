@@ -7,23 +7,22 @@ namespace CinemaBot\Domain\CinemaList;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\CinemaIDs;
 use CinemaBot\Domain\URL;
-use PDO;
+use Doctrine\DBAL\Driver\Connection;
 
-final class PDOCinemaListProjection implements CinemaListProjection
+final class DoctrineCinemaListProjection implements CinemaListProjection
 {
-    /** @var PDO */
-    private $pdo;
+    private Connection $connection;
 
-    public function __construct(PDO $pdo)
+    public function __construct(Connection $connection)
     {
-        $this->pdo = $pdo;
+        $this->connection = $connection;
     }
 
     public function load(): CinemaIDs
     {
         $sql = 'SELECT `cinema_id` FROM `cinema_list`;';
 
-        $statement = $this->pdo->query($sql);
+        $statement = $this->connection->query($sql);
 
         $list = [];
 
@@ -38,7 +37,7 @@ final class PDOCinemaListProjection implements CinemaListProjection
     {
         $sql = 'INSERT INTO `cinema_list` (`cinema_id`, `url`) VALUES (:cinema_id, :url);';
 
-        $statement = $this->pdo->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute([
             'cinema_id' => $id->asString(),
             'url'       => $url->asString(),

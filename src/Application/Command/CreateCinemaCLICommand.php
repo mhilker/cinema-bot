@@ -16,11 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class CreateCinemaCLICommand extends Command
 {
-    /** @var CommandBus */
-    private $commandBus;
-
-    /** @var EventDispatcher */
-    private $eventDispatcher;
+    private CommandBus $commandBus;
+    private EventDispatcher $eventDispatcher;
 
     public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher)
     {
@@ -35,7 +32,7 @@ final class CreateCinemaCLICommand extends Command
         $this->addOption('url', null, InputOption::VALUE_REQUIRED);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): ?int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $id = CinemaID::random();
         $url = URL::from($input->getOption('url'));
@@ -43,6 +40,6 @@ final class CreateCinemaCLICommand extends Command
         $this->commandBus->dispatch(new CreateCinemaCommand($id, $url));
         $this->eventDispatcher->dispatch();
 
-        return null;
+        return 0;
     }
 }

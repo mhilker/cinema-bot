@@ -6,7 +6,7 @@ namespace CinemaBot\Domain\Event;
 
 use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Application\CQRS\Event;
-use CinemaBot\Application\ES\StorableEvent;
+use CinemaBot\Application\EventStore\StorableEvent;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
@@ -15,14 +15,9 @@ final class ShowAddedEvent implements Event, StorableEvent
 {
     public const TOPIC = 'cinema_bot.cinema.show_added';
 
-    /** @var CinemaID */
-    private $cinemaID;
-
-    /** @var MovieName */
-    private $movieName;
-
-    /** @var MovieTime */
-    private $movieTime;
+    private CinemaID $cinemaID;
+    private MovieName $movieName;
+    private MovieTime $movieTime;
 
     public function __construct(CinemaID $cinemaID, MovieName $movieName, MovieTime $movieTime)
     {
@@ -58,7 +53,7 @@ final class ShowAddedEvent implements Event, StorableEvent
 
     public static function fromJSON(string $json): StorableEvent
     {
-        $payload = json_decode($json, true);
+        $payload = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 
         return new self(
             CinemaID::from($payload['id']),
@@ -73,6 +68,6 @@ final class ShowAddedEvent implements Event, StorableEvent
             'id'   => $this->cinemaID->asString(),
             'name' => $this->movieName->asString(),
             'time' => $this->movieTime->asString(),
-        ]);
+        ], JSON_THROW_ON_ERROR);
     }
 }

@@ -11,8 +11,7 @@ use CinemaBot\Domain\Event\GroupFoundedEvent;
 
 final class ChatGroupProjector implements EventListener
 {
-    /** @var ChatGroupProjection */
-    private $projection;
+    private ChatGroupProjection $projection;
 
     public function __construct(ChatGroupProjection $projection)
     {

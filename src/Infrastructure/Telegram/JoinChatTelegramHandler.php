@@ -8,7 +8,7 @@ use CinemaBot\Domain\GroupID;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Update;
 
-class JoinChatTelegramCallback implements TelegramCallback
+class JoinChatTelegramHandler implements TelegramHandler
 {
     public function handle(Client $bot, Update $update, GroupID $groupID): void
     {

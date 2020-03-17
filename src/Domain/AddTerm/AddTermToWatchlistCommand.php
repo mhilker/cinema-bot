@@ -10,11 +10,8 @@ use CinemaBot\Domain\Term;
 
 final class AddTermToWatchlistCommand implements Command
 {
-    /** @var Term */
-    private $term;
-
-    /** @var GroupID */
-    private $groupID;
+    private Term $term;
+    private GroupID $groupID;
 
     public function __construct(GroupID $groupID, Term $term)
     {

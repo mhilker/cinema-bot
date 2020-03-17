@@ -6,23 +6,22 @@ namespace CinemaBot\Domain\ChatIDToGroupIDMap;
 
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\GroupID;
-use mysqli;
+use Doctrine\DBAL\Driver\Connection;
 
-final class MySQLChatGroupProjection implements ChatGroupProjection
+final class DoctrineChatGroupProjection implements ChatGroupProjection
 {
-    /** @var mysqli */
-    private $mysql;
+    private Connection $connection;
 
-    public function __construct(mysqli $mysql)
+    public function __construct(Connection $connection)
     {
-        $this->mysql = $mysql;
+        $this->connection = $connection;
     }
 
     public function add(ChatID $chatID, GroupID $groupID): void
     {
         $sql = 'INSERT INTO `chat_id_to_group_id_map` (`chat_id`, `group_id`) VALUES (?, ?);';
 
-        $statement = $this->mysql->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->bind_param('ss', $_ = $chatID->asString(), $_ = $groupID->asString());
         $statement->execute();
         $statement->close();
@@ -32,7 +31,7 @@ final class MySQLChatGroupProjection implements ChatGroupProjection
     {
         $sql = 'SELECT `group_id` FROM `chat_id_to_group_id_map` WHERE `chat_id` = ? LIMIT 1;';
 
-        $statement = $this->mysql->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->bind_param('s', $_ = $chatID->asString());
         $statement->bind_result($groupID);
         $statement->execute();

@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace CinemaBot\Application\Command;
 
-use CinemaBot\Infrastructure\Telegram\TelegramToken;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Psr7\Response;
 use TelegramBot\Api\Client;
-use TelegramBot\Api\Types\Update;
 
-final class WebHookAction
+final class WebHookAction implements RequestHandlerInterface
 {
-    /** @var Client */
-    private $bot;
+    private Client $bot;
 
     public function __construct(Client $bot)
     {
         $this->bot = $bot;
     }
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->bot->run();
 
-        return $response;
+        return new Response(200);
     }
 }

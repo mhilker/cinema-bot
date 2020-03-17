@@ -11,8 +11,7 @@ use CinemaBot\Domain\Event\TermAddedEvent;
 
 final class AddTermToWatchlistCommandHandler implements CommandHandler
 {
-    /** @var EventPublisher */
-    private $eventPublisher;
+    private EventPublisher $eventPublisher;
 
     public function __construct(EventPublisher $eventPublisher)
     {

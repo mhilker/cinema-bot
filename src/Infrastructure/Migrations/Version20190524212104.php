@@ -26,7 +26,7 @@ final class Version20190524212104 extends AbstractMigration
             'fixed' => true,
         ]);
         $events->addColumn('topic', 'string', [
-            'length' => 1024,
+            'length' => 1_024,
         ]);
         $events->addColumn('payload', 'json');
         $events->setPrimaryKey(['id']);

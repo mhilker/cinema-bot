@@ -12,7 +12,7 @@ use Traversable;
 final class Movies implements IteratorAggregate, Countable
 {
     /** @var Movie[] */
-    private $movies = [];
+    private array $movies = [];
 
     private function __construct(iterable $movies)
     {

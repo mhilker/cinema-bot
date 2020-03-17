@@ -2,26 +2,19 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Application\ES;
+namespace CinemaBot\Application\EventStore;
 
 use CinemaBot\Application\Aggregate\AggregateID;
-use PDO;
+use Doctrine\DBAL\Driver\Connection;
 
-final class PDOEventStore implements EventStore
+final class DoctrineEventStore implements EventStore
 {
-    /** @var PDO */
-    private $pdo;
+    private Connection $connection;
+    private array $eventMap;
 
-    /** @var array<string,string> */
-    private $eventMap;
-
-    /**
-     * @param PDO $pdo
-     * @param array<string,string> $eventMap
-     */
-    public function __construct(PDO $pdo, array $eventMap)
+    public function __construct(Connection $connection, array $eventMap)
     {
-        $this->pdo = $pdo;
+        $this->connection = $connection;
         $this->eventMap = $eventMap;
     }
 
@@ -36,7 +29,7 @@ final class PDOEventStore implements EventStore
             aggregate_id = :id;
         SQL;
 
-        $statement = $this->pdo->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute([
             'id' => $id->asString(),
         ]);
@@ -56,7 +49,7 @@ final class PDOEventStore implements EventStore
 
     public function save(StorableEvents $events): void
     {
-        $this->pdo->beginTransaction();
+        $this->connection->beginTransaction();
 
         foreach ($events as $event) {
             $sql = <<< SQL
@@ -66,7 +59,7 @@ final class PDOEventStore implements EventStore
                 (:aggregate_id, :topic, :payload);
             SQL;
 
-            $statement = $this->pdo->prepare($sql);
+            $statement = $this->connection->prepare($sql);
             $statement->execute([
                 'aggregate_id' => $event->getAggregateID()->asString(),
                 'topic'        => $event->getTopic(),
@@ -74,6 +67,6 @@ final class PDOEventStore implements EventStore
             ]);
         }
 
-        $this->pdo->commit();
+        $this->connection->commit();
     }
 }

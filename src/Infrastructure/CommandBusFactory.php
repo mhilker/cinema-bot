@@ -28,7 +28,6 @@ final class CommandBusFactory
         $commandBus->add(AddTermToWatchlistCommand::class, $container->get(AddTermToWatchlistCommandHandler::class));
         $commandBus->add(RemoveFromWatchlistCommand::class, $container->get(RemoveFromWatchlistCommandHandler::class));
         $commandBus->add(FoundGroupCommand::class, $container->get(FoundGroupCommandHandler::class));
-
         return $commandBus;
     }
 }

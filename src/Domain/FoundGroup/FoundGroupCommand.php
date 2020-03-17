@@ -10,11 +10,8 @@ use CinemaBot\Domain\GroupID;
 
 final class FoundGroupCommand implements Command
 {
-    /** @var GroupID */
-    private $groupID;
-
-    /** @var ChatID */
-    private $chatID;
+    private GroupID $groupID;
+    private ChatID $chatID;
 
     public function __construct(GroupID $groupID, ChatID $chatID)
     {

@@ -8,7 +8,7 @@ use CinemaBot\Domain\GroupID;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Update;
 
-interface TelegramCallback
+interface TelegramHandler
 {
     public const PARSE_MODE = 'markdown';
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Application\ES;
+namespace CinemaBot\Application\EventStore;
 
 use CinemaBot\Application\Aggregate\AggregateID;
 

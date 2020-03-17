@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace CinemaBot;
 
+use CinemaBot\Domain\AddShowToCinema\Parser\DOMParser;
 use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\MovieTime;
 use CinemaBot\Domain\MovieTimes;
-use CinemaBot\Domain\AddShowToCinema\Parser\DOMParser;
 use DateTimeImmutable;
 use Generator;
 use PHPUnit\Framework\TestCase;

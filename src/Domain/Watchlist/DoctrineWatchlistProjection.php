@@ -7,23 +7,22 @@ namespace CinemaBot\Domain\Watchlist;
 use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\Term;
 use CinemaBot\Domain\Terms;
-use PDO;
+use Doctrine\DBAL\Driver\Connection;
 
-final class PDOWatchlistProjection implements WatchlistProjection
+final class DoctrineWatchlistProjection implements WatchlistProjection
 {
-    /** @var PDO */
-    private $pdo;
+    private Connection $connection;
 
-    public function __construct(PDO $pdo)
+    public function __construct(Connection $connection)
     {
-        $this->pdo = $pdo;
+        $this->connection = $connection;
     }
 
     public function loadByGroupID(GroupID $groupID): Terms
     {
         $sql = 'SELECT * FROM `watchlist` WHERE `group_id` = :group_id;';
 
-        $statement = $this->pdo->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute([
             'group_id' => $groupID->asString(),
         ]);
@@ -41,7 +40,7 @@ final class PDOWatchlistProjection implements WatchlistProjection
     {
         $sql = 'INSERT INTO `watchlist` (`group_id`, `term`) VALUES (:group_id, :term);';
 
-        $statement = $this->pdo->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute([
             'group_id' => $groupID->asString(),
             'term'     => $term->asString(),
@@ -52,7 +51,7 @@ final class PDOWatchlistProjection implements WatchlistProjection
     {
         $sql = 'DELETE FROM `watchlist` WHERE `group_id` = :group_id AND `term` = :term;';
 
-        $statement = $this->pdo->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute([
             'group_id' => $groupID->asString(),
             'term'     => $term->asString(),

@@ -8,8 +8,7 @@ use DateTimeImmutable;
 
 final class MovieTime
 {
-    /** @var DateTimeImmutable */
-    private $value;
+    private DateTimeImmutable $value;
 
     private function __construct(DateTimeImmutable $value)
     {

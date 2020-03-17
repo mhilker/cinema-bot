@@ -16,11 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class FoundGroupCLICommand extends Command
 {
-    /** @var CommandBus */
-    private $commandBus;
-
-    /** @var EventDispatcher */
-    private $eventDispatcher;
+    private CommandBus $commandBus;
+    private EventDispatcher $eventDispatcher;
 
     public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher)
     {
@@ -35,7 +32,7 @@ final class FoundGroupCLICommand extends Command
         $this->addOption('chatID', null, InputOption::VALUE_REQUIRED);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): ?int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $ID = GroupID::random();
         $chatID = ChatID::from($input->getOption('chatID'));
@@ -43,6 +40,6 @@ final class FoundGroupCLICommand extends Command
         $this->commandBus->dispatch(new FoundGroupCommand($ID, $chatID));
         $this->eventDispatcher->dispatch();
 
-        return null;
+        return 0;
     }
 }

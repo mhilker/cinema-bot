@@ -12,11 +12,8 @@ use CinemaBot\Domain\URL;
 
 final class CreateCinemaUseCase extends AbstractAggregate
 {
-    /** @var CinemaID */
-    private $id;
-
-    /** @var URL */
-    private $url;
+    private CinemaID $id;
+    private URL $url;
 
     public static function createNew(CinemaID $id, URL $url): CreateCinemaUseCase
     {

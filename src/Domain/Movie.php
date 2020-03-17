@@ -6,11 +6,8 @@ namespace CinemaBot\Domain;
 
 final class Movie
 {
-    /** @var MovieName */
-    private $name;
-
-    /** @var MovieTimes */
-    private $times;
+    private MovieName $name;
+    private MovieTimes $times;
 
     private function __construct(MovieName $name, MovieTimes $times)
     {

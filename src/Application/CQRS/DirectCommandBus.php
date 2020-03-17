@@ -7,7 +7,7 @@ namespace CinemaBot\Application\CQRS;
 final class DirectCommandBus implements CommandBus
 {
     /** @var CommandHandler[] */
-    private $commandHandlers = [];
+    private array $commandHandlers = [];
 
     public function dispatch(Command $command): void
     {

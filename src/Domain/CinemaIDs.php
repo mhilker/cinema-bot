@@ -11,7 +11,7 @@ use Traversable;
 final class CinemaIDs implements IteratorAggregate
 {
     /** @var CinemaID[] */
-    private $values = [];
+    private array $values = [];
 
     private function __construct(iterable $values)
     {

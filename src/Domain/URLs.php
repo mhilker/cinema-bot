@@ -11,7 +11,7 @@ use Traversable;
 final class URLs implements IteratorAggregate
 {
     /** @var URL[] */
-    private $values = [];
+    private array $values = [];
 
     private function __construct(iterable $values)
     {

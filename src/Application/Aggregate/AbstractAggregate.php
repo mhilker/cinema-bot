@@ -10,7 +10,7 @@ use CinemaBot\Application\CQRS\Events;
 abstract class AbstractAggregate
 {
     /** @var Event[] */
-    private $events = [];
+    private array $events = [];
 
     public function __construct(?Events $events)
     {

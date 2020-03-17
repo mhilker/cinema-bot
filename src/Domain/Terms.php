@@ -12,7 +12,7 @@ use Traversable;
 final class Terms implements IteratorAggregate, Countable
 {
     /** @var Term[] */
-    private $terms = [];
+    private array $terms = [];
 
     private function __construct(iterable $terms)
     {

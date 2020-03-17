@@ -6,17 +6,14 @@ namespace CinemaBot\Domain\AddShowToCinema;
 
 use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Application\ES\EventStore;
-use CinemaBot\Application\ES\StorableEvents;
+use CinemaBot\Application\EventStore\EventStore;
+use CinemaBot\Application\EventStore\StorableEvents;
 use CinemaBot\Domain\CinemaID;
 
 final class EventSourcedCinemaRepository implements CinemaRepository
 {
-    /** @var EventStore */
-    private $eventStore;
-
-    /** @var EventPublisher */
-    private $eventPublisher;
+    private EventStore $eventStore;
+    private EventPublisher $eventPublisher;
 
     public function __construct(EventStore $eventStore, EventPublisher $eventPublisher)
     {

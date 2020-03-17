@@ -12,8 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendNotificationCLICommand extends Command
 {
-    /** @var NotifierSystem */
-    private $notifierSystem;
+    private NotifierSystem $notifierSystem;
 
     public function __construct(NotifierSystem $notifierSystem)
     {
@@ -26,13 +25,13 @@ class SendNotificationCLICommand extends Command
         $this->setName('send-notifications');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): ?int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // TODO: Aus store mit pointer laden
         $events = Events::from([]);
 
         $this->notifierSystem->handle($events);
 
-        return null;
+        return 0;
     }
 }

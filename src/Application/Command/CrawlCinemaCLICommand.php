@@ -6,22 +6,17 @@ namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
-use CinemaBot\Domain\CinemaList\CinemaListProjection;
 use CinemaBot\Domain\AddShowToCinema\CrawlCinemaCommand;
+use CinemaBot\Domain\CinemaList\CinemaListProjection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final class CrawlCinemaCLICommand extends Command
 {
-    /** @var CommandBus */
-    private $commandBus;
-
-    /** @var EventDispatcher */
-    private $eventDispatcher;
-
-    /** @var CinemaListProjection */
-    private $projection;
+    private CommandBus $commandBus;
+    private EventDispatcher $eventDispatcher;
+    private CinemaListProjection $projection;
 
     public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher, CinemaListProjection $projection)
     {
@@ -36,7 +31,7 @@ final class CrawlCinemaCLICommand extends Command
         $this->setName('crawl-cinema');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): ?int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $cinemaIDs = $this->projection->load();
 
@@ -45,6 +40,6 @@ final class CrawlCinemaCLICommand extends Command
         }
         $this->eventDispatcher->dispatch();
 
-        return null;
+        return 0;
     }
 }

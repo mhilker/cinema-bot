@@ -12,11 +12,8 @@ final class TelegramNotifier implements Notifier
 {
     private const PARSE_MODE = 'markdown';
 
-    /** @var BotApi */
-    private $telegram;
-
-    /** @var NotificationFormatter */
-    private $formatter;
+    private BotApi $telegram;
+    private NotificationFormatter $formatter;
 
     public function __construct(BotApi $telegram, NotificationFormatter $formatter)
     {

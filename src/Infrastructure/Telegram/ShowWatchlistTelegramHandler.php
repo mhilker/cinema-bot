@@ -10,10 +10,9 @@ use CinemaBot\Domain\Watchlist\WatchlistProjection;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Update;
 
-class ShowWatchlistTelegramCallback implements TelegramCallback
+class ShowWatchlistTelegramHandler implements TelegramHandler
 {
-    /** @var WatchlistProjection */
-    private $watchlistProjection;
+    private WatchlistProjection $watchlistProjection;
 
     public function __construct(WatchlistProjection $watchlistProjection)
     {

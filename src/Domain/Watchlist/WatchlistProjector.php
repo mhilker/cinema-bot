@@ -12,8 +12,7 @@ use CinemaBot\Domain\Event\TermRemovedEvent;
 
 final class WatchlistProjector implements EventListener
 {
-    /** @var WatchlistProjection */
-    private $projection;
+    private WatchlistProjection $projection;
 
     public function __construct(WatchlistProjection $projection)
     {

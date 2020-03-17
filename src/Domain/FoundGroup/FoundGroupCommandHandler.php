@@ -11,8 +11,7 @@ use CinemaBot\Domain\Event\GroupFoundedEvent;
 
 final class FoundGroupCommandHandler implements CommandHandler
 {
-    /** @var EventPublisher */
-    private $eventPublisher;
+    private EventPublisher $eventPublisher;
 
     public function __construct(EventPublisher $eventPublisher)
     {

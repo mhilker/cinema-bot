@@ -6,8 +6,7 @@ namespace CinemaBot\Domain;
 
 final class Term
 {
-    /** @var string */
-    private $value;
+    private string $value;
 
     private function __construct(string $term)
     {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace CinemaBot\Infrastructure;
 
-use CinemaBot\Application\ES\EventStore;
-use CinemaBot\Application\ES\PDOEventStore;
+use CinemaBot\Application\EventStore\DoctrineEventStore;
+use CinemaBot\Application\EventStore\EventStore;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
 use CinemaBot\Domain\Event\TermAddedEvent;
@@ -19,7 +19,7 @@ final class EventStoreFactory
     {
         $connection = $container->get(Connection::class);
 
-        return  new PDOEventStore($connection, [
+        return  new DoctrineEventStore($connection, [
             CinemaCreatedEvent::TOPIC => CinemaCreatedEvent::class,
             ShowAddedEvent::TOPIC     => ShowAddedEvent::class,
             TermAddedEvent::TOPIC     => TermAddedEvent::class,

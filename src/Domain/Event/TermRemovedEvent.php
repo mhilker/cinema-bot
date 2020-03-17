@@ -12,11 +12,8 @@ final class TermRemovedEvent implements Event
 {
     public const TOPIC = 'cinema_bot.watchlist.term_removed';
 
-    /** @var GroupID */
-    private $groupID;
-
-    /** @var Term */
-    private $term;
+    private GroupID $groupID;
+    private Term $term;
 
     public function __construct(GroupID $groupID, Term $term)
     {

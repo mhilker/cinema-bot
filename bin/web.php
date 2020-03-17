@@ -3,20 +3,19 @@
 declare(strict_types=1);
 
 use CinemaBot\Application\Command\WebHookAction;
-use CinemaBot\Infrastructure\CinemaBotConfig;
+use CinemaBot\Infrastructure\ContainerConfig;
 use DI\ContainerBuilder;
-use Slim\App;
+use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 $builder = new ContainerBuilder();
-$builder->addDefinitions(new CinemaBotConfig());
+$builder->addDefinitions(new ContainerConfig());
 $container = $builder->build();
 
-$app = new App([
-    'settings' => [
-        'displayErrorDetails' => getenv('DISPLAY_ERRORS') === 'true',
-    ],
-]);
+$app = AppFactory::create();
+$app->addRoutingMiddleware();
+$app->addBodyParsingMiddleware();
+$app->addErrorMiddleware(true, true, false);
 $app->post('/webhook/telegram', $container->get(WebHookAction::class));
 $app->run();

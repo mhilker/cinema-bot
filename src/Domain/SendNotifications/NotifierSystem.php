@@ -12,13 +12,9 @@ use DateTimeImmutable;
 
 final class NotifierSystem
 {
-    /** @var WatchlistProjection */
-    private $projection;
-
-    /** @var Notifier */
-    private $notifier;
-
-    private $data = [];
+    private WatchlistProjection $projection;
+    private Notifier $notifier;
+    private array $data = [];
 
     public function __construct(WatchlistProjection $projection, Notifier $notifier)
     {

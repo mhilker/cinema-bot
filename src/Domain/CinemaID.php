@@ -9,8 +9,7 @@ use CinemaBot\Infrastructure\UUID;
 
 final class CinemaID implements AggregateID
 {
-    /** @var string */
-    private $value;
+    private string $value;
 
     private function __construct(string $value)
     {
