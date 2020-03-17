@@ -2,40 +2,29 @@
 # Stage: composer
 ########################################################################################################################
 
-FROM composer:1.8.5 as composer
+FROM composer:1.10.1 as composer
 
 ########################################################################################################################
 # Stage: base
 ########################################################################################################################
 
-FROM php:7.3.5-cli-stretch as base
-
+FROM php:7.4.3-fpm-buster as base
 RUN apt-get update \
  && apt-get install -y libicu-dev git unzip \
- && docker-php-ext-install -j$(nproc) intl pdo pdo_mysql mysqli
-
-RUN mkdir /app/
-
+ && docker-php-ext-install -j$(nproc) intl pdo
 RUN adduser --disabled-password --gecos '' app
-
+RUN mkdir /app/
 RUN chown -R app: /app/
-
-WORKDIR /app
+WORKDIR /app/
 
 ########################################################################################################################
 # Stage: build
 ########################################################################################################################
 
 FROM base as build
-
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-
 COPY composer* /app/
-
 USER app
-
-RUN composer global require hirak/prestissimo
-
 RUN composer install
 
 ########################################################################################################################
@@ -43,17 +32,5 @@ RUN composer install
 ########################################################################################################################
 
 FROM base as production
-
-RUN apt-get update \
- && apt-get install -y wait-for-it \
- && rm -rf /var/lib/apt/lists/*
-
 COPY --from=build /app/ /app/
-
 COPY . /app/
-
-COPY ./docker/crawler/entrypoint.sh /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
-
-CMD ["php /app/bin/crawler.php", "crawl-cinema"]

@@ -5,12 +5,12 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
-        "ext-mysqli": "*",
         "telegram-bot/api": "^2.3",
         "symfony/console": "^v5.0",
         "guzzlehttp/guzzle": "^6.3",
         "doctrine/migrations": "^2.2",
-        "slim/slim": "^4.4"
+        "slim/slim": "^4.4",
+        "php-di/php-di": "^6.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",

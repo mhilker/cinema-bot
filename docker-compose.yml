@@ -15,106 +15,53 @@ services:
       - .:/app/
 
   webhook:
-    image: mhilker/private:cinema-bot-webhook
+    image: mhilker/private:cinema-bot-php
     build:
       context: .
-      dockerfile: docker/webhook/Dockerfile
+      dockerfile: docker/php/Dockerfile
     environment:
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=cinema_bot
-      - DB_NAME=cinema_bot
-      - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
       - DISPLAY_ERRORS=true
     volumes:
       - .:/app/
     secrets:
-      - cinema-bot-db-user-password
       - cinema-bot-telegram-token
 
   crawler:
-    image: mhilker/private:cinema-bot-crawler
+    image: mhilker/private:cinema-bot-php
     build:
       context: .
-      dockerfile: docker/crawler/Dockerfile
+      dockerfile: docker/php/Dockerfile
     environment:
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=cinema_bot
-      - DB_NAME=cinema_bot
-      - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
     volumes:
       - .:/app/
     secrets:
-      - cinema-bot-db-user-password
       - cinema-bot-telegram-token
 
   notifier:
-    image: mhilker/private:cinema-bot-notifier
+    image: mhilker/private:cinema-bot-php
     build:
       context: .
-      dockerfile: docker/notifier/Dockerfile
+      dockerfile: docker/php/Dockerfile
     environment:
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=cinema_bot
-      - DB_NAME=cinema_bot
-      - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
     volumes:
       - .:/app/
     secrets:
-      - cinema-bot-db-user-password
       - cinema-bot-telegram-token
 
   migrate:
-    image: mhilker/private:cinema-bot-migrate
+    image: mhilker/private:cinema-bot-php
     build:
-      dockerfile: docker/migrate/Dockerfile
       context: .
-    environment:
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_NAME=cinema_bot
-      - DB_PASSWORD_FILE=/run/secrets/cinema-bot-db-root-password
+      dockerfile: docker/php/Dockerfile
     volumes:
       - .:/app/
-    secrets:
-      - cinema-bot-db-root-password
-
-  db:
-    image: mhilker/private:cinema-bot-db
-    build:
-      dockerfile: docker/db/Dockerfile
-      context: .
-    environment:
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/cinema-bot-db-root-password
-      - MYSQL_PASSWORD_FILE=/run/secrets/cinema-bot-db-user-password
-      - MYSQL_USER=cinema_bot
-      - MYSQL_DATABASE=cinema_bot
-    ports:
-      - "21002:3306"
-    volumes:
-      - db-data:/var/lib/mysql
-    secrets:
-      - cinema-bot-db-root-password
-      - cinema-bot-db-user-password
-
-  adminer:
-    image: adminer
-    ports:
-      - "21001:8080"
 
 volumes:
   db-data:
 
 secrets:
-  cinema-bot-db-root-password:
-    file: db-root-password.local
-  cinema-bot-db-user-password:
-    file: db-user-password.local
   cinema-bot-telegram-token:
     file: telegram-token.local
