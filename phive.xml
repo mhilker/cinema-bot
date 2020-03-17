@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<phive xmlns="https://phar.io/phive">
-  <phar name="phpunit" version="^8.0.5" installed="8.0.5" location="./tools/phpunit" copy="true"/>
-  <phar name="phpcs" version="^3.4.0" installed="3.4.0" location="./tools/phpcs" copy="true"/>
-  <phar name="phpcbf" version="^3.4.1" installed="3.4.1" location="./tools/phpcbf" copy="true"/>
-  <phar name="infection" version="^0.12.2" installed="0.12.2" location="./tools/infection" copy="true"/>
-  <phar name="doctrine/migrations" version="2.0.0" installed="2.0.0" location="./tools/doctrine-migrations" copy="true"/>
-  <phar name="phan/phan" version="^2.0.0" installed="2.0.0" location="./tools/phan" copy="true"/>
-</phive>

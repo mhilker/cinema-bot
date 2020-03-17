@@ -1,2 +1,7 @@
-vendor
-tools
+/*.local
+/.git/
+/.idea/
+/.phpunit.result.cache
+/infection.log
+/tools/
+/vendor/
