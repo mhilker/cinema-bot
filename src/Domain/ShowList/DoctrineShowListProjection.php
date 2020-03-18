@@ -8,34 +8,19 @@ use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\MovieTime;
-use PDO;
+use Doctrine\DBAL\Driver\Connection;
 
-final class PDOShowListProjection implements ShowListProjection
+final class DoctrineShowListProjection implements ShowListProjection
 {
-    private PDO $pdo;
+    private Connection $connection;
 
-    public function __construct(PDO $pdo)
+    public function __construct(Connection $connection)
     {
-        $this->pdo = $pdo;
+        $this->connection = $connection;
     }
 
     public function load(): Movies
     {
-//        $sql = <<< SQL
-//        SELECT
-//            `cinema_id`
-//        FROM
-//            `cinema_list`;
-//        SQL;
-//
-//        $statement = $this->pdo->query($sql);
-//
-//        $list = [];
-//
-//        while (($row = $statement->fetch()) !== false) {
-//            $list[] = CinemaID::from($row['cinema_id']);
-//        }
-
         return Movies::from([]);
     }
 
@@ -48,7 +33,7 @@ final class PDOShowListProjection implements ShowListProjection
             (:cinema_id, :movie_name, :movie_time);
         SQL;
 
-        $statement = $this->pdo->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute([
             'cinema_id'  => $cinemaID->asString(),
             'movie_name' => $movieName->asString(),

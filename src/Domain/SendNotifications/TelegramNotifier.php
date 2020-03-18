@@ -10,8 +10,6 @@ use TelegramBot\Api\BotApi;
 
 final class TelegramNotifier implements Notifier
 {
-    private const PARSE_MODE = 'markdown';
-
     private BotApi $telegram;
     private NotificationFormatter $formatter;
 
@@ -25,6 +23,6 @@ final class TelegramNotifier implements Notifier
     {
         $message = $this->formatter->format($movie);
 
-        $this->telegram->sendMessage($chatId->asString(), $message, self::PARSE_MODE);
+        $this->telegram->sendMessage($chatId->asString(), $message, 'markdown');
     }
 }

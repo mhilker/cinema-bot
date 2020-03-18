@@ -11,11 +11,20 @@ final class CinemaID implements AggregateID
 {
     private string $value;
 
+    /**
+     * @throws InvalidCinemaIDException
+     */
     private function __construct(string $value)
     {
+        if ($value === '') {
+            throw new InvalidCinemaIDException('Cinema ID must not be empty');
+        }
         $this->value = $value;
     }
 
+    /**
+     * @throws InvalidCinemaIDException
+     */
     public static function from(string $value): self
     {
         return new self($value);

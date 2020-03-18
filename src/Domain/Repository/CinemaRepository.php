@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema;
+namespace CinemaBot\Domain\Repository;
 
+use CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase;
 use CinemaBot\Domain\CinemaID;
 
 interface CinemaRepository

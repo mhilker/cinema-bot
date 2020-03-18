@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\CreateCinema;
 
 use CinemaBot\Application\CQRS\CommandHandler;
+use CinemaBot\Domain\Repository\CinemaRepository;
 
 final class CreateCinemaCommandHandler implements CommandHandler
 {

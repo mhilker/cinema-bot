@@ -34,10 +34,10 @@ final class FoundGroupCLICommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $ID = GroupID::random();
-        $chatID = ChatID::from($input->getOption('chatID'));
+        $groupID = GroupID::random();
+        $chatID = ChatID::fromString($input->getOption('chatID'));
 
-        $this->commandBus->dispatch(new FoundGroupCommand($ID, $chatID));
+        $this->commandBus->dispatch(new FoundGroupCommand($groupID, $chatID));
         $this->eventDispatcher->dispatch();
 
         return 0;

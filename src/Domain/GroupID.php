@@ -10,16 +10,28 @@ final class GroupID
 {
     private string $value;
 
+    /**
+     * @throws InvalidGroupIDException
+     */
     private function __construct(string $value)
     {
+        if ($value === '') {
+            throw new InvalidGroupIDException('Group ID must not be empty');
+        }
         $this->value = $value;
     }
 
+    /**
+     * @throws InvalidGroupIDException
+     */
     public static function from(string $value): self
     {
         return new self($value);
     }
 
+    /**
+     * @throws InvalidGroupIDException
+     */
     public static function random(): self
     {
         $id = UUID::generateV4();

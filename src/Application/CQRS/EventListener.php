@@ -6,5 +6,5 @@ namespace CinemaBot\Application\CQRS;
 
 interface EventListener
 {
-    public function handle(Events $events): void;
+    public function handle(Event $event): void;
 }

@@ -18,14 +18,7 @@ final class CinemaListProjector implements EventListener
         $this->projection = $projection;
     }
 
-    public function handle(Events $events): void
-    {
-        foreach ($events as $event) {
-            $this->handleEvent($event);
-        }
-    }
-
-    private function handleEvent(Event $event): void
+    public function handle(Event $event): void
     {
         if ($event instanceof CinemaCreatedEvent) {
             $this->handleCinemaCreatedEvent($event);

@@ -19,25 +19,34 @@ final class DoctrineChatGroupProjection implements ChatGroupProjection
 
     public function add(ChatID $chatID, GroupID $groupID): void
     {
-        $sql = 'INSERT INTO `chat_id_to_group_id_map` (`chat_id`, `group_id`) VALUES (?, ?);';
+        $sql = <<<SQL
+        INSERT INTO `chat_id_to_group_id_map` (`chat_id`, `group_id`) 
+        VALUES (:chat_id, :group_id);
+        SQL;
 
         $statement = $this->connection->prepare($sql);
-        $statement->bind_param('ss', $_ = $chatID->asString(), $_ = $groupID->asString());
-        $statement->execute();
-        $statement->close();
+        $statement->execute([
+            'chat_id' => $chatID->asString(),
+            'group_id' => $groupID->asString(),
+        ]);
     }
 
     public function loadGroupIDByChatID(ChatID $chatID): GroupID
     {
-        $sql = 'SELECT `group_id` FROM `chat_id_to_group_id_map` WHERE `chat_id` = ? LIMIT 1;';
+        $sql = <<<SQL
+        SELECT `group_id` 
+        FROM `chat_id_to_group_id_map` 
+        WHERE `chat_id` = :chat_id
+        LIMIT 1;
+        SQL;
+
 
         $statement = $this->connection->prepare($sql);
-        $statement->bind_param('s', $_ = $chatID->asString());
-        $statement->bind_result($groupID);
-        $statement->execute();
-        $statement->fetch();
-        $statement->close();
+        $statement->execute([
+            'chat_id' => $chatID->asString(),
+        ]);
 
-        return GroupID::from($groupID);
+        $row = $statement->fetch();
+        return GroupID::from($row['group_id']);
     }
 }

@@ -14,7 +14,7 @@ final class DirectCommandBus implements CommandBus
         $commandName = get_class($command);
 
         if (isset($this->commandHandlers[$commandName]) === false) {
-            throw new CommandHandlerNotFoundException(sprintf(
+            throw new CommandException(sprintf(
                 'CommandHandler for Command "%s" not found',
                 $commandName
             ));
@@ -26,7 +26,7 @@ final class DirectCommandBus implements CommandBus
     public function add(string $commandName, CommandHandler $commandHandler): void
     {
         if (method_exists($commandHandler, 'handle') === false) {
-            throw new InvalidCommandHandlerException(sprintf(
+            throw new CommandException(sprintf(
                 'CommandHandler "%s" must provide "handle" method.',
                 get_class($commandHandler)
             ));

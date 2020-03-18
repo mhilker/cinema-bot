@@ -8,6 +8,9 @@ final class Term
 {
     private string $value;
 
+    /**
+     * @throws InvalidTermException
+     */
     private function __construct(string $term)
     {
         if ($term === '') {
@@ -17,6 +20,9 @@ final class Term
         $this->value = $term;
     }
 
+    /**
+     * @throws InvalidTermException
+     */
     public static function from(string $term): Term
     {
         return new self($term);

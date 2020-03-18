@@ -34,10 +34,10 @@ final class CreateCinemaCLICommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $id = CinemaID::random();
+        $cinemaID = CinemaID::random();
         $url = URL::from($input->getOption('url'));
 
-        $this->commandBus->dispatch(new CreateCinemaCommand($id, $url));
+        $this->commandBus->dispatch(new CreateCinemaCommand($cinemaID, $url));
         $this->eventDispatcher->dispatch();
 
         return 0;

@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema;
+namespace CinemaBot\Domain\Repository;
 
 use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Application\EventStore\EventStore;
 use CinemaBot\Application\EventStore\StorableEvents;
+use CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase;
+use CinemaBot\Domain\Repository\CinemaRepository;
 use CinemaBot\Domain\CinemaID;
 
 final class EventSourcedCinemaRepository implements CinemaRepository

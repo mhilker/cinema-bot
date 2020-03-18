@@ -8,21 +8,11 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Response;
-use TelegramBot\Api\Client;
 
-final class WebHookAction implements RequestHandlerInterface
+final class HomeAction implements RequestHandlerInterface
 {
-    private Client $telegram;
-
-    public function __construct(Client $telegram)
-    {
-        $this->telegram = $telegram;
-    }
-
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->telegram->run();
-
         return new Response(200);
     }
 }

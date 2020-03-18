@@ -8,11 +8,20 @@ final class MovieName
 {
     private string $value;
 
+    /**
+     * @throws InvalidMovieNameException
+     */
     private function __construct(string $value)
     {
+        if ($value === '') {
+            throw new InvalidMovieNameException('Movie eame must not be empty');
+        }
         $this->value = $value;
     }
 
+    /**
+     * @throws InvalidMovieNameException
+     */
     public static function from(string $value): self
     {
         return new self($value);
@@ -23,8 +32,8 @@ final class MovieName
         return $this->value;
     }
 
-    public function containsInsensitiveTerm(string $term): bool
+    public function containsInsensitiveTerm(Term $term): bool
     {
-        return mb_stripos($this->asString(), $term) !== false;
+        return mb_stripos($this->asString(), $term->asString()) !== false;
     }
 }

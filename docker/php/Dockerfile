@@ -23,14 +23,17 @@ WORKDIR /app/
 
 FROM base as build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-COPY composer* /app/
 USER app
-RUN composer install
+COPY --chown=app:app composer.* /app/
+RUN composer install --no-cache --no-progress --prefer-dist --no-dev --classmap-authoritative
 
 ########################################################################################################################
 # Stage: production
 ########################################################################################################################
 
 FROM base as production
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 COPY --from=build /app/ /app/
-COPY . /app/
+COPY --chown=app:app . /app/
+CMD ["php-fpm"]

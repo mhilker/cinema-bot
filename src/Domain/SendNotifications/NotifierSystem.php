@@ -51,7 +51,7 @@ final class NotifierSystem
         }
 
         foreach ($watchlist as $term) {
-            if ($event->getMovieName()->containsInsensitiveTerm($term->asString())) {
+            if ($event->getMovieName()->containsInsensitiveTerm($term)) {
                 $this->data[$event->getCinemaID()->asString()][$event->getMovieName()->asString()] = $event->getMovieName();
             }
         }

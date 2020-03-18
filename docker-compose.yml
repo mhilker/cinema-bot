@@ -7,7 +7,6 @@ services:
     build:
       context: .
       dockerfile: docker/nginx/Dockerfile
-    command: php /app/bin/web.php
     environment:
       - PHP_HOSTNAME=webhook
     ports:
@@ -20,11 +19,9 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    command: php /app/bin/web.php
     environment:
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_PATH=/app/database/data.db
-      - DISPLAY_ERRORS=true
     volumes:
       - .:/app/
       - sqlite3-db-data:/app/database/
@@ -60,18 +57,6 @@ services:
 #      - sqlite3-db-data:/app/database/
 #    secrets:
 #      - cinema-bot-telegram-token
-#
-#  migrate:
-#    image: mhilker/private:cinema-bot-php
-#    build:
-#      context: .
-#      dockerfile: docker/php/Dockerfile
-#    command: php /app/bin/cli.php
-#    environment:
-#      - DB_PATH=/app/database/data.db
-#    volumes:
-#      - .:/app/
-#      - sqlite3-db-data:/app/database/
 
 volumes:
   sqlite3-db-data:

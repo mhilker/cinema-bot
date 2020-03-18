@@ -10,8 +10,8 @@ use CinemaBot\Domain\URL;
 
 final class CreateCinemaCommand implements Command
 {
-    private URL $url;
     private CinemaID $id;
+    private URL $url;
 
     public function __construct(CinemaID $id, URL $url)
     {

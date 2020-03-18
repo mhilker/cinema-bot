@@ -28,7 +28,9 @@ final class DirectEventBus implements EventPublisher, EventDispatcher
         while (!$this->events->isEmpty()) {
             $events = $this->events->dequeue();
             foreach ($this->eventListeners as $eventListener) {
-                $eventListener->handle($events);
+                foreach ($events as $event) {
+                    $eventListener->handle($event);
+                }
             }
         }
     }

@@ -6,6 +6,7 @@ namespace CinemaBot\Application\EventStore;
 
 use CinemaBot\Application\Aggregate\AggregateID;
 use Doctrine\DBAL\Driver\Connection;
+use Exception;
 
 final class DoctrineEventStore implements EventStore
 {
@@ -18,55 +19,78 @@ final class DoctrineEventStore implements EventStore
         $this->eventMap = $eventMap;
     }
 
+    /**
+     * @throws EventStoreException
+     */
     public function load(AggregateID $id): StorableEvents
     {
-        $sql = <<< SQL
-        SELECT 
-            * 
-        FROM 
-            events 
-        WHERE 
-            aggregate_id = :id;
-        SQL;
+        try {
+            $sql = <<< SQL
+            SELECT 
+                * 
+            FROM 
+                events 
+            WHERE 
+                aggregate_id = :id;
+            SQL;
 
-        $statement = $this->connection->prepare($sql);
-        $statement->execute([
-            'id' => $id->asString(),
-        ]);
+            $statement = $this->connection->prepare($sql);
+            $statement->execute([
+                'id' => $id->asString(),
+            ]);
 
-        $events = [];
+            $events = [];
 
-        while (($row = $statement->fetch()) !== false) {
-            $topic = $row['topic'] ?? null;
-            $payload = $row['payload'] ?? null;
+            while (($row = $statement->fetch()) !== false) {
+                $topic = $row['topic'] ?? null;
+                $payload = $row['payload'] ?? null;
 
-            $class = $this->eventMap[$topic] ?? null;
-            $events[] = $class::fromJSON($payload);
+                $class = $this->eventMap[$topic] ?? null;
+                $events[] = $class::fromJSON($payload);
+            }
+        } catch (Exception $exception) {
+            throw new EventStoreException('Could not load events');
+        }
+
+        if (count($events) === 0) {
+            throw new EventStoreException('No events for aggregate found');
         }
 
         return StorableEvents::from($events);
     }
 
+    /**
+     * @throws EventStoreException
+     */
     public function save(StorableEvents $events): void
     {
-        $this->connection->beginTransaction();
+        try {
+            $this->connection->beginTransaction();
+        } catch (Exception $exception) {
+            throw new EventStoreException('Could not begin transaction');
+        }
 
-        foreach ($events as $event) {
+        try {
             $sql = <<< SQL
             INSERT INTO 
                 events (aggregate_id, topic, payload) 
             VALUES 
                 (:aggregate_id, :topic, :payload);
             SQL;
-
             $statement = $this->connection->prepare($sql);
-            $statement->execute([
-                'aggregate_id' => $event->getAggregateID()->asString(),
-                'topic'        => $event->getTopic(),
-                'payload'      => $event->asJSON(),
-            ]);
-        }
 
-        $this->connection->commit();
+            foreach ($events as $event) {
+                $statement->execute([
+                    'aggregate_id' => $event->getAggregateID()->asString(),
+                    'topic'        => $event->getTopic(),
+                    'payload'      => $event->asJSON(),
+                ]);
+            }
+
+            $this->connection->commit();
+        } catch (Exception $exception) {
+            $this->connection->rollBack();
+            throw new EventStoreException('Could not insert events');
+        }
     }
 }

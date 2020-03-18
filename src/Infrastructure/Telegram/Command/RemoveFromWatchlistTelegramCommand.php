@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Infrastructure\Telegram;
+namespace CinemaBot\Infrastructure\Telegram\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
@@ -11,9 +11,9 @@ use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommand;
 use CinemaBot\Domain\Term;
 use TelegramBot\Api\Client;
-use TelegramBot\Api\Types\Update;
+use TelegramBot\Api\Types\Message;
 
-class RemoveFromWatchlistTelegramHandler implements TelegramHandler
+class RemoveFromWatchlistTelegramCommand implements TelegramCommand
 {
     private CommandBus $commandBus;
     private EventDispatcher $eventDispatcher;
@@ -24,21 +24,23 @@ class RemoveFromWatchlistTelegramHandler implements TelegramHandler
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function handle(Client $bot, Update $update, GroupID $groupID): void
+    public function getName(): string
     {
-        $chatID = ChatID::from($update->getMessage()->getChat()->getId());
-        preg_match('/\/([a-z]+)( (.*))?/', $update->getMessage()->getText(), $matches);
+        return 'remove';
+    }
+
+    public function execute(Client $bot, Message $message): void
+    {
+        $chatID = ChatID::fromInt($message->getChat()->getId());
+        $groupID = GroupID::random();
+
+        preg_match('/\/([a-z]+)( (.*))?/', $message->getText(), $matches);
         $term = Term::from($matches[3] ?? '');
 
         $this->commandBus->dispatch(new RemoveFromWatchlistCommand($groupID, $term));
         $this->eventDispatcher->dispatch();
 
         $response = 'Removed `' . $term->asString() . '` from watchlist.';
-        $bot->sendMessage($chatID->asString(), $response, self::PARSE_MODE);
-    }
-
-    public function check(Update $update): bool
-    {
-        return mb_strpos($update->getMessage()->getText(), '/remove') === 0;
+        $bot->sendMessage($chatID->asString(), $response, 'markdown');
     }
 }

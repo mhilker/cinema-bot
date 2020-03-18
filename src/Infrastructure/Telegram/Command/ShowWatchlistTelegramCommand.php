@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Infrastructure\Telegram;
+namespace CinemaBot\Infrastructure\Telegram\Command;
 
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\Watchlist\WatchlistProjection;
 use TelegramBot\Api\Client;
-use TelegramBot\Api\Types\Update;
+use TelegramBot\Api\Types\Message;
 
-class ShowWatchlistTelegramHandler implements TelegramHandler
+class ShowWatchlistTelegramCommand implements TelegramCommand
 {
     private WatchlistProjection $watchlistProjection;
 
@@ -19,9 +19,15 @@ class ShowWatchlistTelegramHandler implements TelegramHandler
         $this->watchlistProjection = $watchlistProjection;
     }
 
-    public function handle(Client $bot, Update $update, GroupID $groupID): void
+    public function getName(): string
     {
-        $chatID = ChatID::from($update->getMessage()->getChat()->getId());
+        return 'show';
+    }
+
+    public function execute(Client $bot, Message $message): void
+    {
+        $chatID = ChatID::fromInt($message->getChat()->getId());
+        $groupID = GroupID::random();
 
         $watchlist = $this->watchlistProjection->loadByGroupID($groupID);
         if (count($watchlist) > 0) {
@@ -33,11 +39,6 @@ class ShowWatchlistTelegramHandler implements TelegramHandler
             $response = 'The current watchlist is empty.';
         }
 
-        $bot->sendMessage($chatID->asString(), $response, self::PARSE_MODE);
-    }
-
-    public function check(Update $update): bool
-    {
-        return $update->getMessage()->getText() === '/show';
+        $bot->sendMessage($chatID->asString(), $response, 'markdown');
     }
 }

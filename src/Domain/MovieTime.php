@@ -22,7 +22,12 @@ final class MovieTime
 
     public static function fromString(string $value): self
     {
-        $dateTime = new DateTimeImmutable($value);
+        try {
+            // TODO: Timezone
+            $dateTime = new DateTimeImmutable($value);
+        } catch (\Exception $exception) {
+            throw new InvalidMovieTimeException('Movie time is invalid');
+        }
 
         return new self($dateTime);
     }

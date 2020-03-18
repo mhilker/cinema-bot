@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Infrastructure\Telegram;
+namespace CinemaBot\Infrastructure\Telegram\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
@@ -11,9 +11,9 @@ use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\Term;
 use TelegramBot\Api\Client;
-use TelegramBot\Api\Types\Update;
+use TelegramBot\Api\Types\Message;
 
-class AddToWatchlistTelegramHandler implements TelegramHandler
+class AddToWatchlistTelegramCommand implements TelegramCommand
 {
     private CommandBus $commandBus;
     private EventDispatcher $eventDispatcher;
@@ -24,21 +24,23 @@ class AddToWatchlistTelegramHandler implements TelegramHandler
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function handle(Client $bot, Update $update, GroupID $groupID): void
+    public function getName(): string
     {
-        $chatID = ChatID::from($update->getMessage()->getChat()->getId());
-        preg_match('/\/([a-z]+)( (.*))?/', $update->getMessage()->getText(), $matches);
+        return 'add';
+    }
+
+    public function execute(Client $bot, Message $message): void
+    {
+        $chatID = ChatID::fromInt($message->getChat()->getId());
+        $groupID = GroupID::random();
+
+        preg_match('/\/([a-z]+)( (.*))?/', $message->getText(), $matches);
         $term = Term::from($matches[3] ?? '');
 
         $this->commandBus->dispatch(new AddTermToWatchlistCommand($groupID, $term));
         $this->eventDispatcher->dispatch();
 
         $response = 'Added `' . $term->asString() . '` to watchlist.';
-        $bot->sendMessage($chatID->asString(), $response, self::PARSE_MODE);
-    }
-
-    public function check(Update $update): bool
-    {
-        return mb_strpos($update->getMessage()->getText(), '/add') === 0;
+        $bot->sendMessage($chatID->asString(), $response, 'markdown');
     }
 }

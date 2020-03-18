@@ -34,7 +34,7 @@ final class NotifierTest extends TestCase
             ])
         );
 
-        $chatID = ChatID::from('-12345678');
+        $chatID = ChatID::fromString('-12345678');
 
         $message = <<<MESSAGE
         Test
