@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\CreateCinema;
 
 use CinemaBot\Application\CQRS\CommandHandler;
-use CinemaBot\Domain\Repository\CinemaRepository;
+use CinemaBot\Domain\Cinema\CinemaRepository;
 
 final class CreateCinemaCommandHandler implements CommandHandler
 {
@@ -18,7 +18,7 @@ final class CreateCinemaCommandHandler implements CommandHandler
 
     public function handle(CreateCinemaCommand $command): void
     {
-        $id = $command->getID();
+        $id = $command->getCinemaID();
         $url = $command->getURL();
 
         $cinema = CreateCinemaUseCase::createNew($id, $url);

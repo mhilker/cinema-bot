@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\FoundGroup;
 
 use CinemaBot\Application\CQRS\CommandHandler;
-use CinemaBot\Domain\Repository\GroupRepository;
+use CinemaBot\Domain\Group\GroupRepository;
 
 final class FoundGroupCommandHandler implements CommandHandler
 {

@@ -8,7 +8,7 @@ use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
-use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommand;
+use CinemaBot\Domain\RemoveTerm\RemoveTermCommand;
 use CinemaBot\Domain\Term;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
@@ -39,7 +39,7 @@ class RemoveFromWatchlistTelegramCommand implements TelegramCommand
         preg_match('/\/([a-z]+)( (.*))?/', $message->getText(), $matches);
         $term = Term::from($matches[3] ?? '');
 
-        $this->commandBus->dispatch(new RemoveFromWatchlistCommand($groupID, $term));
+        $this->commandBus->dispatch(new RemoveTermCommand($groupID, $term));
         $this->eventDispatcher->dispatch();
 
         $response = 'Removed `' . $term->asString() . '` from watchlist.';

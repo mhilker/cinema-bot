@@ -9,7 +9,7 @@ use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Event\TermRemovedEvent;
 
-final class RemoveFromWatchlistCommandHandler implements CommandHandler
+final class RemoveTermCommandHandler implements CommandHandler
 {
     private EventPublisher $eventPublisher;
 
@@ -18,7 +18,7 @@ final class RemoveFromWatchlistCommandHandler implements CommandHandler
         $this->eventPublisher = $eventPublisher;
     }
 
-    public function handle(RemoveFromWatchlistCommand $command): void
+    public function handle(RemoveTermCommand $command): void
     {
         $events = Events::from([
             new TermRemovedEvent($command->getGroupID(), $command->getTerm()),

@@ -10,12 +10,15 @@ use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
 use CinemaBot\Domain\MovieName;
+use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\MovieTime;
-use CinemaBot\Domain\Repository\CinemaUseCase;
+use CinemaBot\Domain\Cinema\CinemaUseCase;
+use CinemaBot\Domain\URL;
 
 final class AddShowToCinemaUseCase extends AbstractEventStream implements CinemaUseCase
 {
     private CinemaID $id;
+    private URL $url;
 
     /** @var array<string, array<string, MovieTime>> */
     private array $calendar = [];
@@ -23,13 +26,23 @@ final class AddShowToCinemaUseCase extends AbstractEventStream implements Cinema
     private function applyCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {
         $this->id = $event->getCinemaID();
+        $this->url = $event->getCinemaURL();
+    }
+
+    public function addShows(Movies $movies): void
+    {
+        foreach ($movies as $movie) {
+            foreach ($movie->getTimes() as $time) {
+                if (isset($this->calendar[$movie->getName()->asString()][$time->asString()]) === false) {
+                    $this->record(new ShowAddedEvent($this->id, $movie->getName(), $time));
+                }
+            }
+        }
     }
 
     public function addShow(MovieName $name, MovieTime $time): void
     {
-        if (isset($this->calendar[$name->asString()][$time->asString()]) === false) {
-            $this->record(new ShowAddedEvent($this->id, $name, $time));
-        }
+
     }
 
     private function applyShowAddedEvent(ShowAddedEvent $event): void
@@ -48,5 +61,10 @@ final class AddShowToCinemaUseCase extends AbstractEventStream implements Cinema
         if ($event instanceof ShowAddedEvent) {
             $this->applyShowAddedEvent($event);
         }
+    }
+
+    public function getUrl(): URL
+    {
+        return $this->url;
     }
 }

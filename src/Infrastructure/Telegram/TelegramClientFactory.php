@@ -13,7 +13,7 @@ use CinemaBot\Infrastructure\Telegram\Command\ShowWatchlistTelegramCommand;
 use Psr\Container\ContainerInterface;
 use TelegramBot\Api\Client;
 
-final class TelegramFactory
+final class TelegramClientFactory
 {
     public function __invoke(ContainerInterface $container): Client
     {

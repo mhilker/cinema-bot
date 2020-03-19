@@ -9,7 +9,7 @@ use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Domain\Event\GroupFoundedEvent;
 use CinemaBot\Domain\Event\TermAddedEvent;
 use CinemaBot\Domain\GroupID;
-use CinemaBot\Domain\Repository\GroupUseCase;
+use CinemaBot\Domain\Group\GroupUseCase;
 use CinemaBot\Domain\Term;
 use CinemaBot\Domain\Terms;
 

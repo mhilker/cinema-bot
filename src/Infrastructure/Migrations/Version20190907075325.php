@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\DBAL\Schema\Table;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 final class Version20190907075325 extends AbstractMigration
 {
     public function getDescription(): string

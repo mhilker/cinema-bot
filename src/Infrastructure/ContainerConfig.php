@@ -13,22 +13,27 @@ use CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader;
 use CinemaBot\Domain\AddShowToCinema\Downloader\Downloader;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
 use CinemaBot\Domain\ChatIDToGroupIDMap\DoctrineChatGroupProjection;
+use CinemaBot\Domain\Cinema\CinemaRepository;
+use CinemaBot\Domain\Cinema\EventSourcedCinemaRepository;
 use CinemaBot\Domain\CinemaList\CinemaListProjection;
 use CinemaBot\Domain\CinemaList\DoctrineCinemaListProjection;
-use CinemaBot\Domain\Repository\CinemaRepository;
-use CinemaBot\Domain\Repository\EventSourcedCinemaRepository;
-use CinemaBot\Domain\Repository\EventSourcedGroupRepository;
-use CinemaBot\Domain\Repository\GroupRepository;
+use CinemaBot\Domain\Group\EventSourcedGroupRepository;
+use CinemaBot\Domain\Group\GroupRepository;
+use CinemaBot\Domain\SendNotifications\MarkdownNotificationFormatter;
+use CinemaBot\Domain\SendNotifications\NotificationFormatter;
+use CinemaBot\Domain\SendNotifications\NotifierSystem;
+use CinemaBot\Domain\SendNotifications\TelegramNotifier;
 use CinemaBot\Domain\ShowList\DoctrineShowListProjection;
 use CinemaBot\Domain\ShowList\ShowListProjection;
 use CinemaBot\Domain\Watchlist\DoctrineWatchlistProjection;
 use CinemaBot\Domain\Watchlist\WatchlistProjection;
 use CinemaBot\Infrastructure\Doctrine\DoctrineConnectionFactory;
-use CinemaBot\Infrastructure\Telegram\TelegramFactory;
+use CinemaBot\Infrastructure\Telegram\TelegramBotFactory;
+use CinemaBot\Infrastructure\Telegram\TelegramClientFactory;
 use DI\Definition\Source\DefinitionArray;
 use Doctrine\DBAL\Driver\Connection;
+use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Client;
-
 use function DI\factory;
 use function DI\get;
 
@@ -52,8 +57,11 @@ final class ContainerConfig extends DefinitionArray
             ShowListProjection::class => get(DoctrineShowListProjection::class),
             CinemaRepository::class => get(EventSourcedCinemaRepository::class),
             GroupRepository::class => get(EventSourcedGroupRepository::class),
-            Client::class => factory(TelegramFactory::class),
-            Downloader::class => get(CopyDownloader::class)
+            Client::class => factory(TelegramClientFactory::class),
+            BotApi::class => factory(TelegramBotFactory::class),
+            Downloader::class => get(CopyDownloader::class),
+            NotifierSystem::class => get(TelegramNotifier::class),
+            NotificationFormatter::class => get(MarkdownNotificationFormatter::class),
         ]);
     }
 }

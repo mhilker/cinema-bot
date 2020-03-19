@@ -19,7 +19,7 @@ final class CreateCinemaCommand implements Command
         $this->url = $url;
     }
 
-    public function getID(): CinemaID
+    public function getCinemaID(): CinemaID
     {
         return $this->id;
     }

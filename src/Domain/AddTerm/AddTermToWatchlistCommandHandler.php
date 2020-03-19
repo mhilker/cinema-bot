@@ -6,7 +6,7 @@ namespace CinemaBot\Domain\AddTerm;
 
 use CinemaBot\Application\CQRS\CommandHandler;
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Domain\Repository\GroupRepository;
+use CinemaBot\Domain\Group\GroupRepository;
 
 final class AddTermToWatchlistCommandHandler implements CommandHandler
 {

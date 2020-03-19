@@ -14,11 +14,11 @@ class SendNotificationCLICommand extends Command
 {
     private NotifierSystem $notifierSystem;
 
-    public function __construct(NotifierSystem $notifierSystem)
-    {
-        parent::__construct();
-        $this->notifierSystem = $notifierSystem;
-    }
+//    public function __construct(NotifierSystem $notifierSystem)
+//    {
+//        parent::__construct();
+//        $this->notifierSystem = $notifierSystem;
+//    }
 
     protected function configure(): void
     {

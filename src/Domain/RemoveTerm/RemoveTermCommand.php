@@ -8,7 +8,7 @@ use CinemaBot\Application\CQRS\Command;
 use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\Term;
 
-final class RemoveFromWatchlistCommand implements Command
+final class RemoveTermCommand implements Command
 {
     private GroupID $groupID;
     private Term $term;

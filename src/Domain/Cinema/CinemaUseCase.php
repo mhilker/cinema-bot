@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Repository;
+namespace CinemaBot\Domain\Cinema;
 
 use CinemaBot\Application\CQRS\Events;
 

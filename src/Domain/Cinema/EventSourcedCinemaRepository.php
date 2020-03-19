@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Repository;
+namespace CinemaBot\Domain\Cinema;
 
 use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Application\EventStore\EventStore;
 use CinemaBot\Application\EventStore\StorableEvents;
-use CinemaBot\Domain\FoundGroup\FoundGroupUseCase;
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase;
+use CinemaBot\Domain\CinemaID;
 
-final class EventSourcedGroupRepository implements GroupRepository
+final class EventSourcedCinemaRepository implements CinemaRepository
 {
     private EventStore $eventStore;
     private EventPublisher $eventPublisher;
@@ -22,17 +22,17 @@ final class EventSourcedGroupRepository implements GroupRepository
         $this->eventPublisher = $eventPublisher;
     }
 
-    public function load(GroupID $groupID, callable $callable): GroupUseCase
+    public function load(CinemaID $cinemaID, callable $callable): CinemaUseCase
     {
-        $storableEvents = $this->eventStore->load($groupID);
+        $storableEvents = $this->eventStore->load($cinemaID);
         $events = Events::from($storableEvents);
 
         return $callable($events);
     }
 
-    public function save(GroupUseCase $group): void
+    public function save(CinemaUseCase $cinema): void
     {
-        $events = $group->extractEvents();
+        $events = $cinema->extractEvents();
 
         $storableEvents = StorableEvents::from($events);
         $this->eventStore->save($storableEvents);

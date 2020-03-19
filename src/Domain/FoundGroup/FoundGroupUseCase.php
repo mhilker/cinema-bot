@@ -9,7 +9,7 @@ use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\Event\GroupFoundedEvent;
 use CinemaBot\Domain\GroupID;
-use CinemaBot\Domain\Repository\GroupUseCase;
+use CinemaBot\Domain\Group\GroupUseCase;
 
 final class FoundGroupUseCase extends AbstractEventStream implements GroupUseCase
 {
