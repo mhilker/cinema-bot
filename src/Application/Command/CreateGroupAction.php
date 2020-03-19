@@ -9,37 +9,32 @@ use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\FoundGroup\FoundGroupCommand;
 use CinemaBot\Domain\GroupID;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Psr7\Response;
 
-final class FoundGroupCLICommand extends Command
+final class CreateGroupAction implements RequestHandlerInterface
 {
     private CommandBus $commandBus;
     private EventDispatcher $eventDispatcher;
 
     public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher)
     {
-        parent::__construct();
         $this->commandBus = $commandBus;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    protected function configure(): void
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->setName('found-group');
-        $this->addOption('chatID', null, InputOption::VALUE_REQUIRED);
-    }
+        $body = $request->getParsedBody();
 
-    public function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $groupID = GroupID::random();
-        $chatID = ChatID::fromString($input->getOption('chatID'));
+        $groupID = GroupID::from($body['groupID']);
+        $chatID = ChatID::fromString($body['chatID']);
 
         $this->commandBus->dispatch(new FoundGroupCommand($groupID, $chatID));
         $this->eventDispatcher->dispatch();
 
-        return 0;
+        return new Response(201);
     }
 }

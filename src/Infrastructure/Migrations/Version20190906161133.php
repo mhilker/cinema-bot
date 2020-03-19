@@ -10,14 +10,13 @@ use Doctrine\Migrations\AbstractMigration;
 
 final class Version20190906161133 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return 'Add columns "id" and "group_id" to table "watchlist".';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
-        /** @var Table $watchlist */
         $watchlist = $schema->getTable('watchlist');
         $watchlist->addColumn('id', 'bigint', [
             'unsigned' => true,
@@ -30,9 +29,8 @@ final class Version20190906161133 extends AbstractMigration
         $watchlist->setPrimaryKey(['id']);
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
-        /** @var Table $watchlist */
         $watchlist = $schema->getTable('watchlist');
         $watchlist->dropPrimaryKey();
         $watchlist->dropColumn('id');

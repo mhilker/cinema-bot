@@ -9,12 +9,12 @@ use Doctrine\Migrations\AbstractMigration;
 
 final class Version20190906153149 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return 'Create the table "chat_id_to_group_id_map".';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         $idMap = $schema->createTable('chat_id_to_group_id_map');
         $idMap->addColumn('id', 'bigint', [
@@ -33,7 +33,7 @@ final class Version20190906153149 extends AbstractMigration
         $idMap->addUniqueIndex(['chat_id', 'group_id']);
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         $schema->dropTable('chat_id_to_group_id_map');
     }

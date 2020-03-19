@@ -6,7 +6,6 @@ namespace CinemaBot\Domain\ChatIDToGroupIDMap;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;
-use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Event\GroupFoundedEvent;
 
 final class ChatGroupProjector implements EventListener

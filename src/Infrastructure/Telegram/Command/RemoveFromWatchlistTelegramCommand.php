@@ -7,7 +7,7 @@ namespace CinemaBot\Infrastructure\Telegram\Command;
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Domain\ChatID;
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
 use CinemaBot\Domain\RemoveTerm\RemoveFromWatchlistCommand;
 use CinemaBot\Domain\Term;
 use TelegramBot\Api\Client;
@@ -17,9 +17,11 @@ class RemoveFromWatchlistTelegramCommand implements TelegramCommand
 {
     private CommandBus $commandBus;
     private EventDispatcher $eventDispatcher;
+    private ChatGroupProjection $projection;
 
-    public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher)
+    public function __construct(ChatGroupProjection $projection, CommandBus $commandBus, EventDispatcher $eventDispatcher)
     {
+        $this->projection = $projection;
         $this->commandBus = $commandBus;
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -32,7 +34,7 @@ class RemoveFromWatchlistTelegramCommand implements TelegramCommand
     public function execute(Client $bot, Message $message): void
     {
         $chatID = ChatID::fromInt($message->getChat()->getId());
-        $groupID = GroupID::random();
+        $groupID = $this->projection->loadGroupIDByChatID($chatID);
 
         preg_match('/\/([a-z]+)( (.*))?/', $message->getText(), $matches);
         $term = Term::from($matches[3] ?? '');

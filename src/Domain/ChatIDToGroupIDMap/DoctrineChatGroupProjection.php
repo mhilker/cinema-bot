@@ -20,7 +20,7 @@ final class DoctrineChatGroupProjection implements ChatGroupProjection
     public function add(ChatID $chatID, GroupID $groupID): void
     {
         $sql = <<<SQL
-        INSERT INTO `chat_id_to_group_id_map` (`chat_id`, `group_id`) 
+        INSERT OR IGNORE INTO "chat_id_to_group_id_map" ("chat_id", "group_id") 
         VALUES (:chat_id, :group_id);
         SQL;
 
@@ -34,12 +34,11 @@ final class DoctrineChatGroupProjection implements ChatGroupProjection
     public function loadGroupIDByChatID(ChatID $chatID): GroupID
     {
         $sql = <<<SQL
-        SELECT `group_id` 
-        FROM `chat_id_to_group_id_map` 
-        WHERE `chat_id` = :chat_id
+        SELECT "group_id" 
+        FROM "chat_id_to_group_id_map" 
+        WHERE "chat_id" = :chat_id
         LIMIT 1;
         SQL;
-
 
         $statement = $this->connection->prepare($sql);
         $statement->execute([

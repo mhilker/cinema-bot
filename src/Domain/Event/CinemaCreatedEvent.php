@@ -14,18 +14,18 @@ final class CinemaCreatedEvent implements Event, StorableEvent
 {
     public const TOPIC = 'cinema_bot.cinema.cinema_created';
 
-    private CinemaID $cinemaID;
+    private CinemaID $id;
     private URL $url;
 
     public function __construct(CinemaID $cinemaID, URL $url)
     {
-        $this->cinemaID = $cinemaID;
+        $this->id = $cinemaID;
         $this->url = $url;
     }
 
     public function getCinemaID(): CinemaID
     {
-        return $this->cinemaID;
+        return $this->id;
     }
 
     public function getCinemaURL(): URL
@@ -40,7 +40,7 @@ final class CinemaCreatedEvent implements Event, StorableEvent
 
     public function getAggregateID(): AggregateID
     {
-        return $this->cinemaID;
+        return $this->id;
     }
 
     public static function fromJSON(string $json): StorableEvent
@@ -56,7 +56,7 @@ final class CinemaCreatedEvent implements Event, StorableEvent
     public function asJSON(): string
     {
         return json_encode([
-            'id'  => $this->cinemaID->asString(),
+            'id'  => $this->id->asString(),
             'url' => $this->url->asString(),
         ], JSON_THROW_ON_ERROR);
     }

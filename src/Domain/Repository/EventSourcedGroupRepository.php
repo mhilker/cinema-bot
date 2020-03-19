@@ -8,10 +8,10 @@ use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Application\EventStore\EventStore;
 use CinemaBot\Application\EventStore\StorableEvents;
-use CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase;
-use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\FoundGroup\FoundGroupUseCase;
+use CinemaBot\Domain\GroupID;
 
-final class EventSourcedCinemaRepository implements CinemaRepository
+final class EventSourcedGroupRepository implements GroupRepository
 {
     private EventStore $eventStore;
     private EventPublisher $eventPublisher;
@@ -22,17 +22,17 @@ final class EventSourcedCinemaRepository implements CinemaRepository
         $this->eventPublisher = $eventPublisher;
     }
 
-    public function load(CinemaID $cinemaID): CinemaUseCase
+    public function load(GroupID $groupID): GroupUseCase
     {
-        $storableEvents = $this->eventStore->load($cinemaID);
+        $storableEvents = $this->eventStore->load($groupID);
         $events = Events::from($storableEvents);
 
-        return new AddShowToCinemaUseCase($events);
+        return new FoundGroupUseCase($events);
     }
 
-    public function save(CinemaUseCase $cinema): void
+    public function save(GroupUseCase $group): void
     {
-        $events = $cinema->extractEvents();
+        $events = $group->extractEvents();
 
         $storableEvents = StorableEvents::from($events);
         $this->eventStore->save($storableEvents);

@@ -10,7 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Response;
 use TelegramBot\Api\Client;
 
-final class WebHookAction implements RequestHandlerInterface
+final class TelegramWebHookAction implements RequestHandlerInterface
 {
     private Client $telegram;
 

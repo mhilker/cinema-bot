@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain;
 
+use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Infrastructure\UUID;
 
-final class GroupID
+final class GroupID implements AggregateID
 {
     private string $value;
 

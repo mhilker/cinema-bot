@@ -7,7 +7,7 @@ namespace CinemaBot\Application\Aggregate;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\Events;
 
-abstract class AbstractAggregate
+abstract class AbstractEventStream
 {
     /** @var Event[] */
     private array $events = [];

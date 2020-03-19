@@ -6,7 +6,6 @@ namespace CinemaBot\Domain\CinemaList;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;
-use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 
 final class CinemaListProjector implements EventListener

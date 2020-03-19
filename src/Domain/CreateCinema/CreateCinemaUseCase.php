@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\CreateCinema;
 
-use CinemaBot\Application\Aggregate\AbstractAggregate;
+use CinemaBot\Application\Aggregate\AbstractEventStream;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
+use CinemaBot\Domain\Repository\CinemaUseCase;
 use CinemaBot\Domain\URL;
 
-final class CreateCinemaUseCase extends AbstractAggregate
+final class CreateCinemaUseCase extends AbstractEventStream implements CinemaUseCase
 {
     private CinemaID $id;
     private URL $url;

@@ -18,7 +18,5 @@ $container = $builder->build();
 
 $app = new Application();
 $app->add($container->get(CrawlCinemaCLICommand::class));
-$app->add($container->get(CreateCinemaCLICommand::class));
 $app->add($container->get(SendNotificationCLICommand::class));
-$app->add($container->get(FoundGroupCLICommand::class));
 $app->run();

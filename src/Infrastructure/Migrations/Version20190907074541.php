@@ -10,12 +10,12 @@ use Doctrine\Migrations\AbstractMigration;
 
 final class Version20190907074541 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return 'Add columns "id" and "url" to table "cinema_list".';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         /** @var Table $cinemaList */
         $cinemaList = $schema->getTable('cinema_list');
@@ -29,7 +29,7 @@ final class Version20190907074541 extends AbstractMigration
         $cinemaList->setPrimaryKey(['id']);
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         /** @var Table $cinemaList */
         $cinemaList = $schema->getTable('cinema_list');

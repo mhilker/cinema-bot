@@ -22,10 +22,9 @@ final class DoctrineWatchlistProjection implements WatchlistProjection
     {
         $sql = <<<SQL
         SELECT * 
-        FROM `watchlist` 
-        WHERE `group_id` = :group_id;
+        FROM "watchlist" 
+        WHERE "group_id" = :group_id;
         SQL;
-
 
         $statement = $this->connection->prepare($sql);
         $statement->execute([
@@ -44,7 +43,7 @@ final class DoctrineWatchlistProjection implements WatchlistProjection
     public function add(GroupID $groupID, Term $term): void
     {
         $sql = <<<SQL
-        INSERT INTO `watchlist` (`group_id`, `term`) 
+        INSERT OR IGNORE INTO "watchlist" ("group_id", "term") 
         VALUES (:group_id, :term);
         SQL;
 
@@ -58,9 +57,9 @@ final class DoctrineWatchlistProjection implements WatchlistProjection
     public function remove(GroupID $groupID, Term $term): void
     {
         $sql = <<<SQL
-        DELETE FROM `watchlist` 
-        WHERE `group_id` = :group_id 
-          AND `term` = :term;
+        DELETE FROM "watchlist"
+        WHERE "group_id" = :group_id 
+          AND "term" = :term;
         SQL;
 
         $statement = $this->connection->prepare($sql);

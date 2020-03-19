@@ -4,23 +4,29 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\AddShowToCinema\Parser;
 
-use CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader;
+use CinemaBot\Domain\AddShowToCinema\Downloader\Downloader;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\URL;
 
 final class Crawler
 {
+    private Downloader $downloader;
+
+    public function __construct(Downloader $downloader)
+    {
+        $this->downloader = $downloader;
+    }
+
     public function crawl(URL $url): Movies
     {
-        $downloader = new CopyDownloader();
-        $response = $downloader->download($url);
+        $response = $this->downloader->download($url);
 
         $weekParser = new WeekParser();
         $parsedURLs = $weekParser->parse($response);
 
         $responses = [];
         foreach ($parsedURLs as $parsedURL) {
-            $responses[] = $downloader->download($parsedURL);
+            $responses[] = $this->downloader->download($parsedURL);
         }
 
         $movieList = [];

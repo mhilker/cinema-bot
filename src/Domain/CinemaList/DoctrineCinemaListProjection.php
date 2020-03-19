@@ -21,8 +21,8 @@ final class DoctrineCinemaListProjection implements CinemaListProjection
     public function load(): CinemaIDs
     {
         $sql = <<<SQL
-        SELECT `cinema_id` 
-        FROM `cinema_list`;
+        SELECT "cinema_id" 
+        FROM "cinema_list";
         SQL;
 
         $statement = $this->connection->query($sql);
@@ -39,7 +39,7 @@ final class DoctrineCinemaListProjection implements CinemaListProjection
     public function insert(CinemaID $id, URL $url): void
     {
         $sql = <<<SQL
-        INSERT INTO `cinema_list` (`cinema_id`, `url`) 
+        INSERT INTO "cinema_list" ("cinema_id", "url") 
         VALUES (:cinema_id, :url);
         SQL;
 

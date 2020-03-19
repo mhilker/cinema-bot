@@ -28,7 +28,7 @@ final class DoctrineShowListProjection implements ShowListProjection
     {
         $sql = <<< SQL
         INSERT INTO 
-            `movie_list` (`cinema_id`, `movie_name`, `movie_time`)
+            "movie_list" ("cinema_id", "movie_name", "movie_time")
         VALUES
             (:cinema_id, :movie_name, :movie_time);
         SQL;

@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure\Telegram\Command;
 
 use CinemaBot\Domain\ChatID;
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
 use CinemaBot\Domain\Watchlist\WatchlistProjection;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 
 class ShowWatchlistTelegramCommand implements TelegramCommand
 {
-    private WatchlistProjection $watchlistProjection;
+    private ChatGroupProjection $projection;
+    private WatchlistProjection $watchlist;
 
-    public function __construct(WatchlistProjection $watchlistProjection)
+    public function __construct(ChatGroupProjection $projection, WatchlistProjection $watchlist)
     {
-        $this->watchlistProjection = $watchlistProjection;
+        $this->projection = $projection;
+        $this->watchlist = $watchlist;
     }
 
     public function getName(): string
@@ -27,9 +29,9 @@ class ShowWatchlistTelegramCommand implements TelegramCommand
     public function execute(Client $bot, Message $message): void
     {
         $chatID = ChatID::fromInt($message->getChat()->getId());
-        $groupID = GroupID::random();
+        $groupID = $this->projection->loadGroupIDByChatID($chatID);
 
-        $watchlist = $this->watchlistProjection->loadByGroupID($groupID);
+        $watchlist = $this->watchlist->loadByGroupID($groupID);
         if (count($watchlist) > 0) {
             $response = 'Current watchlist:' . PHP_EOL;
             foreach ($watchlist as $term) {

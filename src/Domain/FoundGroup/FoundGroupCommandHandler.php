@@ -8,22 +8,22 @@ use CinemaBot\Application\CQRS\CommandHandler;
 use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Event\GroupFoundedEvent;
+use CinemaBot\Domain\FoundGroup\FoundGroupUseCase;
+use CinemaBot\Domain\Repository\GroupRepository;
 
 final class FoundGroupCommandHandler implements CommandHandler
 {
-    private EventPublisher $eventPublisher;
+    private GroupRepository $repository;
 
-    public function __construct(EventPublisher $eventPublisher)
+    public function __construct(GroupRepository $repository)
     {
-        $this->eventPublisher = $eventPublisher;
+        $this->repository = $repository;
     }
 
     public function handle(FoundGroupCommand $command): void
     {
-        $events = Events::from([
-            new GroupFoundedEvent($command->getGroupID(), $command->getChatID()),
-        ]);
+        $group = FoundGroupUseCase::foundNew($command->getGroupID(), $command->getChatID());
 
-        $this->eventPublisher->publish($events);
+        $this->repository->save($group);
     }
 }

@@ -9,37 +9,32 @@ use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\CreateCinema\CreateCinemaCommand;
 use CinemaBot\Domain\URL;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Psr7\Response;
 
-final class CreateCinemaCLICommand extends Command
+final class CreateCinemaAction implements RequestHandlerInterface
 {
     private CommandBus $commandBus;
     private EventDispatcher $eventDispatcher;
 
     public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher)
     {
-        parent::__construct();
         $this->commandBus = $commandBus;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    protected function configure(): void
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->setName('create-cinema');
-        $this->addOption('url', null, InputOption::VALUE_REQUIRED);
-    }
+        $body = $request->getParsedBody();
 
-    public function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $cinemaID = CinemaID::random();
-        $url = URL::from($input->getOption('url'));
+        $cinemaID = CinemaID::from($body['cinemaID']);
+        $url = URL::from($body['url']);
 
         $this->commandBus->dispatch(new CreateCinemaCommand($cinemaID, $url));
         $this->eventDispatcher->dispatch();
 
-        return 0;
+        return new Response(201);
     }
 }

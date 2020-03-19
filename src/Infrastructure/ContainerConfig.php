@@ -9,12 +9,16 @@ use CinemaBot\Application\CQRS\DirectEventBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\EventStore\EventStore;
+use CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader;
+use CinemaBot\Domain\AddShowToCinema\Downloader\Downloader;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
 use CinemaBot\Domain\ChatIDToGroupIDMap\DoctrineChatGroupProjection;
-use CinemaBot\Domain\Repository\CinemaRepository;
-use CinemaBot\Domain\Repository\EventSourcedCinemaRepository;
 use CinemaBot\Domain\CinemaList\CinemaListProjection;
 use CinemaBot\Domain\CinemaList\DoctrineCinemaListProjection;
+use CinemaBot\Domain\Repository\CinemaRepository;
+use CinemaBot\Domain\Repository\EventSourcedCinemaRepository;
+use CinemaBot\Domain\Repository\EventSourcedGroupRepository;
+use CinemaBot\Domain\Repository\GroupRepository;
 use CinemaBot\Domain\ShowList\DoctrineShowListProjection;
 use CinemaBot\Domain\ShowList\ShowListProjection;
 use CinemaBot\Domain\Watchlist\DoctrineWatchlistProjection;
@@ -24,6 +28,7 @@ use CinemaBot\Infrastructure\Telegram\TelegramFactory;
 use DI\Definition\Source\DefinitionArray;
 use Doctrine\DBAL\Driver\Connection;
 use TelegramBot\Api\Client;
+
 use function DI\factory;
 use function DI\get;
 
@@ -45,10 +50,10 @@ final class ContainerConfig extends DefinitionArray
             CinemaListProjection::class => get(DoctrineCinemaListProjection::class),
             ChatGroupProjection::class  => get(DoctrineChatGroupProjection::class),
             ShowListProjection::class => get(DoctrineShowListProjection::class),
-
             CinemaRepository::class => get(EventSourcedCinemaRepository::class),
-
+            GroupRepository::class => get(EventSourcedGroupRepository::class),
             Client::class => factory(TelegramFactory::class),
+            Downloader::class => get(CopyDownloader::class)
         ]);
     }
 }

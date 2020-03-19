@@ -6,7 +6,6 @@ namespace CinemaBot\Domain\Watchlist;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;
-use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Event\TermAddedEvent;
 use CinemaBot\Domain\Event\TermRemovedEvent;
 
