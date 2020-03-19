@@ -39,19 +39,19 @@ final class GroupFoundedEvent implements Event, StorableEvent
         return self::TOPIC;
     }
 
+    public function getAggregateID(): AggregateID
+    {
+        return $this->groupID;
+    }
+
     public static function fromJSON(string $json): StorableEvent
     {
         $payload = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 
         return new self(
             GroupID::from($payload['groupID']),
-            CinemaID::from($payload['chatID']),
+            ChatID::fromString($payload['chatID']),
         );
-    }
-
-    public function getAggregateID(): AggregateID
-    {
-        return $this->groupID;
     }
 
     public function asJSON(): string

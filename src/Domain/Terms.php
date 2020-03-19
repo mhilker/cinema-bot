@@ -43,4 +43,22 @@ final class Terms implements IteratorAggregate, Countable
     {
         return count($this->terms);
     }
+
+    public function with(Term $term): self
+    {
+        return new self([
+            ...$this->terms,
+            $term,
+        ]);
+    }
+
+    public function contains(Term $term): bool
+    {
+        return isset($this->terms[$term->asString()]) === true;
+    }
+
+    public function notContains(Term $term): bool
+    {
+        return $this->contains($term) === false;
+    }
 }

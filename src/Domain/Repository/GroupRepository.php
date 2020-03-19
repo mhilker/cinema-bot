@@ -10,5 +10,5 @@ interface GroupRepository
 {
     public function save(GroupUseCase $group): void;
 
-    public function load(GroupID $groupID): GroupUseCase;
+    public function load(GroupID $groupID, callable $callable): GroupUseCase;
 }

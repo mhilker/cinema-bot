@@ -5,25 +5,27 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\AddTerm;
 
 use CinemaBot\Application\CQRS\CommandHandler;
-use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Domain\Event\TermAddedEvent;
+use CinemaBot\Domain\Repository\GroupRepository;
 
 final class AddTermToWatchlistCommandHandler implements CommandHandler
 {
-    private EventPublisher $eventPublisher;
+    private GroupRepository $repository;
 
-    public function __construct(EventPublisher $eventPublisher)
+    public function __construct(GroupRepository $repository)
     {
-        $this->eventPublisher = $eventPublisher;
+        $this->repository = $repository;
     }
 
     public function handle(AddTermToWatchlistCommand $command): void
     {
-        $events = Events::from([
-            new TermAddedEvent($command->getGroupID(), $command->getTerm()),
-        ]);
+        $groupID = $command->getGroupID();
+        $term = $command->getTerm();
 
-        $this->eventPublisher->publish($events);
+        /** @var AddTermToWatchlistUseCase $group */
+        $group = $this->repository->load($groupID, fn(Events $events) => new AddTermToWatchlistUseCase($events));
+        $group->add($term);
+
+        $this->repository->save($group);
     }
 }
