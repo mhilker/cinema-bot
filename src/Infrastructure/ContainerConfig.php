@@ -9,8 +9,8 @@ use CinemaBot\Application\CQRS\DirectEventBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\EventStore\EventStore;
-use CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader;
-use CinemaBot\Domain\AddShowToCinema\Downloader\Downloader;
+use CinemaBot\Domain\CrawlCinema\Downloader\CopyDownloader;
+use CinemaBot\Domain\CrawlCinema\Downloader\Downloader;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
 use CinemaBot\Domain\ChatIDToGroupIDMap\DoctrineChatGroupProjection;
 use CinemaBot\Domain\Cinema\CinemaRepository;
@@ -21,7 +21,7 @@ use CinemaBot\Domain\Group\EventSourcedGroupRepository;
 use CinemaBot\Domain\Group\GroupRepository;
 use CinemaBot\Domain\SendNotifications\MarkdownNotificationFormatter;
 use CinemaBot\Domain\SendNotifications\NotificationFormatter;
-use CinemaBot\Domain\SendNotifications\NotifierSystem;
+use CinemaBot\Domain\SendNotifications\Notifier;
 use CinemaBot\Domain\SendNotifications\TelegramNotifier;
 use CinemaBot\Domain\ShowList\DoctrineShowListProjection;
 use CinemaBot\Domain\ShowList\ShowListProjection;
@@ -60,8 +60,8 @@ final class ContainerConfig extends DefinitionArray
             Client::class => factory(TelegramClientFactory::class),
             BotApi::class => factory(TelegramBotFactory::class),
             Downloader::class => get(CopyDownloader::class),
-            NotifierSystem::class => get(TelegramNotifier::class),
             NotificationFormatter::class => get(MarkdownNotificationFormatter::class),
+            Notifier::class => get(TelegramNotifier::class),
         ]);
     }
 }

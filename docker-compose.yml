@@ -43,20 +43,20 @@ services:
     secrets:
       - cinema-bot-telegram-token
 
-#  notifier:
-#    image: mhilker/private:cinema-bot-php
-#    build:
-#      context: .
-#      dockerfile: docker/php/Dockerfile
-#    command: php /app/bin/cli.php
-#    environment:
-#      - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
-#      - DB_PATH=/app/database/data.db
-#    volumes:
-#      - .:/app/
-#      - sqlite3-db-data:/app/database/
-#    secrets:
-#      - cinema-bot-telegram-token
+  notifier:
+    image: mhilker/private:cinema-bot-php
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    command: php /app/bin/cli.php send-notifications
+    environment:
+      - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
+      - DB_PATH=/app/database/data.db
+    volumes:
+      - .:/app/
+      - sqlite3-db-data:/app/database/
+    secrets:
+      - cinema-bot-telegram-token
 
 volumes:
   sqlite3-db-data:

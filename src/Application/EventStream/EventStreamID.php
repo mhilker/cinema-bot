@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Application\Aggregate;
+namespace CinemaBot\Application\EventStream;
 
-interface AggregateID
+interface EventStreamID
 {
     public function asString(): string;
 }

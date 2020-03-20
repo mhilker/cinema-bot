@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Domain\CrawlCinema;
 
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
@@ -19,16 +18,16 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Domain\AddShowToCinema\AddShowToCinemaUseCase
+ * @covers \CinemaBot\Domain\CrawlCinema\CrawlCinemaUseCase
  */
-final class CinemaTest extends TestCase
+final class CrawlCinemaTest extends TestCase
 {
     public function testAddsShowsToCalendar(): void
     {
         $id = CinemaID::from('123');
         $url = URL::from('https://example.com/');
 
-        $calendar = new AddShowToCinemaUseCase(Events::from([
+        $calendar = new CrawlCinemaUseCase(Events::from([
             new CinemaCreatedEvent($id, $url),
         ]));
         $calendar->addShows(Movies::from([

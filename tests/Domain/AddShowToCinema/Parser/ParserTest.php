@@ -2,38 +2,33 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Domain\CrawlCinema\Parser;
 
-use CinemaBot\Domain\AddShowToCinema\Parser\DOMParser;
 use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\MovieTime;
 use CinemaBot\Domain\MovieTimes;
 use DateTimeImmutable;
-use Generator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Domain\AddShowToCinema\Parser\DOMParser
+ * @covers \CinemaBot\Domain\CrawlCinema\Parser\DOMParser
  */
 final class ParserTest extends TestCase
 {
     /**
      * @dataProvider provider
-     *
-     * @param string $html
-     * @param Movies $expectedMovies
      */
-    public function testExtractsTimesForMovieFromHtml(string $html, Movies $expectedMovies): void
+    public function testExtractsTimesForMovieFromHtml(string $html, Movies $expected): void
     {
         $parser = new DOMParser();
-        $movies = $parser->parse($html);
+        $actual = $parser->parse($html);
 
-        $this->assertEquals($expectedMovies, $movies);
+        $this->assertEquals($expected, $actual);
     }
 
-    public function provider(): Generator
+    public function provider(): iterable
     {
         yield [
             'file' => file_get_contents(__DIR__ . '/_files/kinoprogramm.html'),

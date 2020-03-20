@@ -9,6 +9,13 @@ final class DirectCommandBus implements CommandBus
     /** @var CommandHandler[] */
     private array $commandHandlers = [];
 
+    private EventDispatcher $eventDispatcher;
+
+    public function __construct(EventDispatcher $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     public function dispatch(Command $command): void
     {
         $commandName = get_class($command);
@@ -21,6 +28,8 @@ final class DirectCommandBus implements CommandBus
         }
 
         $this->commandHandlers[$commandName]->handle($command);
+
+        $this->eventDispatcher->dispatch();
     }
 
     public function add(string $commandName, CommandHandler $commandHandler): void

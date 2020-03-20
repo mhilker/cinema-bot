@@ -2,19 +2,21 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Domain\CrawlCinema\Downloader;
 
-use CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader;
 use CinemaBot\Domain\URL;
 use DOMDocument;
 use DOMXPath;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \CinemaBot\Domain\AddShowToCinema\Downloader\CopyDownloader
+ * @covers \CinemaBot\Domain\CrawlCinema\Downloader\CopyDownloader
  */
 final class DownloaderTest extends TestCase
 {
+    /**
+     * @large
+     */
     public function testDownloadsFiles(): void
     {
         $url = URL::from('https://example.com');

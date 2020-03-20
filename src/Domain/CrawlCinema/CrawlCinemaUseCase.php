@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema;
+namespace CinemaBot\Domain\CrawlCinema;
 
-use CinemaBot\Application\Aggregate\AbstractEventStream;
 use CinemaBot\Application\CQRS\Event;
+use CinemaBot\Application\EventStream\AbstractEventStream;
+use CinemaBot\Domain\Cinema\CinemaUseCase;
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\MovieTime;
-use CinemaBot\Domain\Cinema\CinemaUseCase;
 use CinemaBot\Domain\URL;
 
-final class AddShowToCinemaUseCase extends AbstractEventStream implements CinemaUseCase
+final class CrawlCinemaUseCase extends AbstractEventStream implements CinemaUseCase
 {
     private CinemaID $id;
     private URL $url;

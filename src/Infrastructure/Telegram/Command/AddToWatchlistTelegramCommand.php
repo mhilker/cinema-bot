@@ -13,7 +13,7 @@ use CinemaBot\Domain\Term;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 
-class AddToWatchlistTelegramCommand implements TelegramCommand
+final class AddToWatchlistTelegramCommand implements TelegramCommand
 {
     private ChatGroupProjection $projection;
     private CommandBus $commandBus;

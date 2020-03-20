@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\Event;
 
-use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\EventStore\StorableEvent;
+use CinemaBot\Application\EventStream\EventStreamID;
 use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\Term;
 
@@ -38,7 +38,7 @@ final class TermAddedEvent implements Event, StorableEvent
         return self::TOPIC;
     }
 
-    public function getAggregateID(): AggregateID
+    public function getEventStreamID(): EventStreamID
     {
         return $this->groupID;
     }

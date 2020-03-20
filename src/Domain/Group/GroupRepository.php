@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\Group;
 
-use CinemaBot\Domain\Group\GroupUseCase;
 use CinemaBot\Domain\GroupID;
 
 interface GroupRepository

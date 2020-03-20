@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema\Parser;
+namespace CinemaBot\Domain\CrawlCinema\Parser;
 
 use CinemaBot\Domain\Movies;
 

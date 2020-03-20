@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Domain\SendNotifications;
 
 use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
 use CinemaBot\Domain\MovieTimes;
-use CinemaBot\Domain\SendNotifications\MarkdownNotificationFormatter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,7 +24,7 @@ final class MarkdownNotificationFormatterTest extends TestCase
         ]));
 
         $formatter = new MarkdownNotificationFormatter();
-        $markdown = $formatter->format($movie);
+        $actual = $formatter->format($movie);
 
         $expected = <<< MARKDOWN
         The Movie Name
@@ -37,6 +36,6 @@ final class MarkdownNotificationFormatterTest extends TestCase
         `23:00`
         
         MARKDOWN;
-        $this->assertEquals($expected, $markdown);
+        $this->assertEquals($expected, $actual);
     }
 }

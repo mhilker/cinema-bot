@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\Event;
 
-use CinemaBot\Application\Aggregate\AggregateID;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\EventStore\StorableEvent;
+use CinemaBot\Application\EventStream\EventStreamID;
 use CinemaBot\Domain\ChatID;
-use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\GroupID;
 
 final class GroupFoundedEvent implements Event, StorableEvent
@@ -39,7 +38,7 @@ final class GroupFoundedEvent implements Event, StorableEvent
         return self::TOPIC;
     }
 
-    public function getAggregateID(): AggregateID
+    public function getEventStreamID(): EventStreamID
     {
         return $this->groupID;
     }

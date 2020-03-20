@@ -10,7 +10,7 @@ use CinemaBot\Domain\Watchlist\WatchlistProjection;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 
-class ShowWatchlistTelegramCommand implements TelegramCommand
+final class ShowWatchlistTelegramCommand implements TelegramCommand
 {
     private ChatGroupProjection $projection;
     private WatchlistProjection $watchlist;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Application\EventStore;
 
-use CinemaBot\Application\Aggregate\AggregateID;
+use CinemaBot\Application\EventStream\EventStreamID;
 use Doctrine\DBAL\Driver\Connection;
 use Exception;
 
@@ -22,7 +22,7 @@ final class DoctrineEventStore implements EventStore
     /**
      * @throws EventStoreException
      */
-    public function load(AggregateID $id): StorableEvents
+    public function load(EventStreamID $id): StorableEvents
     {
         try {
             $sql = <<< SQL
@@ -31,7 +31,7 @@ final class DoctrineEventStore implements EventStore
             FROM 
                 events 
             WHERE 
-                aggregate_id = :id;
+                event_stream_id = :id;
             SQL;
 
             $statement = $this->connection->prepare($sql);
@@ -73,17 +73,17 @@ final class DoctrineEventStore implements EventStore
         try {
             $sql = <<< SQL
             INSERT INTO 
-                events (aggregate_id, topic, payload) 
+                events (event_stream_id, topic, payload) 
             VALUES 
-                (:aggregate_id, :topic, :payload);
+                (:event_stream_id, :topic, :payload);
             SQL;
             $statement = $this->connection->prepare($sql);
 
             foreach ($events as $event) {
                 $statement->execute([
-                    'aggregate_id' => $event->getAggregateID()->asString(),
-                    'topic'        => $event->getTopic(),
-                    'payload'      => $event->asJSON(),
+                    'event_stream_id' => $event->getEventStreamID()->asString(),
+                    'topic'           => $event->getTopic(),
+                    'payload'         => $event->asJSON(),
                 ]);
             }
 

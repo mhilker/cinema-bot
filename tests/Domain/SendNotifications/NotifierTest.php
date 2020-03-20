@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot;
+namespace CinemaBot\Domain\SendNotifications;
 
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\MovieTime;
 use CinemaBot\Domain\MovieTimes;
-use CinemaBot\Domain\SendNotifications\MarkdownNotificationFormatter;
-use CinemaBot\Domain\SendNotifications\TelegramNotifier;
 use DateTimeImmutable;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

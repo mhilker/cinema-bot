@@ -2,19 +2,21 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema\Parser;
+namespace CinemaBot\Domain\CrawlCinema\Parser;
 
-use CinemaBot\Domain\AddShowToCinema\Downloader\Downloader;
+use CinemaBot\Domain\CrawlCinema\Downloader\Downloader;
 use CinemaBot\Domain\Movies;
 use CinemaBot\Domain\URL;
 
 final class Crawler
 {
     private Downloader $downloader;
+    private Parser $parser;
 
-    public function __construct(Downloader $downloader)
+    public function __construct(Downloader $downloader, Parser $parser)
     {
         $this->downloader = $downloader;
+        $this->parser = $parser;
     }
 
     public function crawl(URL $url): Movies
@@ -31,9 +33,8 @@ final class Crawler
 
         $movieList = [];
 
-        $parser = new DOMParser();
         foreach ($responses as $response) {
-            $movies = $parser->parse($response);
+            $movies = $this->parser->parse($response);
             foreach ($movies as $movie) {
                 $movieList[] = $movie;
             }

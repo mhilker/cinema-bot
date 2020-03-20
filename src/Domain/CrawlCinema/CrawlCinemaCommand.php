@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema;
+namespace CinemaBot\Domain\CrawlCinema;
 
 use CinemaBot\Application\CQRS\Command;
 use CinemaBot\Domain\CinemaID;

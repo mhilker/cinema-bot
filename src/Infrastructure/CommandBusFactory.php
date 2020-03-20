@@ -6,8 +6,9 @@ namespace CinemaBot\Infrastructure;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\DirectCommandBus;
-use CinemaBot\Domain\AddShowToCinema\CrawlCinemaCommand;
-use CinemaBot\Domain\AddShowToCinema\CrawlCinemaCommandHandler;
+use CinemaBot\Application\CQRS\EventDispatcher;
+use CinemaBot\Domain\CrawlCinema\CrawlCinemaCommand;
+use CinemaBot\Domain\CrawlCinema\CrawlCinemaCommandHandler;
 use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommand;
 use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommandHandler;
 use CinemaBot\Domain\CreateCinema\CreateCinemaCommand;
@@ -22,7 +23,9 @@ final class CommandBusFactory
 {
     public function __invoke(ContainerInterface $container): CommandBus
     {
-        $commandBus = new DirectCommandBus();
+        $eventDispatcher = $container->get(EventDispatcher::class);
+
+        $commandBus = new DirectCommandBus($eventDispatcher);
         $commandBus->add(CreateCinemaCommand::class, $container->get(CreateCinemaCommandHandler::class));
         $commandBus->add(CrawlCinemaCommand::class, $container->get(CrawlCinemaCommandHandler::class));
         $commandBus->add(AddTermToWatchlistCommand::class, $container->get(AddTermToWatchlistCommandHandler::class));

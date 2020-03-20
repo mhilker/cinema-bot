@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddShowToCinema\Downloader;
+namespace CinemaBot\Domain\CrawlCinema\Downloader;
 
 use CinemaBot\Domain\URL;
 

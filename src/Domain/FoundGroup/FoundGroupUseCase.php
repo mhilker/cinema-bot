@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\FoundGroup;
 
-use CinemaBot\Application\Aggregate\AbstractEventStream;
 use CinemaBot\Application\CQRS\Event;
+use CinemaBot\Application\EventStream\AbstractEventStream;
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\Event\GroupFoundedEvent;
-use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\Group\GroupUseCase;
+use CinemaBot\Domain\GroupID;
 
 final class FoundGroupUseCase extends AbstractEventStream implements GroupUseCase
 {

@@ -14,11 +14,11 @@ class SendNotificationCLICommand extends Command
 {
     private NotifierSystem $notifierSystem;
 
-//    public function __construct(NotifierSystem $notifierSystem)
-//    {
-//        parent::__construct();
-//        $this->notifierSystem = $notifierSystem;
-//    }
+    public function __construct(NotifierSystem $notifierSystem)
+    {
+        parent::__construct();
+        $this->notifierSystem = $notifierSystem;
+    }
 
     protected function configure(): void
     {
@@ -27,10 +27,9 @@ class SendNotificationCLICommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        // TODO: Aus store mit pointer laden
         $events = Events::from([]);
 
-        $this->notifierSystem->handle($events);
+        $this->notifierSystem->send($events);
 
         return 0;
     }

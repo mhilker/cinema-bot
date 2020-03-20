@@ -8,7 +8,7 @@ use CinemaBot\Domain\ChatID;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 
-class HelpTelegramCommand implements TelegramCommand
+final class HelpTelegramCommand implements TelegramCommand
 {
     public function getName(): string
     {
