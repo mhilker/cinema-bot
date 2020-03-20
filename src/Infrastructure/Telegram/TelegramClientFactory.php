@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace CinemaBot\Infrastructure\Telegram;
 
-use CinemaBot\Infrastructure\Telegram\Command\AddToWatchlistTelegramCommand;
+use CinemaBot\Infrastructure\Telegram\Command\AddToWatchListTelegramCommand;
 use CinemaBot\Infrastructure\Telegram\Command\HelpTelegramCommand;
 use CinemaBot\Infrastructure\Telegram\Command\JoinChatTelegramCommand;
 use CinemaBot\Infrastructure\Telegram\Command\LeaveChatTelegramCommand;
-use CinemaBot\Infrastructure\Telegram\Command\RemoveFromWatchlistTelegramCommand;
-use CinemaBot\Infrastructure\Telegram\Command\ShowWatchlistTelegramCommand;
+use CinemaBot\Infrastructure\Telegram\Command\RemoveFromWatchListTelegramCommand;
+use CinemaBot\Infrastructure\Telegram\Command\ShowWatchListTelegramCommand;
 use Psr\Container\ContainerInterface;
 use TelegramBot\Api\Client;
 
@@ -20,10 +20,10 @@ final class TelegramClientFactory
         $token = TelegramToken::get();
 
         $commands = [
-            $container->get(AddToWatchlistTelegramCommand::class),
+            $container->get(AddToWatchListTelegramCommand::class),
             $container->get(HelpTelegramCommand::class),
-            $container->get(RemoveFromWatchlistTelegramCommand::class),
-            $container->get(ShowWatchlistTelegramCommand::class),
+            $container->get(RemoveFromWatchListTelegramCommand::class),
+            $container->get(ShowWatchListTelegramCommand::class),
         ];
 
         $client = new Client($token);

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Watchlist;
+namespace CinemaBot\Domain\WatchList;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;
 use CinemaBot\Domain\Event\TermAddedEvent;
 use CinemaBot\Domain\Event\TermRemovedEvent;
 
-final class WatchlistProjector implements EventListener
+final class WatchListProjector implements EventListener
 {
-    private WatchlistProjection $projection;
+    private WatchListProjection $projection;
 
-    public function __construct(WatchlistProjection $projection)
+    public function __construct(WatchListProjection $projection)
     {
         $this->projection = $projection;
     }

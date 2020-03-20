@@ -8,7 +8,7 @@ use CinemaBot\Application\CQRS\Command;
 use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\Term;
 
-final class AddTermToWatchlistCommand implements Command
+final class AddTermToWatchListCommand implements Command
 {
     private GroupID $groupID;
     private Term $term;

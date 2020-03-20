@@ -6,14 +6,14 @@ namespace CinemaBot\Infrastructure\Telegram\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
-use CinemaBot\Domain\AddTerm\AddTermToWatchlistCommand;
+use CinemaBot\Domain\AddTerm\AddTermToWatchListCommand;
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
 use CinemaBot\Domain\Term;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 
-final class AddToWatchlistTelegramCommand implements TelegramCommand
+final class AddToWatchListTelegramCommand implements TelegramCommand
 {
     private ChatGroupProjection $projection;
     private CommandBus $commandBus;
@@ -39,7 +39,7 @@ final class AddToWatchlistTelegramCommand implements TelegramCommand
         preg_match('/\/([a-z]+)( (.*))?/', $message->getText(), $matches);
         $term = Term::from($matches[3] ?? '');
 
-        $this->commandBus->dispatch(new AddTermToWatchlistCommand($groupID, $term));
+        $this->commandBus->dispatch(new AddTermToWatchListCommand($groupID, $term));
         $this->eventDispatcher->dispatch();
 
         $response = 'Added `' . $term->asString() . '` to watchlist.';

@@ -8,7 +8,7 @@ use CinemaBot\Application\CQRS\CommandHandler;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Group\GroupRepository;
 
-final class AddTermToWatchlistCommandHandler implements CommandHandler
+final class AddTermToWatchListCommandHandler implements CommandHandler
 {
     private GroupRepository $repository;
 
@@ -17,13 +17,13 @@ final class AddTermToWatchlistCommandHandler implements CommandHandler
         $this->repository = $repository;
     }
 
-    public function handle(AddTermToWatchlistCommand $command): void
+    public function handle(AddTermToWatchListCommand $command): void
     {
         $groupID = $command->getGroupID();
         $term = $command->getTerm();
 
-        /** @var AddTermToWatchlistUseCase $group */
-        $group = $this->repository->load($groupID, fn(Events $events) => new AddTermToWatchlistUseCase($events));
+        /** @var AddTermToWatchListUseCase $group */
+        $group = $this->repository->load($groupID, fn(Events $events) => new AddTermToWatchListUseCase($events));
         $group->add($term);
 
         $this->repository->save($group);

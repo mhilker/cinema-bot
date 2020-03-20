@@ -13,7 +13,7 @@ use CinemaBot\Domain\Term;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 
-final class RemoveFromWatchlistTelegramCommand implements TelegramCommand
+final class RemoveFromWatchListTelegramCommand implements TelegramCommand
 {
     private CommandBus $commandBus;
     private EventDispatcher $eventDispatcher;

@@ -19,14 +19,16 @@ use CinemaBot\Domain\CinemaList\CinemaListProjection;
 use CinemaBot\Domain\CinemaList\DoctrineCinemaListProjection;
 use CinemaBot\Domain\Group\EventSourcedGroupRepository;
 use CinemaBot\Domain\Group\GroupRepository;
+use CinemaBot\Domain\MovieList\DoctrineMovieListProjection;
+use CinemaBot\Domain\MovieList\MovieListProjection;
 use CinemaBot\Domain\SendNotifications\MarkdownNotificationFormatter;
 use CinemaBot\Domain\SendNotifications\NotificationFormatter;
 use CinemaBot\Domain\SendNotifications\Notifier;
 use CinemaBot\Domain\SendNotifications\TelegramNotifier;
 use CinemaBot\Domain\ShowList\DoctrineShowListProjection;
 use CinemaBot\Domain\ShowList\ShowListProjection;
-use CinemaBot\Domain\Watchlist\DoctrineWatchlistProjection;
-use CinemaBot\Domain\Watchlist\WatchlistProjection;
+use CinemaBot\Domain\WatchList\DoctrineWatchListProjection;
+use CinemaBot\Domain\WatchList\WatchListProjection;
 use CinemaBot\Infrastructure\Doctrine\DoctrineConnectionFactory;
 use CinemaBot\Infrastructure\Telegram\TelegramBotFactory;
 use CinemaBot\Infrastructure\Telegram\TelegramClientFactory;
@@ -51,10 +53,11 @@ final class ContainerConfig extends DefinitionArray
             EventDispatcher::class => get(DirectEventBus::class),
             EventStore::class      => factory(EventStoreFactory::class),
 
-            WatchlistProjection::class  => get(DoctrineWatchlistProjection::class),
+            WatchListProjection::class  => get(DoctrineWatchListProjection::class),
             CinemaListProjection::class => get(DoctrineCinemaListProjection::class),
             ChatGroupProjection::class  => get(DoctrineChatGroupProjection::class),
             ShowListProjection::class => get(DoctrineShowListProjection::class),
+            MovieListProjection::class => get(DoctrineMovieListProjection::class),
             CinemaRepository::class => get(EventSourcedCinemaRepository::class),
             GroupRepository::class => get(EventSourcedGroupRepository::class),
             Client::class => factory(TelegramClientFactory::class),

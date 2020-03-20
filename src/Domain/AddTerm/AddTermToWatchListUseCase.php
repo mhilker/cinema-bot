@@ -13,7 +13,7 @@ use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\Term;
 use CinemaBot\Domain\Terms;
 
-final class AddTermToWatchlistUseCase extends AbstractEventStream implements GroupUseCase
+final class AddTermToWatchListUseCase extends AbstractEventStream implements GroupUseCase
 {
     private GroupID $groupID;
     private Terms $terms;

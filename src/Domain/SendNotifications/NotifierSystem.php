@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\SendNotifications;
 
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Domain\Watchlist\WatchlistProjection;
+use CinemaBot\Domain\WatchList\WatchListProjection;
 
 final class NotifierSystem
 {
-    private WatchlistProjection $projection;
+    private WatchListProjection $projection;
     private Notifier $notifier;
     private array $data = [];
 
-    public function __construct(WatchlistProjection $projection, Notifier $notifier)
+    public function __construct(WatchListProjection $projection, Notifier $notifier)
     {
         $this->projection = $projection;
         $this->notifier = $notifier;

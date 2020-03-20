@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Watchlist;
+namespace CinemaBot\Domain\WatchList;
 
 use CinemaBot\Domain\GroupID;
 use CinemaBot\Domain\Term;
 use CinemaBot\Domain\Terms;
 
-interface WatchlistProjection
+interface WatchListProjection
 {
     public function loadByGroupID(GroupID $groupID): Terms;
 

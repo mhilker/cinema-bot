@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\CrawlCinema\Parser;
 
 use CinemaBot\Domain\CrawlCinema\Downloader\Downloader;
+use CinemaBot\Domain\Movie;
+use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Movies;
+use CinemaBot\Domain\MovieTime;
+use CinemaBot\Domain\MovieTimes;
 use CinemaBot\Domain\URL;
 use PHPUnit\Framework\TestCase;
 
@@ -28,11 +32,31 @@ final class CrawlerTest extends TestCase
         $parser = $this->createMock(Parser::class);
         $parser->expects($this->exactly(15))
             ->method('parse')
-            ->with($content)->willReturn(Movies::from([]));
+            ->with($content)->willReturn(Movies::from([
+                Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            ]));
 
         $crawler = new Crawler($downloader, $parser);
-        $movies = $crawler->crawl($url);
+        $actual = $crawler->crawl($url);
 
-        $this->assertCount(0, $movies);
+        $expected = Movies::from([
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+            Movie::from(MovieName::from('Test'), MovieTimes::from([MovieTime::fromString('2020-01-01T00:00:00Z')])),
+        ]);
+
+        $this->assertEquals($expected, $actual);
     }
 }
