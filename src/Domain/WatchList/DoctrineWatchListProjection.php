@@ -43,7 +43,7 @@ final class DoctrineWatchListProjection implements WatchListProjection
     public function add(GroupID $id, Term $term): void
     {
         $sql = <<<SQL
-        INSERT OR IGNORE INTO "watchlist" ("group_id", "term") 
+        INSERT INTO "watchlist" ("group_id", "term") 
         VALUES (:group_id, :term);
         SQL;
 

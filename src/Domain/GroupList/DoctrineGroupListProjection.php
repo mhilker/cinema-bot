@@ -39,7 +39,7 @@ final class DoctrineGroupListProjection implements GroupListProjection
     public function add(GroupID $id): void
     {
         $sql = <<< SQL
-        INSERT OR IGNORE INTO 
+        INSERT INTO 
             "group_list" ("group_id")
         VALUES
             (:group_id);

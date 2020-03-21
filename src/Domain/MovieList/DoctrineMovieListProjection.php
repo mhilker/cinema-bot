@@ -37,7 +37,7 @@ final class DoctrineMovieListProjection implements MovieListProjection
     public function add(MovieName $name): void
     {
         $sql = <<< SQL
-        INSERT OR IGNORE INTO 
+        INSERT INTO 
             "movie_list" ("movie_name")
         VALUES
             (:movie_name);
