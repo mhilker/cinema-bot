@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\CrawlCinema;
 
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\Cinema\CinemaID;
 use CinemaBot\Domain\CrawlCinema\Crawler\RealCrawler;
 use CinemaBot\Domain\CrawlCinema\Crawler\StubCrawler;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;

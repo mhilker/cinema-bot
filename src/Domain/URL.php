@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain;
 
+use CinemaBot\Domain\InvalidUrlException;
+
 final class URL
 {
     private string $value;

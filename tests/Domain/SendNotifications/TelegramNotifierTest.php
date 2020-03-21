@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\SendNotifications;
 
-use CinemaBot\Domain\ChatID;
+use CinemaBot\Domain\Group\ChatID;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\Group\GroupID;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Show;
 use CinemaBot\Domain\Shows;

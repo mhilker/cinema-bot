@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Infrastructure\Telegram\Command;
 
-use CinemaBot\Domain\ChatID;
+use CinemaBot\Domain\Group\ChatID;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 

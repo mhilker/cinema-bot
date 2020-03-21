@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain;
+namespace CinemaBot\Domain\Group;
 
 use Exception;
 

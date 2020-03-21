@@ -7,7 +7,7 @@ namespace CinemaBot\Domain\Event;
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\EventStore\StorableEvent;
 use CinemaBot\Application\EventStream\EventStreamID;
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\Group\GroupID;
 use CinemaBot\Domain\Term;
 
 final class TermAddedEvent implements Event, StorableEvent

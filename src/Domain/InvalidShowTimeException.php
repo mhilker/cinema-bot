@@ -6,7 +6,7 @@ namespace CinemaBot\Domain;
 
 use Exception;
 
-final class InvalidMovieTimeException extends Exception
+final class InvalidShowTimeException extends Exception
 {
 
 }

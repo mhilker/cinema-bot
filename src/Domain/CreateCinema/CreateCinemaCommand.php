@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\CreateCinema;
 
 use CinemaBot\Application\CQRS\Command;
-use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\Cinema\CinemaID;
 use CinemaBot\Domain\URL;
 
 final class CreateCinemaCommand implements Command

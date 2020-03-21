@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\WatchList;
 
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\Group\GroupID;
 use CinemaBot\Domain\Term;
 use CinemaBot\Domain\Terms;
 use Doctrine\DBAL\Driver\Connection;

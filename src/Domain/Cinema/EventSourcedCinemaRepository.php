@@ -8,7 +8,7 @@ use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Application\EventStore\EventStore;
 use CinemaBot\Application\EventStore\StorableEvents;
-use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\Cinema\CinemaID;
 
 final class EventSourcedCinemaRepository implements CinemaRepository
 {

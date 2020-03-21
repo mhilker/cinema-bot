@@ -10,7 +10,7 @@ use CinemaBot\Domain\Event\GroupFoundedEvent;
 use CinemaBot\Domain\Event\TermAddedEvent;
 use CinemaBot\Domain\Event\TermRemovedEvent;
 use CinemaBot\Domain\Group\GroupUseCase;
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\Group\GroupID;
 use CinemaBot\Domain\Term;
 use CinemaBot\Domain\Terms;
 

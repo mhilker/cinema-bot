@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\Cinema;
 
-use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\Cinema\CinemaID;
 
 interface CinemaRepository
 {

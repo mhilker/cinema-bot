@@ -26,7 +26,7 @@ final class ShowTime
             // TODO: Timezone
             $dateTime = new DateTimeImmutable($value);
         } catch (\Exception $exception) {
-            throw new InvalidMovieTimeException('Show time is invalid');
+            throw new InvalidShowTimeException('Show time is invalid');
         }
 
         return new self($dateTime);

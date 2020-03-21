@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
-use CinemaBot\Domain\ChatID;
+use CinemaBot\Domain\Group\ChatID;
 use CinemaBot\Domain\FoundGroup\FoundGroupCommand;
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\Group\GroupID;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

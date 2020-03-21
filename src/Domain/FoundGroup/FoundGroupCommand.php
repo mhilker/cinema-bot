@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\FoundGroup;
 
 use CinemaBot\Application\CQRS\Command;
-use CinemaBot\Domain\ChatID;
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\Group\ChatID;
+use CinemaBot\Domain\Group\GroupID;
 
 final class FoundGroupCommand implements Command
 {

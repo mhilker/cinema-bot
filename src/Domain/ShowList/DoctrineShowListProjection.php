@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\ShowList;
 
-use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\Cinema\CinemaID;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Shows;
 use CinemaBot\Domain\ShowTime;

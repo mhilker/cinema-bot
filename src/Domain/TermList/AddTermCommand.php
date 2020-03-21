@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\TermList;
 
 use CinemaBot\Application\CQRS\Command;
-use CinemaBot\Domain\GroupID;
+use CinemaBot\Domain\Group\GroupID;
 use CinemaBot\Domain\Term;
 
 final class AddTermCommand implements Command

@@ -8,7 +8,7 @@ use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Application\EventStream\AbstractEventStream;
 use CinemaBot\Domain\Cinema\CinemaUseCase;
-use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\Cinema\CinemaID;
 use CinemaBot\Domain\CrawlCinema\Crawler\Crawler;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;

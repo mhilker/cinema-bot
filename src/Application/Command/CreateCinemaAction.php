@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
-use CinemaBot\Domain\CinemaID;
+use CinemaBot\Domain\Cinema\CinemaID;
 use CinemaBot\Domain\CreateCinema\CreateCinemaCommand;
 use CinemaBot\Domain\URL;
 use Psr\Http\Message\ResponseInterface;
