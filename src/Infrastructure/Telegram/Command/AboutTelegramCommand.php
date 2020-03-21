@@ -4,28 +4,23 @@ declare(strict_types=1);
 
 namespace CinemaBot\Infrastructure\Telegram\Command;
 
-use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
 use CinemaBot\Domain\Group\ChatID;
-use CinemaBot\Domain\Term;
-use CinemaBot\Domain\TermList\RemoveTermCommand;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 
-final class RemoveFromWatchListTelegramCommand implements TelegramCommand
+final class AboutTelegramCommand implements TelegramCommand
 {
-    private CommandBus $commandBus;
     private ChatGroupMapProjection $projection;
 
-    public function __construct(ChatGroupMapProjection $projection, CommandBus $commandBus)
+    public function __construct(ChatGroupMapProjection $projection)
     {
         $this->projection = $projection;
-        $this->commandBus = $commandBus;
     }
 
     public function getName(): string
     {
-        return 'remove';
+        return 'about';
     }
 
     public function execute(Client $bot, Message $message): void
@@ -33,13 +28,9 @@ final class RemoveFromWatchListTelegramCommand implements TelegramCommand
         $chatID = ChatID::fromInt($message->getChat()->getId());
         $groupID = $this->projection->loadGroupIDByChatID($chatID);
 
-        preg_match('/\/([a-z]+)( (.*))?/', $message->getText(), $matches);
-        $term = Term::from($matches[3] ?? '');
-
-        $this->commandBus->dispatch(new RemoveTermCommand($groupID, $term));
-
         $response = <<<MESSAGE
-        Removed `{$term->asString()}` from watchlist.
+        Your Chat ID: `{$chatID->asString()}`
+        Your Group ID: `{$groupID->asString()}`
         MESSAGE;
 
         $bot->sendMessage($chatID->asString(), $response, 'markdown');
