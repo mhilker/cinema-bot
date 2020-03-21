@@ -9,7 +9,6 @@ use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Show;
 use CinemaBot\Domain\Shows;
 use CinemaBot\Domain\ShowTime;
-use CinemaBot\Domain\ShowTimes;
 use Doctrine\DBAL\Driver\Connection;
 
 final class DoctrineShowListProjection implements ShowListProjection

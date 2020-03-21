@@ -7,6 +7,7 @@ namespace CinemaBot\Domain\SendNotifications;
 use CinemaBot\Domain\Group\GroupID;
 use CinemaBot\Domain\Shows;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * @covers \CinemaBot\Domain\SendNotifications\NotifierSystem
@@ -46,7 +47,9 @@ final class NotifierSystemTest extends TestCase
         $notifier->expects($this->at(2))->method('notify')->with($notification3);
         $notifier->expects($this->at(3))->method('notify')->with($notification4)->willThrowException(new \Exception());
 
-        $system = $this->object = new NotifierSystem($projection, $notifier);
+        $logger = $this->createMock(LoggerInterface::class);
+
+        $system = $this->object = new NotifierSystem($projection, $notifier, $logger);
         $system->run();
     }
 }
