@@ -10,7 +10,7 @@ FROM composer:1.10.1 as composer
 
 FROM php:7.4.3-fpm-buster as base
 RUN apt-get update \
- && apt-get install -y libicu-dev git unzip cron \
+ && apt-get install -y libicu-dev cron \
  && rm -rf /var/lib/apt/lists/* \
  && docker-php-ext-install -j$(nproc) intl pdo
 
@@ -26,6 +26,9 @@ WORKDIR /app/
 ########################################################################################################################
 
 FROM base as build
+RUN apt-get update \
+ && apt-get install -y libicu-dev git unzip \
+ && rm -rf /var/lib/apt/lists/*
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 USER app
 COPY --chown=app:app composer.* /app/

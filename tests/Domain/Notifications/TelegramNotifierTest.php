@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\SendNotifications;
+namespace CinemaBot\Domain\Notifications;
 
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
 use CinemaBot\Domain\Group\ChatID;
@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use TelegramBot\Api\BotApi;
 
 /**
- * @covers \CinemaBot\Domain\SendNotifications\TelegramNotifier
+ * @covers \CinemaBot\Domain\Notifications\TelegramNotifier
  */
 final class TelegramNotifierTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\SendNotifications;
+namespace CinemaBot\Domain\Notifications;
 
 use CinemaBot\Domain\Group\GroupID;
 use CinemaBot\Domain\Shows;
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 /**
- * @covers \CinemaBot\Domain\SendNotifications\NotifierSystem
+ * @covers \CinemaBot\Domain\Notifications\NotifierSystem
  */
 final class NotifierSystemTest extends TestCase
 {

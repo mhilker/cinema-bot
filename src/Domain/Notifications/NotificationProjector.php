@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\SendNotifications;
+namespace CinemaBot\Domain\Notifications;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\EventListener;

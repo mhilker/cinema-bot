@@ -1,5 +1,9 @@
 # Cinema Bot
 
+```
+echo "YOUR_TELEGRAM_TOKEN" > telegram-token.local
+```
+
 ### Create Migration
 
 ``` bash
