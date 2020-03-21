@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '/vendor/autoload.php';
+
 return [
     'name'                 => 'Cinema-Bot Migrations',
     'migrations_namespace' => 'CinemaBot\Infrastructure\Migrations',
