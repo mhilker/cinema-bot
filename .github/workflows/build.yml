@@ -24,6 +24,9 @@ jobs:
       - name: Build containers
         run: docker-compose build
 
+      - name: Create telegram secret
+        run: echo "" > telegram-token.local
+
       - name: Run containers
         run: docker-compose up web php -d
 
