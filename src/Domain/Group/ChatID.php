@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\Group;
 
-use CinemaBot\Domain\Group\InvalidChatIdException;
-
 final class ChatID
 {
     private string $value;

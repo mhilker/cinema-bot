@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\DBAL\Schema\Table;
 use Doctrine\Migrations\AbstractMigration;
 
 final class Version20200321112427 extends AbstractMigration

@@ -6,7 +6,6 @@ namespace CinemaBot\Domain\CrawlCinema;
 
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Cinema\CinemaID;
-use CinemaBot\Domain\CrawlCinema\Crawler\RealCrawler;
 use CinemaBot\Domain\CrawlCinema\Crawler\StubCrawler;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\Event\ShowAddedEvent;

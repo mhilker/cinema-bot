@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
-use CinemaBot\Domain\Group\ChatID;
 use CinemaBot\Domain\FoundGroup\FoundGroupCommand;
+use CinemaBot\Domain\Group\ChatID;
 use CinemaBot\Domain\Group\GroupID;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

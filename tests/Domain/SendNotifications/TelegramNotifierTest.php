@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\SendNotifications;
 
-use CinemaBot\Domain\Group\ChatID;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
+use CinemaBot\Domain\Group\ChatID;
 use CinemaBot\Domain\Group\GroupID;
 use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Show;
 use CinemaBot\Domain\Shows;
 use CinemaBot\Domain\ShowTime;
 use CinemaBot\Domain\ShowTimes;
-use CinemaBot\Domain\Terms;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use TelegramBot\Api\BotApi;

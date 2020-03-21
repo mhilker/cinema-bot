@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\SendNotifications;
 
 use CinemaBot\Domain\Group\GroupID;
-use CinemaBot\Domain\SendNotifications\NotifierSystem;
 use CinemaBot\Domain\Shows;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \CinemaBot\Domain\SendNotifications\NotifierSystem

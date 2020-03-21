@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\Group;
 
 use CinemaBot\Application\EventStream\EventStreamID;
-use CinemaBot\Domain\Group\InvalidGroupIDException;
 use CinemaBot\Infrastructure\UUID;
 
 final class GroupID implements EventStreamID

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\SendNotifications;
 
 use ArrayIterator;
-use Exception;
 use Traversable;
 
 final class Notifications implements \IteratorAggregate, \Countable

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\Group;
 
-use CinemaBot\Domain\Group\GroupID;
-
 interface GroupRepository
 {
     public function save(GroupUseCase $group): void;

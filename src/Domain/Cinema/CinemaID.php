@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\Cinema;
 
 use CinemaBot\Application\EventStream\EventStreamID;
-use CinemaBot\Domain\Cinema\InvalidCinemaIDException;
 use CinemaBot\Infrastructure\UUID;
 
 final class CinemaID implements EventStreamID

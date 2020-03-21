@@ -8,7 +8,6 @@ use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Application\EventStore\EventStore;
 use CinemaBot\Application\EventStore\StorableEvents;
-use CinemaBot\Domain\Group\GroupID;
 
 final class EventSourcedGroupRepository implements GroupRepository
 {

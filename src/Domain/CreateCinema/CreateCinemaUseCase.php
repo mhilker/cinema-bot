@@ -6,8 +6,8 @@ namespace CinemaBot\Domain\CreateCinema;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\EventStream\AbstractEventStream;
-use CinemaBot\Domain\Cinema\CinemaUseCase;
 use CinemaBot\Domain\Cinema\CinemaID;
+use CinemaBot\Domain\Cinema\CinemaUseCase;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
 use CinemaBot\Domain\URL;
 

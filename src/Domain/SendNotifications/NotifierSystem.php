@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\SendNotifications;
 
-use CinemaBot\Application\CQRS\Events;
-
 final class NotifierSystem
 {
     private NotificationProjection $projection;

@@ -6,8 +6,8 @@ namespace CinemaBot\Infrastructure\Telegram\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
-use CinemaBot\Domain\Group\ChatID;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
+use CinemaBot\Domain\Group\ChatID;
 use CinemaBot\Domain\Term;
 use CinemaBot\Domain\TermList\AddTermCommand;
 use TelegramBot\Api\Client;

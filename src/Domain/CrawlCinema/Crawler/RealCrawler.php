@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\CrawlCinema\Crawler;
 
-use CinemaBot\Domain\CrawlCinema\Crawler\Crawler;
 use CinemaBot\Domain\CrawlCinema\Downloader\Downloader;
 use CinemaBot\Domain\CrawlCinema\Parser\Parser;
 use CinemaBot\Domain\CrawlCinema\Parser\WeekParser;

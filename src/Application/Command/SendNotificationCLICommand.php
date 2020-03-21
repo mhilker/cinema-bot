@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CinemaBot\Application\Command;
 
-use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\SendNotifications\NotifierSystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
