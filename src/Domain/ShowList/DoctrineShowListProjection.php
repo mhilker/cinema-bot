@@ -6,8 +6,10 @@ namespace CinemaBot\Domain\ShowList;
 
 use CinemaBot\Domain\Cinema\CinemaID;
 use CinemaBot\Domain\MovieName;
+use CinemaBot\Domain\Show;
 use CinemaBot\Domain\Shows;
 use CinemaBot\Domain\ShowTime;
+use CinemaBot\Domain\ShowTimes;
 use Doctrine\DBAL\Driver\Connection;
 
 final class DoctrineShowListProjection implements ShowListProjection
@@ -32,7 +34,11 @@ final class DoctrineShowListProjection implements ShowListProjection
 //            $shows[] = Show::from(MovieName::from($row[]), ShowTimes::from());
 //        }
 
-        return Shows::from([]);
+        return Shows::from([
+            Show::from(MovieName::from('John Wick'), ShowTimes::from([ShowTime::fromString('2020-01-01T00:00:00Z')])),
+            Show::from(MovieName::from('John Wick'), ShowTimes::from([ShowTime::fromString('2020-01-01T00:00:00Z')])),
+            Show::from(MovieName::from('John Wick'), ShowTimes::from([ShowTime::fromString('2021-01-01T00:00:00Z')])),
+        ]);
     }
 
     public function insert(CinemaID $id, MovieName $name, ShowTime $time): void

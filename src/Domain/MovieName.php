@@ -32,7 +32,18 @@ final class MovieName
         return $this->value;
     }
 
-    public function containsInsensitiveTerm(Term $term): bool
+    public function containsAnyTerms(Terms $terms): bool
+    {
+        foreach ($terms as $term) {
+            if ($this->containsTerm($term)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function containsTerm(Term $term): bool
     {
         return mb_stripos($this->asString(), $term->asString()) !== false;
     }

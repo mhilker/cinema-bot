@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\Group;
 
 use ArrayIterator;
+use Countable;
 use IteratorAggregate;
 use Traversable;
 
-final class GroupIDs implements IteratorAggregate
+final class GroupIDs implements IteratorAggregate, Countable
 {
     /** @var GroupID[] */
     private array $values = [];
@@ -36,5 +37,10 @@ final class GroupIDs implements IteratorAggregate
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->values);
+    }
+
+    public function count(): int
+    {
+        return count($this->values);
     }
 }

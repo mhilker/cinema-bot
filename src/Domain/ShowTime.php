@@ -41,4 +41,9 @@ final class ShowTime
     {
         return $this->value->format(DATE_ATOM);
     }
+
+    public function isAfter(DateTimeImmutable $date): bool
+    {
+        return $this->value->getTimestamp() > $date->getTimestamp();
+    }
 }

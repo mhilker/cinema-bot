@@ -28,7 +28,7 @@ final class ShowTimes implements IteratorAggregate, Countable
 
     private function add(ShowTime $value): void
     {
-        $key = $value->getValue()->format(DATE_ATOM);
+        $key = $value->asString();
         $this->values[$key] = $value;
     }
 
@@ -43,5 +43,25 @@ final class ShowTimes implements IteratorAggregate, Countable
     public function count(): int
     {
         return count($this->values);
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $times = [];
+
+        foreach ($data as $item) {
+            $times[] = ShowTime::fromString($item);
+        }
+
+        return new self($times);
+    }
+
+    public function asArray(): array
+    {
+        $times = [];
+        foreach ($this->values as $value) {
+            $times[] = $value->asString();
+        }
+        return $times;
     }
 }

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\SendNotifications;
 
 use ArrayIterator;
+use Countable;
+use IteratorAggregate;
 use Traversable;
 
-final class Notifications implements \IteratorAggregate, \Countable
+final class Notifications implements IteratorAggregate, Countable
 {
     /** @var array<Notification> */
     private array $notifications = [];
@@ -30,16 +32,13 @@ final class Notifications implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return Traversable | array<Notification>
+     * @return Traversable | Notification[]
      */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->notifications);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function count(): int
     {
         return count($this->notifications);

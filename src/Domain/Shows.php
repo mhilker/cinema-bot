@@ -12,28 +12,28 @@ use Traversable;
 final class Shows implements IteratorAggregate, Countable
 {
     /** @var Show[] */
-    private array $movies = [];
+    private array $shows = [];
 
-    private function __construct(iterable $movies)
+    private function __construct(iterable $shows)
     {
-        foreach ($movies as $movie) {
-            $this->add($movie);
+        foreach ($shows as $show) {
+            $this->add($show);
         }
     }
 
-    public static function from(iterable $movies): self
+    public static function from(iterable $shows): self
     {
-        return new self($movies);
+        return new self($shows);
     }
 
-    private function add(Show $movie): void
+    private function add(Show $show): void
     {
-        $this->movies[] = $movie;
+        $this->shows[] = $show;
     }
 
     public function filter(callable $callable): self
     {
-        return self::from(array_filter($this->movies, $callable));
+        return self::from(array_filter($this->shows, $callable));
     }
 
     /**
@@ -41,11 +41,30 @@ final class Shows implements IteratorAggregate, Countable
      */
     public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->movies);
+        return new ArrayIterator($this->shows);
     }
 
     public function count(): int
     {
-        return count($this->movies);
+        return count($this->shows);
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $shows = [];
+        foreach ($data as $item) {
+            $shows[] = Show::fromArray($item);
+        }
+
+        return new self($shows);
+    }
+
+    public function asArray(): array
+    {
+        $shows = [];
+        foreach ($this->shows as $show) {
+            $shows[] = $show->asArray();
+        }
+        return $shows;
     }
 }
