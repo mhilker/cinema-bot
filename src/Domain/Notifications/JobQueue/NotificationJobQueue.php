@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Notifications;
+namespace CinemaBot\Domain\Notifications\JobQueue;
 
-interface NotificationProjection
+use CinemaBot\Domain\Notifications\NotificationID;
+use CinemaBot\Domain\Notifications\Notifications;
+
+interface NotificationJobQueue
 {
     public function fetch(): Notifications;
 

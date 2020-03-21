@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Notifications;
+namespace CinemaBot\Domain\Notifications\Notifier;
+
+use CinemaBot\Domain\Notifications\Notification;
 
 interface Notifier
 {

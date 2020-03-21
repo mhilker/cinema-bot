@@ -8,6 +8,7 @@ use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
 use CinemaBot\Domain\Group\ChatID;
 use CinemaBot\Domain\Group\GroupID;
 use CinemaBot\Domain\MovieName;
+use CinemaBot\Domain\Notifications\Notifier\TelegramNotifier;
 use CinemaBot\Domain\Show;
 use CinemaBot\Domain\Shows;
 use CinemaBot\Domain\ShowTime;
@@ -17,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 use TelegramBot\Api\BotApi;
 
 /**
- * @covers \CinemaBot\Domain\Notifications\TelegramNotifier
+ * @covers \CinemaBot\Domain\Notifications\Notifier\TelegramNotifier
  */
 final class TelegramNotifierTest extends TestCase
 {

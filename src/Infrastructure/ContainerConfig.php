@@ -27,10 +27,12 @@ use CinemaBot\Domain\GroupList\DoctrineGroupListProjection;
 use CinemaBot\Domain\GroupList\GroupListProjection;
 use CinemaBot\Domain\MovieList\DoctrineMovieListProjection;
 use CinemaBot\Domain\MovieList\MovieListProjection;
-use CinemaBot\Domain\Notifications\DoctrineNotificationProjection;
-use CinemaBot\Domain\Notifications\NotificationProjection;
-use CinemaBot\Domain\Notifications\Notifier;
-use CinemaBot\Domain\Notifications\TelegramNotifier;
+use CinemaBot\Domain\Notifications\JobQueue\FakeNotificationJobQueue;
+use CinemaBot\Domain\Notifications\JobQueue\NotificationJobQueue;
+use CinemaBot\Domain\Notifications\Notifier\Notifier;
+use CinemaBot\Domain\Notifications\Notifier\TelegramNotifier;
+use CinemaBot\Domain\Notifications\Projection\DoctrineNotificationQueueProjection;
+use CinemaBot\Domain\Notifications\Projection\NotificationQueueProjection;
 use CinemaBot\Domain\ShowList\DoctrineShowListProjection;
 use CinemaBot\Domain\ShowList\ShowListProjection;
 use CinemaBot\Domain\WatchList\DoctrineWatchListProjection;
@@ -72,9 +74,10 @@ final class ContainerConfig extends DefinitionArray
             Crawler::class => get(RealCrawler::class),
             Parser::class => get(DOMParser::class),
             Notifier::class => get(TelegramNotifier::class),
-            NotificationProjection::class => get(DoctrineNotificationProjection::class),
+            NotificationJobQueue::class => get(FakeNotificationJobQueue::class),
             GroupListProjection::class => get(DoctrineGroupListProjection::class),
             LoggerInterface::class => factory(LoggerFactory::class),
+            NotificationQueueProjection::class => get(DoctrineNotificationQueueProjection::class),
         ]);
     }
 }

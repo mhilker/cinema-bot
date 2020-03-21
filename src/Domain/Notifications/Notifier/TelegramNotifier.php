@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Notifications;
+namespace CinemaBot\Domain\Notifications\Notifier;
 
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
+use CinemaBot\Domain\Notifications\Notification;
 use CinemaBot\Domain\Show;
 use DateTimeImmutable;
 use IntlDateFormatter;

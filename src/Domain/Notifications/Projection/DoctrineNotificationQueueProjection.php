@@ -2,76 +2,28 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\Notifications;
+namespace CinemaBot\Domain\Notifications\Projection;
 
 use CinemaBot\Domain\Group\GroupID;
-use CinemaBot\Domain\GroupList\GroupListProjection;
-use CinemaBot\Domain\Show;
-use CinemaBot\Domain\ShowList\ShowListProjection;
+use CinemaBot\Domain\Notifications\Notification;
+use CinemaBot\Domain\Notifications\NotificationID;
+use CinemaBot\Domain\Notifications\Notifications;
 use CinemaBot\Domain\Shows;
-use CinemaBot\Domain\WatchList\WatchListProjection;
 use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\DBAL\Driver\Connection;
 use Exception;
 
-final class DoctrineNotificationProjection implements NotificationProjection
+final class DoctrineNotificationQueueProjection implements NotificationQueueProjection
 {
     private Connection $connection;
-    private GroupListProjection $groupList;
-    private ShowListProjection $showList;
-    private WatchListProjection $watchList;
 
-    public function __construct(
-        Connection $connection,
-        GroupListProjection $groupList,
-        ShowListProjection $showList,
-        WatchListProjection $watchList
-    ) {
-        $this->connection = $connection;
-        $this->groupList = $groupList;
-        $this->showList = $showList;
-        $this->watchList = $watchList;
-    }
-
-    public function fetch(): Notifications
+    public function __construct(Connection $connection)
     {
-        if ($this->isEmpty() === false) {
-            return $this->dequeue();
-        }
-
-        $shows = $this->showList->load();
-        if (count($shows) === 0) {
-            return Notifications::from([]);
-        }
-
-        $groupIds = $this->groupList->load();
-        if (count($groupIds) === 0) {
-            return Notifications::from([]);
-        }
-
-        $now = new DateTimeImmutable();
-
-        $notifications = [];
-        foreach ($groupIds as $groupId) {
-            $terms = $this->watchList->loadByGroupID($groupId);
-            $shows = $shows->filter(fn(Show $show) => $show->getName()->containsAnyTerms($terms));
-            $shows = $shows->filter(fn(Show $show) => $show->isAfter($now));
-            if (count($shows) > 0) {
-                $notifications[] = new Notification(NotificationID::random(), $groupId, $shows);
-            }
-        }
-
-        if (count($notifications) === 0) {
-            return Notifications::from([]);
-        }
-
-        $this->enqueue(Notifications::from($notifications));
-
-        return $this->dequeue();
+        $this->connection = $connection;
     }
 
-    private function enqueue(Notifications $notifications): void
+    public function enqueue(Notifications $notifications): void
     {
         $this->connection->beginTransaction();
 
@@ -98,7 +50,7 @@ final class DoctrineNotificationProjection implements NotificationProjection
         }
     }
 
-    private function dequeue(): Notifications
+    public function dequeue(): Notifications
     {
         $sql = <<<'SQL'
         SELECT * 
@@ -119,6 +71,22 @@ final class DoctrineNotificationProjection implements NotificationProjection
         }
 
         return Notifications::from($notifications);
+    }
+
+    public function isEmpty(): bool
+    {
+        $sql = <<<'SQL'
+        SELECT COUNT(*) AS "count" 
+        FROM "notifications" 
+        WHERE "notified" IS NULL 
+          AND "failed" IS NULL;
+        SQL;
+
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([]);
+
+        $row = $statement->fetch();
+        return ((int) $row['count']) === 0;
     }
 
     public function ack(NotificationID $id): void
@@ -149,21 +117,5 @@ final class DoctrineNotificationProjection implements NotificationProjection
             'notification_id' => $id->asString(),
             'now'             => (new DateTimeImmutable('now', new DateTimeZone('UTC')))->format(DATE_ATOM),
         ]);
-    }
-
-    private function isEmpty(): bool
-    {
-        $sql = <<<'SQL'
-        SELECT COUNT(*) AS "count" 
-        FROM "notifications" 
-        WHERE "notified" IS NULL 
-          AND "failed" IS NULL;
-        SQL;
-
-        $statement = $this->connection->prepare($sql);
-        $statement->execute([]);
-
-        $row = $statement->fetch();
-        return ((int) $row['count']) === 0;
     }
 }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\Notifications;
 
 use CinemaBot\Domain\Group\GroupID;
+use CinemaBot\Domain\Notifications\JobQueue\NotificationJobQueue;
+use CinemaBot\Domain\Notifications\Notifier\Notifier;
 use CinemaBot\Domain\Shows;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -28,7 +30,7 @@ final class NotifierSystemTest extends TestCase
             $notification4,
         ]);
 
-        $projection = $this->createMock(NotificationProjection::class);
+        $projection = $this->createMock(NotificationJobQueue::class);
         $projection->expects($this->once())->method('fetch')->willReturn($notifications);
         $projection->expects($this->exactly(3))
             ->method('ack')
