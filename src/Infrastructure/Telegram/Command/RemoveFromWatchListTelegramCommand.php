@@ -33,9 +33,13 @@ final class RemoveFromWatchListTelegramCommand implements TelegramCommand
         $chatID = ChatID::fromInt($message->getChat()->getId());
         $groupID = $this->projection->loadGroupIDByChatID($chatID);
 
-        preg_match('/\/([a-z]+)( (.*))?/', $message->getText(), $matches);
-        $term = Term::from($matches[3] ?? '');
+        $text = trim(substr($message->getText(), strlen('/' . $this->getName())));
+        if ($text === '') {
+            $bot->sendMessage($chatID->asString(), 'Please add a term to remove.', 'markdown');
+            return;
+        }
 
+        $term = Term::from($text);
         $this->commandBus->dispatch(new RemoveTermCommand($groupID, $term));
 
         $response = <<<MESSAGE

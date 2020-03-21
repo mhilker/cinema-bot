@@ -11,7 +11,9 @@ use CinemaBot\Infrastructure\Telegram\Command\RemoveFromWatchListTelegramCommand
 use CinemaBot\Infrastructure\Telegram\Command\ShowMovieListTelegramCommand;
 use CinemaBot\Infrastructure\Telegram\Command\ShowWatchListTelegramCommand;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use TelegramBot\Api\Client;
+use TelegramBot\Api\Types\Message;
 
 final class TelegramClientFactory
 {
@@ -28,9 +30,14 @@ final class TelegramClientFactory
             $container->get(AboutTelegramCommand::class),
         ];
 
+        $logger = $container->get(LoggerInterface::class);
+
         $client = new Client($token);
         foreach ($commands as $command) {
-            $client->command($command->getName(), static function ($message) use ($command, $client) {
+            $client->command($command->getName(), static function (Message $message) use ($command, $client, $logger) {
+                $logger->info('Received web hook message', [
+                    'chatID' => $message->getChat()->getId(),
+                ]);
                 $command->execute($client, $message);
             });
         }

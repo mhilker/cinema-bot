@@ -40,6 +40,7 @@ use CinemaBot\Infrastructure\Telegram\TelegramBotFactory;
 use CinemaBot\Infrastructure\Telegram\TelegramClientFactory;
 use DI\Definition\Source\DefinitionArray;
 use Doctrine\DBAL\Driver\Connection;
+use Psr\Log\LoggerInterface;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Client;
 use function DI\factory;
@@ -73,6 +74,7 @@ final class ContainerConfig extends DefinitionArray
             Notifier::class => get(TelegramNotifier::class),
             NotificationProjection::class => get(DoctrineNotificationProjection::class),
             GroupListProjection::class => get(DoctrineGroupListProjection::class),
+            LoggerInterface::class => factory(LoggerFactory::class),
         ]);
     }
 }

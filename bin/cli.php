@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-use CinemaBot\Application\Command\CrawlCinemaCLICommand;
-use CinemaBot\Application\Command\CreateCinemaCLICommand;
-use CinemaBot\Application\Command\FoundGroupCLICommand;
-use CinemaBot\Application\Command\SendNotificationCLICommand;
+use CinemaBot\Application\Command\CrawlerCLICommand;
+use CinemaBot\Application\Command\NotifierCLICommand;
 use CinemaBot\Infrastructure\ContainerConfig;
 use DI\ContainerBuilder;
 use Symfony\Component\Console\Application;
@@ -17,6 +15,6 @@ $builder->addDefinitions(new ContainerConfig());
 $container = $builder->build();
 
 $app = new Application();
-$app->add($container->get(CrawlCinemaCLICommand::class));
-$app->add($container->get(SendNotificationCLICommand::class));
+$app->add($container->get(CrawlerCLICommand::class));
+$app->add($container->get(NotifierCLICommand::class));
 $app->run();
