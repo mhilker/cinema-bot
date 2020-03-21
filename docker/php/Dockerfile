@@ -32,8 +32,7 @@ RUN apt-get update \
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 USER app
 COPY --chown=app:app composer.* /app/
-# RUN composer global require hirak/prestissimo
-RUN composer install --no-cache --no-progress --prefer-dist --no-dev --classmap-authoritative
+RUN composer install --no-cache --no-progress --prefer-dist --no-dev
 
 ########################################################################################################################
 # Stage: production
