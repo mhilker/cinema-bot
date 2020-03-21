@@ -13,5 +13,5 @@ docker-compose run --user app --rm php /app/vendor/bin/doctrine-migrations migra
 ### Migrate
 
 ``` bash
-docker-compose run --user app --rm php /app/vendor/bin/doctrine-migrations migrations:migrate --configuration /app/migrations.php --db-configuration /app/doctrine.php --no-interaction latest
+docker-compose run --rm php /app/vendor/bin/doctrine-migrations migrations:migrate --configuration /app/migrations.php --db-configuration /app/doctrine.php --no-interaction latest
 ```
