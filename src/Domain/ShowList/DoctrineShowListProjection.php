@@ -23,22 +23,28 @@ final class DoctrineShowListProjection implements ShowListProjection
 
     public function load(): Shows
     {
-//        $sql = <<< SQL
-//        SELECT * FROM "show_list";
-//        SQL;
-//
-//        $statement = $this->connection->query($sql);
-//
-//        $shows = [];
-//        while ($row = $statement->fetch()) {
-//            $shows[] = Show::from(MovieName::from($row[]), ShowTimes::from());
-//        }
+        $sql = <<< SQL
+        SELECT * FROM "show_list";
+        SQL;
 
-        return Shows::from([
-            Show::from(MovieName::from('John Wick'), ShowTimes::from([ShowTime::fromString('2020-01-01T00:00:00Z')])),
-            Show::from(MovieName::from('John Wick'), ShowTimes::from([ShowTime::fromString('2020-01-01T00:00:00Z')])),
-            Show::from(MovieName::from('John Wick'), ShowTimes::from([ShowTime::fromString('2021-01-01T00:00:00Z')])),
-        ]);
+        $statement = $this->connection->query($sql);
+
+        $rows = [];
+        while ($row = $statement->fetch()) {
+            $name = $row['movie_name'];
+            $time = $row['show_time'];
+            $rows[$name][] = $time;
+        }
+
+        $shows = [];
+        foreach ($rows as $name => $times) {
+            $shows[] = Show::fromArray([
+                'name' => $name,
+                'times' => $times,
+            ]);
+        }
+
+        return Shows::from($shows);
     }
 
     public function insert(CinemaID $id, MovieName $name, ShowTime $time): void

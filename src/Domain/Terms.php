@@ -47,7 +47,7 @@ final class Terms implements IteratorAggregate, Countable
     public function with(Term $term): self
     {
         return new self([
-            ...$this->terms,
+            ...array_values($this->terms),
             $term,
         ]);
     }
