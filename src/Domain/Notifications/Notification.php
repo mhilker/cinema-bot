@@ -34,4 +34,14 @@ final class Notification
     {
         return $this->shows;
     }
+
+    public function calculateMessageHash(): string
+    {
+        $message = json_encode([
+            $this->groupID->asString(),
+            $this->shows->asArray(),
+        ], JSON_THROW_ON_ERROR);
+
+        return hash('sha256', $message);
+    }
 }

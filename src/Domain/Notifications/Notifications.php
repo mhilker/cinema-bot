@@ -43,4 +43,9 @@ final class Notifications implements IteratorAggregate, Countable
     {
         return count($this->notifications);
     }
+
+    public function filter(callable $callback): self
+    {
+        return new self(array_filter($this->notifications, $callback));
+    }
 }

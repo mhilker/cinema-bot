@@ -46,4 +46,9 @@ final class ShowTime
     {
         return $this->value->getTimestamp() > $date->getTimestamp();
     }
+
+    public function format(string $format): string
+    {
+        return $this->value->format($format);
+    }
 }

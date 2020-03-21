@@ -18,4 +18,6 @@ interface NotificationQueueProjection
     public function ack(NotificationID $id): void;
 
     public function nack(NotificationID $id): void;
+
+    public function hasMessageHash(string $hash): bool;
 }

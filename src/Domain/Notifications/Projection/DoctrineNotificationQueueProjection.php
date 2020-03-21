@@ -29,8 +29,8 @@ final class DoctrineNotificationQueueProjection implements NotificationQueueProj
 
         try {
             $sql = <<<SQL
-            INSERT INTO "notifications" ("notification_id", "group_id", "shows")
-            VALUES (:notification_id, :group_id, :shows);
+            INSERT INTO "notifications" ("notification_id", "group_id", "hash", "shows")
+            VALUES (:notification_id, :group_id, :hash, :shows);
             SQL;
 
             $statement = $this->connection->prepare($sql);
@@ -39,6 +39,7 @@ final class DoctrineNotificationQueueProjection implements NotificationQueueProj
                 $statement->execute([
                     'notification_id' => $notification->getNotificationID()->asString(),
                     'group_id'        => $notification->getGroupID()->asString(),
+                    'hash'            => $notification->calculateMessageHash(),
                     'shows'           => json_encode($notification->getShows()->asArray(), JSON_THROW_ON_ERROR),
                 ]);
             }
@@ -117,5 +118,22 @@ final class DoctrineNotificationQueueProjection implements NotificationQueueProj
             'notification_id' => $id->asString(),
             'now'             => (new DateTimeImmutable('now', new DateTimeZone('UTC')))->format(DATE_ATOM),
         ]);
+    }
+
+    public function hasMessageHash(string $hash): bool
+    {
+        $sql = <<<'SQL'
+        SELECT COUNT(*) as "count"
+        FROM "notifications" 
+        WHERE "hash" = :hash;
+        SQL;
+
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([
+            'hash' => $hash,
+        ]);
+
+        $row = $statement->fetch();
+        return ((int) $row['count']) > 0;
     }
 }

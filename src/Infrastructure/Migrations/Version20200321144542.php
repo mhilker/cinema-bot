@@ -30,6 +30,10 @@ final class Version20200321144542 extends AbstractMigration
             'length' => 36,
             'fixed' => true,
         ]);
+        $events->addColumn('hash', Types::STRING, [
+            'length' => 64,
+            'fixed' => true,
+        ]);
         $events->addColumn('shows', Types::JSON);
         $events->addColumn('failed', Types::DATETIME_IMMUTABLE, [
             'notnull' => false,

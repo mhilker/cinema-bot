@@ -12,7 +12,6 @@ use CinemaBot\Domain\Notifications\Projection\NotificationQueueProjection;
 use CinemaBot\Domain\Show;
 use CinemaBot\Domain\ShowList\ShowListProjection;
 use CinemaBot\Domain\WatchList\WatchListProjection;
-use DateTimeImmutable;
 
 final class FakeNotificationJobQueue implements NotificationJobQueue
 {
@@ -54,7 +53,7 @@ final class FakeNotificationJobQueue implements NotificationJobQueue
 
     private function fillQueue(): void
     {
-        $shows = $this->showList->load();
+        $shows = $this->showList->loadUpcomingShows();
         if (count($shows) === 0) {
             return;
         }
@@ -64,22 +63,23 @@ final class FakeNotificationJobQueue implements NotificationJobQueue
             return;
         }
 
-        $now = new DateTimeImmutable();
-
         $notifications = [];
         foreach ($groupIds as $groupId) {
             $terms = $this->watchList->loadByGroupID($groupId);
             $shows = $shows->filter(fn(Show $show) => $show->getName()->containsAnyTerms($terms));
-            $shows = $shows->filter(fn(Show $show) => $show->isAfter($now));
             if (count($shows) > 0) {
                 $notifications[] = new Notification(NotificationID::random(), $groupId, $shows);
             }
         }
+        $notifications = Notifications::from($notifications);
+
+        $callback = fn(Notification $n) => $this->queue->hasMessageHash($n->calculateMessageHash()) === false;
+        $notifications = $notifications->filter($callback);
 
         if (count($notifications) === 0) {
             return;
         }
 
-        $this->queue->enqueue(Notifications::from($notifications));
+        $this->queue->enqueue($notifications);
     }
 }

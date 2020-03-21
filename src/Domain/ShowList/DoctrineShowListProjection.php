@@ -9,6 +9,7 @@ use CinemaBot\Domain\MovieName;
 use CinemaBot\Domain\Show;
 use CinemaBot\Domain\Shows;
 use CinemaBot\Domain\ShowTime;
+use DateTimeZone;
 use Doctrine\DBAL\Driver\Connection;
 
 final class DoctrineShowListProjection implements ShowListProjection
@@ -20,13 +21,18 @@ final class DoctrineShowListProjection implements ShowListProjection
         $this->connection = $connection;
     }
 
-    public function load(): Shows
+    public function loadUpcomingShows(): Shows
     {
         $sql = <<< SQL
-        SELECT * FROM "show_list";
+        SELECT * 
+        FROM "show_list" 
+        WHERE "show_time" > DATETIME(:now);
         SQL;
 
-        $statement = $this->connection->query($sql);
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([
+            'now' => (new \DateTimeImmutable('now', new DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
+        ]);
 
         $rows = [];
         while ($row = $statement->fetch()) {
@@ -59,7 +65,7 @@ final class DoctrineShowListProjection implements ShowListProjection
         $statement->execute([
             'cinema_id'  => $id->asString(),
             'movie_name' => $name->asString(),
-            'show_time'  => $time->asString(),
+            'show_time'  => $time->format('Y-m-d H:i:s'),
         ]);
     }
 }

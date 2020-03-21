@@ -11,7 +11,7 @@ use CinemaBot\Domain\ShowTime;
 
 interface ShowListProjection
 {
-    public function load(): Shows;
+    public function loadUpcomingShows(): Shows;
 
     public function insert(CinemaID $id, MovieName $name, ShowTime $time): void;
 }
