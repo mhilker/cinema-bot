@@ -11,7 +11,7 @@ use Traversable;
 
 final class Notifications implements IteratorAggregate, Countable
 {
-    /** @var array<Notification> */
+    /** @var Notification[] */
     private array $notifications = [];
 
     public function __construct(array $notifications)

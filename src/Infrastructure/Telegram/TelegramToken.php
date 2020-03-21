@@ -9,6 +9,10 @@ final class TelegramToken
     public static function get(): string
     {
         $file = getenv('TELEGRAM_TOKEN_FILE');
+        if ($file === false) {
+            throw new TokenException('"TELEGRAM_TOKEN_FILE" variable not set');
+        }
+
         if (!file_exists($file)) {
             throw new TokenException('Telegram token file does not exist');
         }

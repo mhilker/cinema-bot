@@ -51,7 +51,7 @@ final class NotifierSystemTest extends TestCase
 
         $logger = $this->createMock(LoggerInterface::class);
 
-        $system = $this->object = new NotifierSystem($projection, $notifier, $logger);
+        $system = new NotifierSystem($projection, $notifier, $logger);
         $system->run();
     }
 }

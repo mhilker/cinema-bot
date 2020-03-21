@@ -16,6 +16,7 @@ final class WeekParserTest extends TestCase
     public function testParsesUrlsFromHtml(): void
     {
         $content = file_get_contents(__DIR__ . '/_files/kinoprogramm.html');
+        $this->assertIsString($content);
 
         $parser = new WeekParser();
         $urls = $parser->parse($content);
