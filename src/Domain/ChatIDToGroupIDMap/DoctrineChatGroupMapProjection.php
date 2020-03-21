@@ -64,6 +64,6 @@ final class DoctrineChatGroupMapProjection implements ChatGroupMapProjection
         ]);
 
         $row = $statement->fetch();
-        return GroupID::from($row['chat_id']);
+        return ChatID::fromString($row['chat_id']);
     }
 }

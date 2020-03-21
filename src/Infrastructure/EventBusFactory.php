@@ -7,6 +7,7 @@ namespace CinemaBot\Infrastructure;
 use CinemaBot\Application\CQRS\DirectEventBus;
 use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjector;
 use CinemaBot\Domain\CinemaList\CinemaListProjector;
+use CinemaBot\Domain\GroupList\GroupListProjector;
 use CinemaBot\Domain\MovieList\MovieListProjector;
 use CinemaBot\Domain\ShowList\ShowListProjector;
 use CinemaBot\Domain\WatchList\WatchListProjector;
@@ -22,6 +23,7 @@ final class EventBusFactory
         $eventBus->add($container->get(ChatGroupProjector::class));
         $eventBus->add($container->get(ShowListProjector::class));
         $eventBus->add($container->get(MovieListProjector::class));
+        $eventBus->add($container->get(GroupListProjector::class));
         return $eventBus;
     }
 }

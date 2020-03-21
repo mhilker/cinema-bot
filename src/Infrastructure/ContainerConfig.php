@@ -23,6 +23,8 @@ use CinemaBot\Domain\CrawlCinema\Parser\DOMParser;
 use CinemaBot\Domain\CrawlCinema\Parser\Parser;
 use CinemaBot\Domain\Group\EventSourcedGroupRepository;
 use CinemaBot\Domain\Group\GroupRepository;
+use CinemaBot\Domain\GroupList\DoctrineGroupListProjection;
+use CinemaBot\Domain\GroupList\GroupListProjection;
 use CinemaBot\Domain\MovieList\DoctrineMovieListProjection;
 use CinemaBot\Domain\MovieList\MovieListProjection;
 use CinemaBot\Domain\SendNotifications\DoctrineNotificationProjection;
@@ -70,6 +72,7 @@ final class ContainerConfig extends DefinitionArray
             Parser::class => get(DOMParser::class),
             Notifier::class => get(TelegramNotifier::class),
             NotificationProjection::class => get(DoctrineNotificationProjection::class),
+            GroupListProjection::class => get(DoctrineGroupListProjection::class),
         ]);
     }
 }

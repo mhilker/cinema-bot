@@ -21,9 +21,11 @@ final class HelpTelegramCommand implements TelegramCommand
 
         $response = <<< MESSAGE
         `/help` Show this help.
+        `/movies` Show all known movies.
         `/show` Show all terms on watchlist.
         `/add [term]` Add term to watchlist.
         `/remove [term]` Remove term from watchlist.
+        `/about` Show various statistics
         MESSAGE;
 
         $bot->sendMessage($chatID->asString(), $response, 'markdown');
