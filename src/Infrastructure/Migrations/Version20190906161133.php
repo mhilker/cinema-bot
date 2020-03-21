@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\AbstractMigration;
 
 final class Version20190906161133 extends AbstractMigration
@@ -17,11 +18,11 @@ final class Version20190906161133 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $watchlist = $schema->getTable('watchlist');
-        $watchlist->addColumn('id', 'bigint', [
+        $watchlist->addColumn('id', TYPES::BIGINT, [
             'unsigned' => true,
             'autoincrement' => true,
         ]);
-        $watchlist->addColumn('group_id', 'string', [
+        $watchlist->addColumn('group_id', TYPES::STRING, [
             'length' => 36,
             'fixed' => true,
         ]);

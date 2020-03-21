@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\MovieList;
 
 use CinemaBot\Domain\MovieName;
-use CinemaBot\Domain\Shows;
+use CinemaBot\Domain\MovieNames;
 use Doctrine\DBAL\Driver\Connection;
 
 final class DoctrineMovieListProjection implements MovieListProjection
@@ -17,12 +17,24 @@ final class DoctrineMovieListProjection implements MovieListProjection
         $this->connection = $connection;
     }
 
-    public function load(): Shows
+    public function load(): MovieNames
     {
-        return Shows::from([]);
+        $sql = <<< SQL
+        SELECT "movie_name" FROM "movie_list"; 
+        SQL;
+
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([]);
+
+        $names = [];
+        while ($row = $statement->fetch()) {
+            $names[] = MovieName::from($row['movie_name']);
+        }
+
+        return MovieNames::from($names);
     }
 
-    public function insert(MovieName $name): void
+    public function add(MovieName $name): void
     {
         $sql = <<< SQL
         INSERT OR IGNORE INTO 

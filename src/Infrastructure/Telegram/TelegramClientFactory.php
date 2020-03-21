@@ -9,6 +9,7 @@ use CinemaBot\Infrastructure\Telegram\Command\HelpTelegramCommand;
 use CinemaBot\Infrastructure\Telegram\Command\JoinChatTelegramCommand;
 use CinemaBot\Infrastructure\Telegram\Command\LeaveChatTelegramCommand;
 use CinemaBot\Infrastructure\Telegram\Command\RemoveFromWatchListTelegramCommand;
+use CinemaBot\Infrastructure\Telegram\Command\ShowMovieListTelegramCommand;
 use CinemaBot\Infrastructure\Telegram\Command\ShowWatchListTelegramCommand;
 use Psr\Container\ContainerInterface;
 use TelegramBot\Api\Client;
@@ -24,6 +25,7 @@ final class TelegramClientFactory
             $container->get(HelpTelegramCommand::class),
             $container->get(RemoveFromWatchListTelegramCommand::class),
             $container->get(ShowWatchListTelegramCommand::class),
+            $container->get(ShowMovieListTelegramCommand::class),
         ];
 
         $client = new Client($token);

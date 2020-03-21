@@ -6,6 +6,7 @@ namespace CinemaBot\Infrastructure\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\AbstractMigration;
 
 final class Version20190907074541 extends AbstractMigration
@@ -19,11 +20,11 @@ final class Version20190907074541 extends AbstractMigration
     {
         /** @var Table $cinemaList */
         $cinemaList = $schema->getTable('cinema_list');
-        $cinemaList->addColumn('id', 'bigint', [
+        $cinemaList->addColumn('id', Types::BIGINT, [
             'unsigned' => true,
             'autoincrement' => true,
         ]);
-        $cinemaList->addColumn('url', 'string', [
+        $cinemaList->addColumn('url', Types::STRING, [
             'length' => 255,
         ]);
         $cinemaList->setPrimaryKey(['id']);

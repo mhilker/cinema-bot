@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\AbstractMigration;
 
 final class Version20190526165842 extends AbstractMigration
@@ -17,7 +18,7 @@ final class Version20190526165842 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $cinemaList = $schema->createTable('cinema_list');
-        $cinemaList->addColumn('cinema_id', 'string', [
+        $cinemaList->addColumn('cinema_id', Types::STRING, [
             'length' => 36,
             'fixed' => true,
         ]);

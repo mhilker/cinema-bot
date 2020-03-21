@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\AbstractMigration;
 
 final class Version20190524212104 extends AbstractMigration
@@ -17,18 +18,18 @@ final class Version20190524212104 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $events = $schema->createTable('events');
-        $events->addColumn('id', 'bigint', [
+        $events->addColumn('id', Types::BIGINT, [
             'unsigned' => true,
             'autoincrement' => true,
         ]);
-        $events->addColumn('aggregate_id', 'string', [
+        $events->addColumn('aggregate_id', Types::STRING, [
             'length' => 36,
             'fixed' => true,
         ]);
-        $events->addColumn('topic', 'string', [
+        $events->addColumn('topic', Types::STRING, [
             'length' => 1_024,
         ]);
-        $events->addColumn('payload', 'json');
+        $events->addColumn('payload', Types::JSON);
         $events->setPrimaryKey(['id']);
         $events->addIndex(['aggregate_id']);
     }

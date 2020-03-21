@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\AbstractMigration;
 
 final class Version20200320171417 extends AbstractMigration
@@ -17,11 +18,11 @@ final class Version20200320171417 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $idMap = $schema->createTable('movie_list');
-        $idMap->addColumn('id', 'bigint', [
+        $idMap->addColumn('id', Types::BIGINT, [
             'unsigned' => true,
             'autoincrement' => true,
         ]);
-        $idMap->addColumn('movie_name', 'string', [
+        $idMap->addColumn('movie_name', Types::STRING, [
             'length' => 255,
             'fixed' => false,
         ]);

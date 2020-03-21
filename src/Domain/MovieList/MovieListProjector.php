@@ -26,6 +26,6 @@ final class MovieListProjector implements EventListener
 
     private function handleShowAddedEvent(ShowAddedEvent $event): void
     {
-        $this->projection->insert($event->getName());
+        $this->projection->add($event->getName());
     }
 }
