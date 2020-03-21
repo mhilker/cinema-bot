@@ -7,14 +7,16 @@ services:
     build:
       context: .
       dockerfile: docker/nginx/Dockerfile
+    depends_on:
+      - php
     environment:
-      - PHP_HOSTNAME=webhook
+      - PHP_HOSTNAME=php
     ports:
       - "21000:80"
     volumes:
       - .:/app/
 
-  webhook:
+  php:
     image: mhilker/private:cinema-bot-php
     build:
       context: .
