@@ -28,7 +28,7 @@ jobs:
         run: echo "" > telegram-token.local
 
       - name: Run containers
-        run: docker-compose up web php -d
+        run: docker-compose up -d web php
 
       - name: Wait for startup
         run: sleep 10
