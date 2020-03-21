@@ -27,9 +27,7 @@ class SendNotificationCLICommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $events = Events::from([]);
-
-        $this->notifierSystem->send($events);
+        $this->notifierSystem->run();
 
         return 0;
     }

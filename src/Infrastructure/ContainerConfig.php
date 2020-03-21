@@ -15,14 +15,18 @@ use CinemaBot\Domain\Cinema\CinemaRepository;
 use CinemaBot\Domain\Cinema\EventSourcedCinemaRepository;
 use CinemaBot\Domain\CinemaList\CinemaListProjection;
 use CinemaBot\Domain\CinemaList\DoctrineCinemaListProjection;
+use CinemaBot\Domain\CrawlCinema\Crawler\Crawler;
+use CinemaBot\Domain\CrawlCinema\Crawler\RealCrawler;
 use CinemaBot\Domain\CrawlCinema\Downloader\CopyDownloader;
 use CinemaBot\Domain\CrawlCinema\Downloader\Downloader;
+use CinemaBot\Domain\CrawlCinema\Parser\DOMParser;
+use CinemaBot\Domain\CrawlCinema\Parser\Parser;
 use CinemaBot\Domain\Group\EventSourcedGroupRepository;
 use CinemaBot\Domain\Group\GroupRepository;
 use CinemaBot\Domain\MovieList\DoctrineMovieListProjection;
 use CinemaBot\Domain\MovieList\MovieListProjection;
-use CinemaBot\Domain\SendNotifications\MarkdownNotificationFormatter;
-use CinemaBot\Domain\SendNotifications\NotificationFormatter;
+use CinemaBot\Domain\SendNotifications\DoctrineNotificationProjection;
+use CinemaBot\Domain\SendNotifications\NotificationProjection;
 use CinemaBot\Domain\SendNotifications\Notifier;
 use CinemaBot\Domain\SendNotifications\TelegramNotifier;
 use CinemaBot\Domain\ShowList\DoctrineShowListProjection;
@@ -63,8 +67,10 @@ final class ContainerConfig extends DefinitionArray
             Client::class => factory(TelegramClientFactory::class),
             BotApi::class => factory(TelegramBotFactory::class),
             Downloader::class => get(CopyDownloader::class),
-            NotificationFormatter::class => get(MarkdownNotificationFormatter::class),
+            Crawler::class => get(RealCrawler::class),
+            Parser::class => get(DOMParser::class),
             Notifier::class => get(TelegramNotifier::class),
+            NotificationProjection::class => get(DoctrineNotificationProjection::class),
         ]);
     }
 }

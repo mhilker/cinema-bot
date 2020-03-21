@@ -49,7 +49,7 @@ final class DoctrineEventStore implements EventStore
                 $events[] = $class::fromJSON($payload);
             }
         } catch (Exception $exception) {
-            throw new EventStoreException('Could not load events');
+            throw new EventStoreException('Could not load events', 0, $exception);
         }
 
         if (count($events) === 0) {

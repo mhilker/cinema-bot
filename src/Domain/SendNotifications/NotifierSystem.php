@@ -17,11 +17,18 @@ final class NotifierSystem
         $this->notifier = $notifier;
     }
 
-    public function send(Events $events): void
+    public function run(): void
     {
-        while ($notification = $this->projection->fetch()) {
-            $this->notifier->notify($notification);
-            $this->projection->ack($notification->getNotificationID());
+        $notifications = $this->projection->fetch();
+
+        foreach ($notifications as $notification) {
+            $id = $notification->getNotificationID();
+            try {
+                $this->notifier->notify($notification);
+                $this->projection->ack($id);
+            } catch (\Exception $exception) {
+                $this->projection->nack($id);
+            }
         }
     }
 }
