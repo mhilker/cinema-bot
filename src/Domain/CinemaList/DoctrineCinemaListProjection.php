@@ -30,7 +30,7 @@ final class DoctrineCinemaListProjection implements CinemaListProjection
 
         $list = [];
 
-        while (($row = $statement->fetch()) !== false) {
+        while ($row = $statement->fetch()) {
             $list[] = CinemaID::from($row['cinema_id']);
         }
 

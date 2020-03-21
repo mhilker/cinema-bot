@@ -21,6 +21,7 @@ final class TelegramWebHookAction implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        // TODO: inject request
         $this->telegram->run();
 
         return new Response(200);

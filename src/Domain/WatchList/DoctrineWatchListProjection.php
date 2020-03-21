@@ -33,7 +33,7 @@ final class DoctrineWatchListProjection implements WatchListProjection
 
         $terms = [];
 
-        while (($row = $statement->fetch()) !== false) {
+        while ($row = $statement->fetch()) {
             $terms[] = Term::from($row['term']);
         }
 

@@ -41,7 +41,7 @@ final class DoctrineEventStore implements EventStore
 
             $events = [];
 
-            while (($row = $statement->fetch()) !== false) {
+            while ($row = $statement->fetch()) {
                 $topic = $row['topic'] ?? null;
                 $payload = $row['payload'] ?? null;
 

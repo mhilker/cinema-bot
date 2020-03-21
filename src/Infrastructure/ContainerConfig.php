@@ -50,13 +50,12 @@ final class ContainerConfig extends DefinitionArray
         parent::__construct([
             'db' => require __DIR__ . '/../../doctrine.php',
 
-            Connection::class      => factory(DoctrineConnectionFactory::class),
-            CommandBus::class      => factory(CommandBusFactory::class),
-            DirectEventBus::class  => factory(EventBusFactory::class),
-            EventPublisher::class  => get(DirectEventBus::class),
+            Connection::class => factory(DoctrineConnectionFactory::class),
+            CommandBus::class => factory(CommandBusFactory::class),
+            DirectEventBus::class => factory(EventBusFactory::class),
+            EventPublisher::class => get(DirectEventBus::class),
             EventDispatcher::class => get(DirectEventBus::class),
-            EventStore::class      => factory(EventStoreFactory::class),
-
+            EventStore::class => factory(EventStoreFactory::class),
             WatchListProjection::class  => get(DoctrineWatchListProjection::class),
             CinemaListProjection::class => get(DoctrineCinemaListProjection::class),
             ChatGroupMapProjection::class  => get(DoctrineChatGroupMapProjection::class),
