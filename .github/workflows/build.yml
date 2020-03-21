@@ -1,0 +1,46 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: composer install --no-progress --prefer-dist
+
+      - name: Run phpcs
+        run: ./vendor/bin/phpcs
+
+      - name: Run phpunit
+        run: ./vendor/bin/phpunit
+
+      - name: Build containers
+        run: docker-compose build
+
+      - name: Run containers
+        run: docker-compose up web php -d
+
+      - name: Wait for startup
+        run: sleep 10
+
+      - name: Execute migrations
+        run: docker-compose run --user app --rm php /app/vendor/bin/doctrine-migrations migrations:migrate --configuration /app/migrations.php --db-configuration /app/doctrine.php --no-interaction latest
+
+      - name: Test home page
+        run: curl --silent --show-error --fail -XGET http://localhost:8080
+
+      - name: Shut down containers
+        run: docker-compose down
+
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u mhilker --password-stdin
+
+      - name: Push image
+        run: docker-compose push
