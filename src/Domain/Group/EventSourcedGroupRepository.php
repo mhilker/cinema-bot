@@ -21,9 +21,9 @@ final class EventSourcedGroupRepository implements GroupRepository
         $this->eventPublisher = $eventPublisher;
     }
 
-    public function load(GroupID $groupID, callable $callable): GroupUseCase
+    public function load(GroupID $id, callable $callable): GroupUseCase
     {
-        $storableEvents = $this->eventStore->load($groupID);
+        $storableEvents = $this->eventStore->load($id);
         $events = Events::from($storableEvents);
 
         return $callable($events);

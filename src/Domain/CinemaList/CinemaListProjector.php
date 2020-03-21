@@ -26,6 +26,6 @@ final class CinemaListProjector implements EventListener
 
     private function handleCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {
-        $this->projection->insert($event->getCinemaID(), $event->getCinemaURL());
+        $this->projection->insert($event->getID(), $event->getURL());
     }
 }

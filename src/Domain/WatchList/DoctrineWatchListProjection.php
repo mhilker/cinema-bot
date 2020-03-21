@@ -18,7 +18,7 @@ final class DoctrineWatchListProjection implements WatchListProjection
         $this->connection = $connection;
     }
 
-    public function loadByGroupID(GroupID $groupID): Terms
+    public function loadByGroupID(GroupID $id): Terms
     {
         $sql = <<<SQL
         SELECT * 
@@ -28,7 +28,7 @@ final class DoctrineWatchListProjection implements WatchListProjection
 
         $statement = $this->connection->prepare($sql);
         $statement->execute([
-            'group_id' => $groupID->asString(),
+            'group_id' => $id->asString(),
         ]);
 
         $terms = [];
@@ -40,7 +40,7 @@ final class DoctrineWatchListProjection implements WatchListProjection
         return Terms::from($terms);
     }
 
-    public function add(GroupID $groupID, Term $term): void
+    public function add(GroupID $id, Term $term): void
     {
         $sql = <<<SQL
         INSERT OR IGNORE INTO "watchlist" ("group_id", "term") 
@@ -49,12 +49,12 @@ final class DoctrineWatchListProjection implements WatchListProjection
 
         $statement = $this->connection->prepare($sql);
         $statement->execute([
-            'group_id' => $groupID->asString(),
+            'group_id' => $id->asString(),
             'term'     => $term->asString(),
         ]);
     }
 
-    public function remove(GroupID $groupID, Term $term): void
+    public function remove(GroupID $id, Term $term): void
     {
         $sql = <<<SQL
         DELETE FROM "watchlist"
@@ -64,7 +64,7 @@ final class DoctrineWatchListProjection implements WatchListProjection
 
         $statement = $this->connection->prepare($sql);
         $statement->execute([
-            'group_id' => $groupID->asString(),
+            'group_id' => $id->asString(),
             'term'     => $term->asString(),
         ]);
     }

@@ -10,9 +10,9 @@ use CinemaBot\Domain\Event\GroupFoundedEvent;
 
 final class ChatGroupProjector implements EventListener
 {
-    private ChatGroupProjection $projection;
+    private ChatGroupMapProjection $projection;
 
-    public function __construct(ChatGroupProjection $projection)
+    public function __construct(ChatGroupMapProjection $projection)
     {
         $this->projection = $projection;
     }

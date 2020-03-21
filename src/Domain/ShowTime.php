@@ -6,7 +6,7 @@ namespace CinemaBot\Domain;
 
 use DateTimeImmutable;
 
-final class MovieTime
+final class ShowTime
 {
     private DateTimeImmutable $value;
 
@@ -26,7 +26,7 @@ final class MovieTime
             // TODO: Timezone
             $dateTime = new DateTimeImmutable($value);
         } catch (\Exception $exception) {
-            throw new InvalidMovieTimeException('Movie time is invalid');
+            throw new InvalidMovieTimeException('Show time is invalid');
         }
 
         return new self($dateTime);

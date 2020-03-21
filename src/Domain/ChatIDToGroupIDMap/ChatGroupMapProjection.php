@@ -7,9 +7,11 @@ namespace CinemaBot\Domain\ChatIDToGroupIDMap;
 use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\GroupID;
 
-interface ChatGroupProjection
+interface ChatGroupMapProjection
 {
     public function add(ChatID $chatID, GroupID $groupID): void;
 
-    public function loadGroupIDByChatID(ChatID $chatID): GroupID;
+    public function loadGroupIDByChatID(ChatID $id): GroupID;
+
+    public function loadChatIDByGroupID(GroupID $id): ChatID;
 }

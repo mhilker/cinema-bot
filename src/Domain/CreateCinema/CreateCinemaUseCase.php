@@ -25,8 +25,8 @@ final class CreateCinemaUseCase extends AbstractEventStream implements CinemaUse
 
     private function applyCinemaCreatedEvent(CinemaCreatedEvent $event): void
     {
-        $this->id = $event->getCinemaID();
-        $this->url = $event->getCinemaURL();
+        $this->id = $event->getID();
+        $this->url = $event->getURL();
     }
 
     protected function apply(Event $event): void

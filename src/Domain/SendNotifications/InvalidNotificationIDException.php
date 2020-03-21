@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\SendNotifications;
 
-interface Notifier
+use Exception;
+
+final class InvalidNotificationIDException extends Exception
 {
-    public function notify(Notification $notification): void;
+
 }

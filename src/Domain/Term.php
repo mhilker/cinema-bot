@@ -32,4 +32,14 @@ final class Term
     {
         return $this->value;
     }
+
+    public function equals(Term $term): bool
+    {
+        return $this->value === $term->value;
+    }
+
+    public function notEquals(Term $term): bool
+    {
+        return $this->equals($term) === false;
+    }
 }

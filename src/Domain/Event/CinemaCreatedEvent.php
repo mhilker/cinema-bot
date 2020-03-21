@@ -17,18 +17,18 @@ final class CinemaCreatedEvent implements Event, StorableEvent
     private CinemaID $id;
     private URL $url;
 
-    public function __construct(CinemaID $cinemaID, URL $url)
+    public function __construct(CinemaID $id, URL $url)
     {
-        $this->id = $cinemaID;
+        $this->id = $id;
         $this->url = $url;
     }
 
-    public function getCinemaID(): CinemaID
+    public function getID(): CinemaID
     {
         return $this->id;
     }
 
-    public function getCinemaURL(): URL
+    public function getURL(): URL
     {
         return $this->url;
     }

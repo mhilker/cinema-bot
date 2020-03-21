@@ -52,6 +52,14 @@ final class Terms implements IteratorAggregate, Countable
         ]);
     }
 
+    public function without(Term $term): self
+    {
+        $copy = $this->terms;
+        unset($copy[$term->asString()]);
+
+        return new self($copy);
+    }
+
     public function contains(Term $term): bool
     {
         return isset($this->terms[$term->asString()]) === true;

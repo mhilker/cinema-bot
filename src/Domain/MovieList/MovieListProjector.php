@@ -20,12 +20,12 @@ final class MovieListProjector implements EventListener
     public function handle(Event $event): void
     {
         if ($event instanceof ShowAddedEvent) {
-            $this->handleCinemaCreatedEvent($event);
+            $this->handleShowAddedEvent($event);
         }
     }
 
-    private function handleCinemaCreatedEvent(ShowAddedEvent $event): void
+    private function handleShowAddedEvent(ShowAddedEvent $event): void
     {
-        $this->projection->insert($event->getMovieName(), $event->getMovieTime());
+        $this->projection->insert($event->getName());
     }
 }

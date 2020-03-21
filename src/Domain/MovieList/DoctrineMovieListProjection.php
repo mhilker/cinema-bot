@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\MovieList;
 
 use CinemaBot\Domain\MovieName;
-use CinemaBot\Domain\Movies;
-use CinemaBot\Domain\MovieTime;
+use CinemaBot\Domain\Shows;
 use Doctrine\DBAL\Driver\Connection;
 
 final class DoctrineMovieListProjection implements MovieListProjection
@@ -18,25 +17,23 @@ final class DoctrineMovieListProjection implements MovieListProjection
         $this->connection = $connection;
     }
 
-    public function load(): Movies
+    public function load(): Shows
     {
-        // TODO
-        return Movies::from([]);
+        return Shows::from([]);
     }
 
-    public function insert(MovieName $movieName, MovieTime $movieTime): void
+    public function insert(MovieName $name): void
     {
         $sql = <<< SQL
-        INSERT INTO 
-            "movie_list" ("movie_name", "movie_time")
+        INSERT OR IGNORE INTO 
+            "movie_list" ("movie_name")
         VALUES
-            (:movie_name, :movie_time);
+            (:movie_name);
         SQL;
 
         $statement = $this->connection->prepare($sql);
         $statement->execute([
-            'movie_name' => $movieName->asString(),
-            'movie_time' => $movieTime->asString(),
+            'movie_name' => $name->asString(),
         ]);
     }
 }

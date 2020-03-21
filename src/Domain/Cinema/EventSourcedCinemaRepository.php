@@ -21,9 +21,9 @@ final class EventSourcedCinemaRepository implements CinemaRepository
         $this->eventPublisher = $eventPublisher;
     }
 
-    public function load(CinemaID $cinemaID, callable $callable): CinemaUseCase
+    public function load(CinemaID $id, callable $callable): CinemaUseCase
     {
-        $storableEvents = $this->eventStore->load($cinemaID);
+        $storableEvents = $this->eventStore->load($id);
         $events = Events::from($storableEvents);
 
         return $callable($events);

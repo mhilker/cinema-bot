@@ -10,6 +10,10 @@ final class CopyDownloader implements Downloader
 {
     public function download(URL $url): string
     {
-        return file_get_contents($url->asString());
+        $contents = @file_get_contents($url->asString());
+        if ($contents === false) {
+            throw new DownloadException('Could not download file from URL');
+        }
+        return $contents;
     }
 }

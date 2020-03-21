@@ -6,8 +6,8 @@ namespace CinemaBot\Domain\CrawlCinema;
 
 use CinemaBot\Application\CQRS\CommandHandler;
 use CinemaBot\Application\CQRS\Events;
-use CinemaBot\Domain\CrawlCinema\Parser\Crawler;
 use CinemaBot\Domain\Cinema\CinemaRepository;
+use CinemaBot\Domain\CrawlCinema\Crawler\Crawler;
 
 final class CrawlCinemaCommandHandler implements CommandHandler
 {
@@ -22,15 +22,11 @@ final class CrawlCinemaCommandHandler implements CommandHandler
 
     public function handle(CrawlCinemaCommand $command): void
     {
-        $cinemaID = $command->getCinemaID();
+        $id = $command->getID();
 
         /** @var CrawlCinemaUseCase $cinema */
-        $cinema = $this->repository->load($cinemaID, fn(Events $events) => new CrawlCinemaUseCase($events));
-
-        $url = $cinema->getURL();
-        $movies = $this->crawler->crawl($url);
-
-        $cinema->addShows($movies);
+        $cinema = $this->repository->load($id, fn(Events $events) => new CrawlCinemaUseCase($events, $this->crawler));
+        $cinema->crawl();
 
         $this->repository->save($cinema);
     }

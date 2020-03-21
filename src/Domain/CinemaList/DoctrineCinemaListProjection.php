@@ -25,7 +25,8 @@ final class DoctrineCinemaListProjection implements CinemaListProjection
         FROM "cinema_list";
         SQL;
 
-        $statement = $this->connection->query($sql);
+        $statement = $this->connection->prepare($sql);
+        $statement->execute();
 
         $list = [];
 

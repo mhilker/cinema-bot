@@ -14,18 +14,18 @@ final class TermAddedEvent implements Event, StorableEvent
 {
     public const TOPIC = 'cinema_bot.watchlist.term_added';
 
-    private GroupID $groupID;
+    private GroupID $id;
     private Term $term;
 
-    public function __construct(GroupID $groupID, Term $term)
+    public function __construct(GroupID $id, Term $term)
     {
-        $this->groupID = $groupID;
+        $this->id = $id;
         $this->term = $term;
     }
 
-    public function getGroupID(): GroupID
+    public function getId(): GroupID
     {
-        return $this->groupID;
+        return $this->id;
     }
 
     public function getTerm(): Term
@@ -40,7 +40,7 @@ final class TermAddedEvent implements Event, StorableEvent
 
     public function getEventStreamID(): EventStreamID
     {
-        return $this->groupID;
+        return $this->id;
     }
 
     public static function fromJSON(string $json): StorableEvent
@@ -56,7 +56,7 @@ final class TermAddedEvent implements Event, StorableEvent
     public function asJSON(): string
     {
         return json_encode([
-            'groupID'   => $this->groupID->asString(),
+            'groupID'   => $this->id->asString(),
             'term' => $this->term->asString(),
         ], JSON_THROW_ON_ERROR);
     }

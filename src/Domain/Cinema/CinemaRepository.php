@@ -10,5 +10,5 @@ interface CinemaRepository
 {
     public function save(CinemaUseCase $cinema): void;
 
-    public function load(CinemaID $cinemaID, callable $callable): CinemaUseCase;
+    public function load(CinemaID $id, callable $callable): CinemaUseCase;
 }

@@ -7,9 +7,9 @@ namespace CinemaBot\Infrastructure\Telegram\Command;
 use CinemaBot\Application\CQRS\CommandBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Domain\ChatID;
-use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
-use CinemaBot\Domain\RemoveTerm\RemoveTermCommand;
+use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
 use CinemaBot\Domain\Term;
+use CinemaBot\Domain\TermList\RemoveTermCommand;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 
@@ -17,9 +17,9 @@ final class RemoveFromWatchListTelegramCommand implements TelegramCommand
 {
     private CommandBus $commandBus;
     private EventDispatcher $eventDispatcher;
-    private ChatGroupProjection $projection;
+    private ChatGroupMapProjection $projection;
 
-    public function __construct(ChatGroupProjection $projection, CommandBus $commandBus, EventDispatcher $eventDispatcher)
+    public function __construct(ChatGroupMapProjection $projection, CommandBus $commandBus, EventDispatcher $eventDispatcher)
     {
         $this->projection = $projection;
         $this->commandBus = $commandBus;

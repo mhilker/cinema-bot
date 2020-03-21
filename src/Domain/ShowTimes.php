@@ -9,9 +9,9 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
-final class MovieTimes implements IteratorAggregate, Countable
+final class ShowTimes implements IteratorAggregate, Countable
 {
-    /** @var MovieTime[] */
+    /** @var ShowTime[] */
     private array $values = [];
 
     private function __construct(iterable $values)
@@ -26,14 +26,14 @@ final class MovieTimes implements IteratorAggregate, Countable
         return new self($times);
     }
 
-    private function add(MovieTime $value): void
+    private function add(ShowTime $value): void
     {
         $key = $value->getValue()->format(DATE_ATOM);
         $this->values[$key] = $value;
     }
 
     /**
-     * @return Traversable | MovieTime[]
+     * @return Traversable | ShowTime[]
      */
     public function getIterator(): Traversable
     {

@@ -6,8 +6,8 @@ namespace CinemaBot\Domain\ShowList;
 
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\MovieName;
-use CinemaBot\Domain\Movies;
-use CinemaBot\Domain\MovieTime;
+use CinemaBot\Domain\Shows;
+use CinemaBot\Domain\ShowTime;
 use Doctrine\DBAL\Driver\Connection;
 
 final class DoctrineShowListProjection implements ShowListProjection
@@ -19,26 +19,36 @@ final class DoctrineShowListProjection implements ShowListProjection
         $this->connection = $connection;
     }
 
-    public function load(): Movies
+    public function load(): Shows
     {
-        // TODO
-        return Movies::from([]);
+//        $sql = <<< SQL
+//        SELECT * FROM "show_list";
+//        SQL;
+//
+//        $statement = $this->connection->query($sql);
+//
+//        $shows = [];
+//        while ($row = $statement->fetch()) {
+//            $shows[] = Show::from(MovieName::from($row[]), ShowTimes::from());
+//        }
+
+        return Shows::from([]);
     }
 
-    public function insert(CinemaID $cinemaID, MovieName $movieName, MovieTime $movieTime): void
+    public function insert(CinemaID $id, MovieName $name, ShowTime $time): void
     {
         $sql = <<< SQL
         INSERT INTO 
-            "show_list" ("cinema_id", "movie_name", "movie_time")
+            "show_list" ("cinema_id", "movie_name", "show_time")
         VALUES
-            (:cinema_id, :movie_name, :movie_time);
+            (:cinema_id, :movie_name, :show_time);
         SQL;
 
         $statement = $this->connection->prepare($sql);
         $statement->execute([
-            'cinema_id'  => $cinemaID->asString(),
-            'movie_name' => $movieName->asString(),
-            'movie_time' => $movieTime->asString(),
+            'cinema_id'  => $id->asString(),
+            'movie_name' => $name->asString(),
+            'show_time'  => $time->asString(),
         ]);
     }
 }

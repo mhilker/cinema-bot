@@ -9,14 +9,14 @@ use CinemaBot\Application\CQRS\DirectEventBus;
 use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Application\CQRS\EventPublisher;
 use CinemaBot\Application\EventStore\EventStore;
-use CinemaBot\Domain\CrawlCinema\Downloader\CopyDownloader;
-use CinemaBot\Domain\CrawlCinema\Downloader\Downloader;
-use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
-use CinemaBot\Domain\ChatIDToGroupIDMap\DoctrineChatGroupProjection;
+use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
+use CinemaBot\Domain\ChatIDToGroupIDMap\DoctrineChatGroupMapProjection;
 use CinemaBot\Domain\Cinema\CinemaRepository;
 use CinemaBot\Domain\Cinema\EventSourcedCinemaRepository;
 use CinemaBot\Domain\CinemaList\CinemaListProjection;
 use CinemaBot\Domain\CinemaList\DoctrineCinemaListProjection;
+use CinemaBot\Domain\CrawlCinema\Downloader\CopyDownloader;
+use CinemaBot\Domain\CrawlCinema\Downloader\Downloader;
 use CinemaBot\Domain\Group\EventSourcedGroupRepository;
 use CinemaBot\Domain\Group\GroupRepository;
 use CinemaBot\Domain\MovieList\DoctrineMovieListProjection;
@@ -55,7 +55,7 @@ final class ContainerConfig extends DefinitionArray
 
             WatchListProjection::class  => get(DoctrineWatchListProjection::class),
             CinemaListProjection::class => get(DoctrineCinemaListProjection::class),
-            ChatGroupProjection::class  => get(DoctrineChatGroupProjection::class),
+            ChatGroupMapProjection::class  => get(DoctrineChatGroupMapProjection::class),
             ShowListProjection::class => get(DoctrineShowListProjection::class),
             MovieListProjection::class => get(DoctrineMovieListProjection::class),
             CinemaRepository::class => get(EventSourcedCinemaRepository::class),

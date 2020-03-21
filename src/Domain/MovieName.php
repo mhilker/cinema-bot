@@ -14,7 +14,7 @@ final class MovieName
     private function __construct(string $value)
     {
         if ($value === '') {
-            throw new InvalidMovieNameException('Movie eame must not be empty');
+            throw new InvalidMovieNameException('Show eame must not be empty');
         }
         $this->value = $value;
     }

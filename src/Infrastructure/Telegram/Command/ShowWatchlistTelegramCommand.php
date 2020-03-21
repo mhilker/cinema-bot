@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace CinemaBot\Infrastructure\Telegram\Command;
 
 use CinemaBot\Domain\ChatID;
-use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupProjection;
+use CinemaBot\Domain\ChatIDToGroupIDMap\ChatGroupMapProjection;
 use CinemaBot\Domain\WatchList\WatchListProjection;
 use TelegramBot\Api\Client;
 use TelegramBot\Api\Types\Message;
 
 final class ShowWatchListTelegramCommand implements TelegramCommand
 {
-    private ChatGroupProjection $projection;
+    private ChatGroupMapProjection $projection;
     private WatchListProjection $watchlist;
 
-    public function __construct(ChatGroupProjection $projection, WatchListProjection $watchlist)
+    public function __construct(ChatGroupMapProjection $projection, WatchListProjection $watchlist)
     {
         $this->projection = $projection;
         $this->watchlist = $watchlist;

@@ -30,11 +30,11 @@ final class WatchListProjector implements EventListener
 
     private function handleTermAddedEvent(TermAddedEvent $event): void
     {
-        $this->projection->add($event->getGroupID(), $event->getTerm());
+        $this->projection->add($event->getId(), $event->getTerm());
     }
 
     private function handleTermRemovedEvent(TermRemovedEvent $event): void
     {
-        $this->projection->remove($event->getGroupID(), $event->getTerm());
+        $this->projection->remove($event->getId(), $event->getTerm());
     }
 }

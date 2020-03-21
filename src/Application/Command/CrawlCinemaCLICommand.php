@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\CommandBus;
-use CinemaBot\Domain\CrawlCinema\CrawlCinemaCommand;
 use CinemaBot\Domain\CinemaList\CinemaListProjection;
+use CinemaBot\Domain\CrawlCinema\CrawlCinemaCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

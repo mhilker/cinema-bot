@@ -2,6 +2,5 @@
 /.git/
 /.idea/
 /.phpunit.result.cache
-/infection.log
-/tools/
+/tmp
 /vendor/

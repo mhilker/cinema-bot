@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\CrawlCinema\Parser;
 
-use CinemaBot\Domain\Movie;
 use CinemaBot\Domain\MovieName;
-use CinemaBot\Domain\Movies;
-use CinemaBot\Domain\MovieTime;
-use CinemaBot\Domain\MovieTimes;
+use CinemaBot\Domain\Show;
+use CinemaBot\Domain\Shows;
+use CinemaBot\Domain\ShowTime;
+use CinemaBot\Domain\ShowTimes;
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -17,7 +17,7 @@ use DOMXPath;
 
 final class DOMParser implements Parser
 {
-    public function parse(string $html): Movies
+    public function parse(string $html): Shows
     {
         $document = new DOMDocument();
         @$document->loadHTML($html);
@@ -26,7 +26,7 @@ final class DOMParser implements Parser
         return $this->extractMovies($xpath);
     }
 
-    protected function extractMovies(DOMXPath $xpath): Movies
+    protected function extractMovies(DOMXPath $xpath): Shows
     {
         $movies = [];
         $nodes = $xpath->query('//*[@id="program-module"]/table[2]/tbody/tr');
@@ -50,14 +50,14 @@ final class DOMParser implements Parser
                     $dateTime = $dateTime->add(new DateInterval('P' . $j . 'D'));
                     $dateTime = $dateTime->setTime((int) $hours, (int) $minutes);
 
-                    $movieTimes[] = MovieTime::from($dateTime);
+                    $movieTimes[] = ShowTime::from($dateTime);
                 }
             }
 
-            $movies[] = Movie::from($movieName, MovieTimes::from($movieTimes));
+            $movies[] = Show::from($movieName, ShowTimes::from($movieTimes));
         }
 
-        return Movies::from($movies);
+        return Shows::from($movies);
     }
 
     private function extractStartDay(DOMXPath $xpath): DateTimeImmutable

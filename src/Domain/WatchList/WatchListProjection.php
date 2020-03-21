@@ -10,9 +10,9 @@ use CinemaBot\Domain\Terms;
 
 interface WatchListProjection
 {
-    public function loadByGroupID(GroupID $groupID): Terms;
+    public function loadByGroupID(GroupID $id): Terms;
 
-    public function add(GroupID $groupID, Term $value): void;
+    public function add(GroupID $id, Term $value): void;
 
-    public function remove(GroupID $groupID, Term $value): void;
+    public function remove(GroupID $id, Term $value): void;
 }

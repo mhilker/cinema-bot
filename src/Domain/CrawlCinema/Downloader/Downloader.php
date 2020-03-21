@@ -8,5 +8,8 @@ use CinemaBot\Domain\URL;
 
 interface Downloader
 {
+    /**
+     * @throws DownloadException
+     */
     public function download(URL $url): string;
 }

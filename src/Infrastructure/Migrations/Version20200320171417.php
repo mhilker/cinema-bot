@@ -11,22 +11,24 @@ final class Version20200320171417 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Create the table "movie_list".';
     }
 
     public function up(Schema $schema): void
     {
-//        $events = $schema->getTable('events');
-//        $events->changeColumn('aggregate_id', [
-//            'name' => 'event_stream_id',
-//        ]);
+        $idMap = $schema->createTable('movie_list');
+        $idMap->addColumn('id', 'bigint', [
+            'unsigned' => true,
+            'autoincrement' => true,
+        ]);
+        $idMap->addColumn('movie_name', 'string', [
+            'length' => 255,
+            'fixed' => false,
+        ]);
     }
 
     public function down(Schema $schema): void
     {
-//        $events = $schema->getTable('events');
-//        $events->changeColumn('event_stream_id', [
-//            'name' => 'aggregate_id',
-//        ]);
+        $schema->dropTable('movie_list');
     }
 }

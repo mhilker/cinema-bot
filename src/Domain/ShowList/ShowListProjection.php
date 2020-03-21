@@ -6,12 +6,12 @@ namespace CinemaBot\Domain\ShowList;
 
 use CinemaBot\Domain\CinemaID;
 use CinemaBot\Domain\MovieName;
-use CinemaBot\Domain\Movies;
-use CinemaBot\Domain\MovieTime;
+use CinemaBot\Domain\Shows;
+use CinemaBot\Domain\ShowTime;
 
 interface ShowListProjection
 {
-    public function load(): Movies;
+    public function load(): Shows;
 
-    public function insert(CinemaID $cinemaID, MovieName $movieName, MovieTime $movieTime): void;
+    public function insert(CinemaID $id, MovieName $name, ShowTime $time): void;
 }

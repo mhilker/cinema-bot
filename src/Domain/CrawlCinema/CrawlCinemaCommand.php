@@ -16,7 +16,7 @@ final class CrawlCinemaCommand implements Command
         $this->id = $id;
     }
 
-    public function getCinemaID(): CinemaID
+    public function getID(): CinemaID
     {
         return $this->id;
     }

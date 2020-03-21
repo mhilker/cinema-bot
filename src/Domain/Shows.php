@@ -9,9 +9,9 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
-final class Movies implements IteratorAggregate, Countable
+final class Shows implements IteratorAggregate, Countable
 {
-    /** @var Movie[] */
+    /** @var Show[] */
     private array $movies = [];
 
     private function __construct(iterable $movies)
@@ -26,7 +26,7 @@ final class Movies implements IteratorAggregate, Countable
         return new self($movies);
     }
 
-    private function add(Movie $movie): void
+    private function add(Show $movie): void
     {
         $this->movies[] = $movie;
     }
@@ -37,7 +37,7 @@ final class Movies implements IteratorAggregate, Countable
     }
 
     /**
-     * @return Traversable | Movie[]
+     * @return Traversable | Show[]
      */
     public function getIterator(): Traversable
     {

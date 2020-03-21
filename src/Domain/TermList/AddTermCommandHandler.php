@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\AddTerm;
+namespace CinemaBot\Domain\TermList;
 
 use CinemaBot\Application\CQRS\CommandHandler;
 use CinemaBot\Application\CQRS\Events;
 use CinemaBot\Domain\Group\GroupRepository;
 
-final class AddTermToWatchListCommandHandler implements CommandHandler
+final class AddTermCommandHandler implements CommandHandler
 {
     private GroupRepository $repository;
 
@@ -17,13 +17,13 @@ final class AddTermToWatchListCommandHandler implements CommandHandler
         $this->repository = $repository;
     }
 
-    public function handle(AddTermToWatchListCommand $command): void
+    public function handle(AddTermCommand $command): void
     {
-        $groupID = $command->getGroupID();
+        $id = $command->getId();
         $term = $command->getTerm();
 
-        /** @var AddTermToWatchListUseCase $group */
-        $group = $this->repository->load($groupID, fn(Events $events) => new AddTermToWatchListUseCase($events));
+        /** @var TermListUseCase $group */
+        $group = $this->repository->load($id, fn(Events $events) => new TermListUseCase($events));
         $group->add($term);
 
         $this->repository->save($group);

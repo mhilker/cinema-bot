@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Domain\CrawlCinema\Parser;
+namespace CinemaBot\Domain\CrawlCinema\Crawler;
 
+use CinemaBot\Domain\CrawlCinema\Crawler\Crawler;
 use CinemaBot\Domain\CrawlCinema\Downloader\Downloader;
-use CinemaBot\Domain\Movies;
+use CinemaBot\Domain\CrawlCinema\Parser\Parser;
+use CinemaBot\Domain\CrawlCinema\Parser\WeekParser;
+use CinemaBot\Domain\Shows;
 use CinemaBot\Domain\URL;
 
-final class Crawler
+final class RealCrawler implements Crawler
 {
     private Downloader $downloader;
     private Parser $parser;
@@ -19,7 +22,7 @@ final class Crawler
         $this->parser = $parser;
     }
 
-    public function crawl(URL $url): Movies
+    public function crawl(URL $url): Shows
     {
         $response = $this->downloader->download($url);
 
@@ -40,6 +43,6 @@ final class Crawler
             }
         }
 
-        return Movies::from($movieList);
+        return Shows::from($movieList);
     }
 }

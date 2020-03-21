@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain;
 
-final class Movie
+final class Show
 {
     private MovieName $name;
-    private MovieTimes $times;
+    private ShowTimes $times;
 
-    private function __construct(MovieName $name, MovieTimes $times)
+    private function __construct(MovieName $name, ShowTimes $times)
     {
         $this->name = $name;
         $this->times = $times;
     }
 
-    public static function from(MovieName $name, MovieTimes $times): self
+    public static function from(MovieName $name, ShowTimes $times): self
     {
         return new self($name, $times);
     }
@@ -25,7 +25,7 @@ final class Movie
         return $this->name;
     }
 
-    public function getTimes(): MovieTimes
+    public function getTimes(): ShowTimes
     {
         return $this->times;
     }

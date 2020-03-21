@@ -8,7 +8,7 @@ use CinemaBot\Domain\ChatID;
 use CinemaBot\Domain\GroupID;
 use Doctrine\DBAL\Driver\Connection;
 
-final class DoctrineChatGroupProjection implements ChatGroupProjection
+final class DoctrineChatGroupMapProjection implements ChatGroupMapProjection
 {
     private Connection $connection;
 
@@ -31,7 +31,7 @@ final class DoctrineChatGroupProjection implements ChatGroupProjection
         ]);
     }
 
-    public function loadGroupIDByChatID(ChatID $chatID): GroupID
+    public function loadGroupIDByChatID(ChatID $id): GroupID
     {
         $sql = <<<SQL
         SELECT "group_id" 
@@ -42,10 +42,28 @@ final class DoctrineChatGroupProjection implements ChatGroupProjection
 
         $statement = $this->connection->prepare($sql);
         $statement->execute([
-            'chat_id' => $chatID->asString(),
+            'chat_id' => $id->asString(),
         ]);
 
         $row = $statement->fetch();
         return GroupID::from($row['group_id']);
+    }
+
+    public function loadChatIDByGroupID(GroupID $id): ChatID
+    {
+        $sql = <<<SQL
+        SELECT "chat_id" 
+        FROM "chat_id_to_group_id_map" 
+        WHERE "group_id" = :group_id
+        LIMIT 1;
+        SQL;
+
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([
+            'group_id' => $id->asString(),
+        ]);
+
+        $row = $statement->fetch();
+        return GroupID::from($row['chat_id']);
     }
 }

@@ -18,7 +18,10 @@ final class FoundGroupCommandHandler implements CommandHandler
 
     public function handle(FoundGroupCommand $command): void
     {
-        $group = FoundGroupUseCase::foundNew($command->getGroupID(), $command->getChatID());
+        $groupID = $command->getGroupID();
+        $chatID = $command->getChatID();
+
+        $group = FoundGroupUseCase::foundNew($groupID, $chatID);
 
         $this->repository->save($group);
     }

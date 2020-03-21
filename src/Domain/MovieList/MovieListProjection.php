@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\MovieList;
 
 use CinemaBot\Domain\MovieName;
-use CinemaBot\Domain\Movies;
-use CinemaBot\Domain\MovieTime;
+use CinemaBot\Domain\Shows;
 
 interface MovieListProjection
 {
-    public function load(): Movies;
+    public function load(): Shows;
 
-    public function insert(MovieName $movieName, MovieTime $movieTime): void;
+    public function insert(MovieName $name): void;
 }
