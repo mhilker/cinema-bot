@@ -25,8 +25,10 @@ final class FoundGroupCommandHandler implements CommandHandler
         $chatID = $command->getChatID();
 
         if ($this->exists($groupID)) {
+            error_log('exists');
             return;
         }
+        error_log('not');
 
         $group = FoundGroupUseCase::foundNew($groupID, $chatID);
         $this->repository->save($group);

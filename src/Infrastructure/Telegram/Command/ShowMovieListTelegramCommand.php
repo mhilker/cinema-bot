@@ -34,7 +34,7 @@ final class ShowMovieListTelegramCommand implements TelegramCommand
 
         $names = $this->movieList->load();
         if (count($names) > 0) {
-            $response = 'All movies:' . PHP_EOL;
+            $response = 'Last ' . count($names) . ' movies:' . PHP_EOL;
             foreach ($names as $name) {
                 $response .=  '`' . $name->asString() . '`' . PHP_EOL;
             }

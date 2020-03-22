@@ -12,7 +12,7 @@ use CinemaBot\Domain\Term;
 
 final class TermRemovedEvent implements Event, StorableEvent
 {
-    public const TOPIC = 'cinema_bot.watchlist.term_removed';
+    public const TOPIC = 'cinema_bot.group.term_removed';
 
     private GroupID $id;
     private Term $term;

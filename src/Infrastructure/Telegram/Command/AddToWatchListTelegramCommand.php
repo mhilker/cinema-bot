@@ -35,7 +35,7 @@ final class AddToWatchListTelegramCommand implements TelegramCommand
 
         $text = trim(substr($message->getText(), strlen('/' . $this->getName())));
         if ($text === '') {
-            $bot->sendMessage($chatID->asString(), 'Please add a term to add.', 'markdown');
+            $bot->sendMessage($chatID->asString(), 'Please submit the term to add.', 'markdown');
             return;
         }
 
@@ -43,7 +43,7 @@ final class AddToWatchListTelegramCommand implements TelegramCommand
         $this->commandBus->dispatch(new AddTermCommand($groupID, $term));
 
         $response = <<<MESSAGE
-        Added `{$term->asString()}` to watchlist.
+        Added `{$term->asString()}` to watch list.
         MESSAGE;
         $bot->sendMessage($chatID->asString(), $response, 'markdown');
     }

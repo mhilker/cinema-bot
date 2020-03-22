@@ -35,7 +35,7 @@ final class RemoveFromWatchListTelegramCommand implements TelegramCommand
 
         $text = trim(substr($message->getText(), strlen('/' . $this->getName())));
         if ($text === '') {
-            $bot->sendMessage($chatID->asString(), 'Please add a term to remove.', 'markdown');
+            $bot->sendMessage($chatID->asString(), 'Please submit the term to remove.', 'markdown');
             return;
         }
 
@@ -43,7 +43,7 @@ final class RemoveFromWatchListTelegramCommand implements TelegramCommand
         $this->commandBus->dispatch(new RemoveTermCommand($groupID, $term));
 
         $response = <<<MESSAGE
-        Removed `{$term->asString()}` from watchlist.
+        Removed `{$term->asString()}` from watch list.
         MESSAGE;
 
         $bot->sendMessage($chatID->asString(), $response, 'markdown');

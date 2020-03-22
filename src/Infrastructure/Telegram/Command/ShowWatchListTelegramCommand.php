@@ -33,12 +33,12 @@ final class ShowWatchListTelegramCommand implements TelegramCommand
 
         $watchlist = $this->watchlist->loadByGroupID($groupID);
         if (count($watchlist) > 0) {
-            $response = 'Current watchlist:' . PHP_EOL;
+            $response = 'Current watch list:' . PHP_EOL;
             foreach ($watchlist as $term) {
                 $response .=  '`' . $term->asString() . '`' . PHP_EOL;
             }
         } else {
-            $response = 'The current watchlist is empty.';
+            $response = 'The current watch list is empty.';
         }
 
         $bot->sendMessage($chatID->asString(), $response, 'markdown');

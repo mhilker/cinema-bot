@@ -20,7 +20,7 @@ final class DoctrineMovieListProjection implements MovieListProjection
     public function load(): MovieNames
     {
         $sql = <<< SQL
-        SELECT "movie_name" FROM "movie_list" ORDER BY "movie_name"; 
+        SELECT "movie_name" FROM "movie_list" ORDER BY "id" DESC LIMIT 10; 
         SQL;
 
         $statement = $this->connection->prepare($sql);

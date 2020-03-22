@@ -23,9 +23,9 @@ final class HelpTelegramCommand implements TelegramCommand
         *Commands:*
         `/help` Show this help.
         `/movies` Show all known movies.
-        `/show` Show all terms on watchlist.
-        `/add [term]` Add term to watchlist.
-        `/remove [term]` Remove term from watchlist.
+        `/show` Show all terms on watch list.
+        `/add [term]` Add term to watch list.
+        `/remove [term]` Remove term from watch list.
         `/about` Show various statistics.
         MESSAGE;
 
