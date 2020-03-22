@@ -91,12 +91,6 @@ final class DoctrineEventStore implements EventStore
      */
     public function loadAll(): StorableEvents
     {
-//        $this->connection->exec('delete from "events";');
-//        $this->connection->exec(file_get_contents('/app/data1.sql'));
-//        $this->connection->exec(file_get_contents('/app/data2.sql'));
-//        $this->connection->exec(file_get_contents('/app/data3.sql'));
-//        $this->connection->exec(file_get_contents('/app/data4.sql'));
-
         try {
             $sql = <<< SQL
             SELECT * FROM "events"; 
