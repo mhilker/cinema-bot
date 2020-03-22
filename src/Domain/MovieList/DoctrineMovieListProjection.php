@@ -20,7 +20,7 @@ final class DoctrineMovieListProjection implements MovieListProjection
     public function load(): MovieNames
     {
         $sql = <<< SQL
-        SELECT "movie_name" FROM "movie_list"; 
+        SELECT "movie_name" FROM "movie_list" ORDER BY "movie_name"; 
         SQL;
 
         $statement = $this->connection->prepare($sql);
@@ -37,7 +37,7 @@ final class DoctrineMovieListProjection implements MovieListProjection
     public function add(MovieName $name): void
     {
         $sql = <<< SQL
-        INSERT INTO 
+        REPLACE INTO 
             "movie_list" ("movie_name")
         VALUES
             (:movie_name);
