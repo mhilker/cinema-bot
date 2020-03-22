@@ -1,14 +1,4 @@
--- Adminer 4.7.6 MySQL dump
-
-SET NAMES utf8;
-SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
-
-INSERT INTO `cinema_list` (`cinema_id`) VALUES
-('fd065c46-cd1c-411f-b9b0-d208ba84c3c3');
-
-INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
+INSERT INTO `events` (`id`, `event_stream_id`, `topic`, `payload`) VALUES
 (1,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.cinema_created',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"url\": \"https://www.cinemotion-kino.de/hameln/kinoprogramm\"}'),
 (2,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"TKKG\", \"time\": \"2019-05-30T15:15:00+02:00\"}'),
 (3,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Rocketman\", \"time\": \"2019-05-26T20:20:00+02:00\"}'),
@@ -4959,7 +4949,7 @@ INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
 (4948,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Stuber - 5 Sterne Undercover\", \"time\": \"2019-08-30T18:00:00+02:00\"}'),
 (4949,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Stuber - 5 Sterne Undercover\", \"time\": \"2019-08-31T18:00:00+02:00\"}'),
 (4950,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Once Upon a Time... in Hollywood\", \"time\": \"2019-08-26T21:45:00+02:00\"}');
-INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
+INSERT INTO `events` (`id`, `event_stream_id`, `topic`, `payload`) VALUES
 (4951,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Once Upon a Time... in Hollywood\", \"time\": \"2019-08-27T21:45:00+02:00\"}'),
 (4952,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Once Upon a Time... in Hollywood\", \"time\": \"2019-08-29T17:00:00+02:00\"}'),
 (4953,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Once Upon a Time... in Hollywood\", \"time\": \"2019-08-29T19:45:00+02:00\"}'),
@@ -9859,7 +9849,7 @@ INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
 (9847,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Depeche Mode: SPIRITS in the Forest\", \"time\": \"2019-12-03T20:00:00+01:00\"}'),
 (9848,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"(3D) Die Eiskönigin 2\", \"time\": \"2019-11-30T15:00:00+01:00\"}'),
 (9849,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"(3D) Die Eiskönigin 2\", \"time\": \"2019-11-30T17:30:00+01:00\"}');
-INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
+INSERT INTO `events` (`id`, `event_stream_id`, `topic`, `payload`) VALUES
 (9850,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"(3D) Die Eiskönigin 2\", \"time\": \"2019-11-30T20:00:00+01:00\"}'),
 (9851,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"(3D) Die Eiskönigin 2\", \"time\": \"2019-12-01T22:20:00+01:00\"}'),
 (9852,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"(3D) Die Eiskönigin 2\", \"time\": \"2019-12-02T12:30:00+01:00\"}'),
@@ -14432,9 +14422,9 @@ INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
 (14419,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Latte Igel und der magische Wasserstein\", \"time\": \"2020-01-30T12:45:00+01:00\"}'),
 (14420,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"KfK: Die schönste Zeit unseres Lebens\", \"time\": \"2020-01-31T19:30:00+01:00\"}'),
 (14421,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"KfK: Parasite\", \"time\": \"2020-01-26T17:00:00+01:00\"}'),
-(14422,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins\' Porgy and Bess\", \"time\": \"2020-01-29T19:00:00+01:00\"}'),
-(14423,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins\' Porgy and Bess\", \"time\": \"2020-02-01T19:00:00+01:00\"}'),
-(14424,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins\' Porgy and Bess\", \"time\": \"2020-02-02T19:00:00+01:00\"}'),
+(14422,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins'' Porgy and Bess\", \"time\": \"2020-01-29T19:00:00+01:00\"}'),
+(14423,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins'' Porgy and Bess\", \"time\": \"2020-02-01T19:00:00+01:00\"}'),
+(14424,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins'' Porgy and Bess\", \"time\": \"2020-02-02T19:00:00+01:00\"}'),
 (14425,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"(3D) Die fantastische Reise des Dr. Dolittle\", \"time\": \"2020-01-26T17:25:00+01:00\"}'),
 (14426,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"(3D) Die fantastische Reise des Dr. Dolittle\", \"time\": \"2020-01-26T19:40:00+01:00\"}'),
 (14427,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"(3D) Die fantastische Reise des Dr. Dolittle\", \"time\": \"2020-01-27T22:00:00+01:00\"}'),
@@ -14451,7 +14441,7 @@ INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
 (14438,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die Heinzels - Rückkehr der Heinzelmännchen\", \"time\": \"2020-01-26T15:50:00+01:00\"}'),
 (14439,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die Heinzels - Rückkehr der Heinzelmännchen\", \"time\": \"2020-01-28T10:15:00+01:00\"}'),
 (14440,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die Heinzels - Rückkehr der Heinzelmännchen\", \"time\": \"2020-01-28T12:10:00+01:00\"}'),
-(14441,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins\' Porgy and Bess\", \"time\": \"2020-01-28T19:00:00+01:00\"}'),
+(14441,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins'' Porgy and Bess\", \"time\": \"2020-01-28T19:00:00+01:00\"}'),
 (14442,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die fantastische Reise des Dr. Dolittle\", \"time\": \"2020-01-26T15:10:00+01:00\"}'),
 (14443,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"1917\", \"time\": \"2020-01-26T17:00:00+01:00\"}'),
 (14444,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"1917\", \"time\": \"2020-01-28T15:00:00+01:00\"}'),
@@ -14506,7 +14496,7 @@ INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
 (14493,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die Heinzels - Rückkehr der Heinzelmännchen\", \"time\": \"2020-02-07T14:00:00+01:00\"}'),
 (14494,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die Heinzels - Rückkehr der Heinzelmännchen\", \"time\": \"2020-02-07T15:50:00+01:00\"}'),
 (14495,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die Heinzels - Rückkehr der Heinzelmännchen\", \"time\": \"2020-02-08T14:40:00+01:00\"}'),
-(14496,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins\' Porgy and Bess\", \"time\": \"2020-02-04T19:00:00+01:00\"}'),
+(14496,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins'' Porgy and Bess\", \"time\": \"2020-02-04T19:00:00+01:00\"}'),
 (14497,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Birds of Prey: The Emancipation of Harley Quinn\", \"time\": \"2020-02-08T20:00:00+01:00\"}'),
 (14498,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die fantastische Reise des Dr. Dolittle\", \"time\": \"2020-02-07T15:10:00+01:00\"}'),
 (14499,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die fantastische Reise des Dr. Dolittle\", \"time\": \"2020-02-08T15:10:00+01:00\"}'),
@@ -14566,7 +14556,7 @@ INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
 (14553,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die Hochzeit\", \"time\": \"2020-02-07T16:30:00+01:00\"}'),
 (14554,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die Hochzeit\", \"time\": \"2020-02-07T20:55:00+01:00\"}'),
 (14555,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Die Heinzels - Rückkehr der Heinzelmännchen\", \"time\": \"2020-02-07T14:40:00+01:00\"}'),
-(14556,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins\' Porgy and Bess\", \"time\": \"2020-02-03T19:00:00+01:00\"}'),
+(14556,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Met Opera 2019-20: The Gershwins'' Porgy and Bess\", \"time\": \"2020-02-03T19:00:00+01:00\"}'),
 (14557,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Birds of Prey: The Emancipation of Harley Quinn\", \"time\": \"2020-02-07T20:00:00+01:00\"}'),
 (14558,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Bad Boys for Life\", \"time\": \"2020-02-07T17:20:00+01:00\"}'),
 (14559,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"1917\", \"time\": \"2020-02-03T15:00:00+01:00\"}'),
@@ -14705,7 +14695,7 @@ INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
 (14692,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Birds of Prey: The Emancipation of Harley Quinn\", \"time\": \"2020-02-12T17:50:00+01:00\"}'),
 (14693,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Birds of Prey: The Emancipation of Harley Quinn\", \"time\": \"2020-02-12T19:45:00+01:00\"}'),
 (14694,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Enkel für Anfänger\", \"time\": \"2020-02-08T14:50:00+01:00\"}');
-INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
+INSERT INTO `events` (`id`, `event_stream_id`, `topic`, `payload`) VALUES
 (14695,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Enkel für Anfänger\", \"time\": \"2020-02-08T16:30:00+01:00\"}'),
 (14696,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Enkel für Anfänger\", \"time\": \"2020-02-08T19:30:00+01:00\"}'),
 (14697,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Enkel für Anfänger\", \"time\": \"2020-02-09T14:50:00+01:00\"}'),
@@ -16917,12 +16907,3 @@ INSERT INTO `events` (`id`, `aggregate_id`, `topic`, `payload`) VALUES
 (16903,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Sonic the Hedgehog\", \"time\": \"2020-03-07T18:15:00+01:00\"}'),
 (16904,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Sonic the Hedgehog\", \"time\": \"2020-03-10T13:20:00+01:00\"}'),
 (16905,	'fd065c46-cd1c-411f-b9b0-d208ba84c3c3',	'cinema_bot.cinema.show_added',	'{\"id\": \"fd065c46-cd1c-411f-b9b0-d208ba84c3c3\", \"name\": \"Nightlife\", \"time\": \"2020-03-09T22:15:00+01:00\"}');
-
-INSERT INTO `watchlist` (`term`) VALUES
-('top gun'),
-('kingsmen'),
-('kingsman'),
-('new mutants'),
-('black widow');
-
--- 2020-03-14 10:57:25

@@ -26,12 +26,9 @@ final class DoctrineEventStore implements EventStore
     {
         try {
             $sql = <<< SQL
-            SELECT 
-                * 
-            FROM 
-                events 
-            WHERE 
-                event_stream_id = :id;
+            SELECT * 
+            FROM "events" 
+            WHERE "event_stream_id" = :id;
             SQL;
 
             $statement = $this->connection->prepare($sql);
@@ -56,7 +53,7 @@ final class DoctrineEventStore implements EventStore
             throw new EventStoreException('No events for aggregate found');
         }
 
-        return StorableEvents::from($events);
+        return StorableEventsArray::from($events);
     }
 
     /**
@@ -72,10 +69,8 @@ final class DoctrineEventStore implements EventStore
 
         try {
             $sql = <<< SQL
-            INSERT INTO 
-                events (event_stream_id, topic, payload) 
-            VALUES 
-                (:event_stream_id, :topic, :payload);
+            INSERT INTO  "events" ("event_stream_id", "topic", "payload") 
+            VALUES (:event_stream_id, :topic, :payload);
             SQL;
             $statement = $this->connection->prepare($sql);
 
@@ -92,5 +87,34 @@ final class DoctrineEventStore implements EventStore
             $this->connection->rollBack();
             throw new EventStoreException('Could not insert events');
         }
+    }
+
+    /**
+     * @throws EventStoreException
+     */
+    public function loadAll(): StorableEvents
+    {
+        try {
+            $sql = <<< SQL
+            SELECT * FROM "events"; 
+            SQL;
+
+            $statement = $this->connection->prepare($sql);
+            $statement->execute([]);
+
+            $events = [];
+
+            while ($row = $statement->fetch()) {
+                $topic = $row['topic'] ?? null;
+                $payload = $row['payload'] ?? null;
+
+                $class = $this->eventMap[$topic] ?? null;
+                $events[] = $class::fromJSON($payload);
+            }
+        } catch (Exception $exception) {
+            throw new EventStoreException('Could not load events', 0, $exception);
+        }
+
+        return StorableEventsArray::from($events);
     }
 }

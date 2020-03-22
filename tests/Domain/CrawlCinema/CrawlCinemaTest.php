@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Domain\CrawlCinema;
 
-use CinemaBot\Application\CQRS\Events;
+use CinemaBot\Application\CQRS\EventsArray;
 use CinemaBot\Domain\Cinema\CinemaID;
 use CinemaBot\Domain\CrawlCinema\Crawler\StubCrawler;
 use CinemaBot\Domain\Event\CinemaCreatedEvent;
@@ -28,7 +28,7 @@ final class CrawlCinemaTest extends TestCase
         $id = CinemaID::from('123');
         $url = URL::from('https://example.com/');
 
-        $events = Events::from([
+        $events = EventsArray::from([
             new CinemaCreatedEvent($id, $url),
         ]);
 
@@ -41,7 +41,7 @@ final class CrawlCinemaTest extends TestCase
         $cinema = new CrawlCinemaUseCase($events, $crawler);
         $cinema->crawl();
 
-        $expectedEvents = Events::from([
+        $expectedEvents = EventsArray::from([
             new ShowAddedEvent($id, MovieName::from('Test 1'), ShowTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00'))),
             new ShowAddedEvent($id, MovieName::from('Test 2'), ShowTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00'))),
             new ShowAddedEvent($id, MovieName::from('Test 3'), ShowTime::from(new DateTimeImmutable('2019-05-01T12:15:45+02:00'))),

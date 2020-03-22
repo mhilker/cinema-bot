@@ -6,6 +6,7 @@ namespace CinemaBot\Application\EventStream;
 
 use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\CQRS\Events;
+use CinemaBot\Application\CQRS\EventsArray;
 
 abstract class AbstractEventStream
 {
@@ -33,6 +34,6 @@ abstract class AbstractEventStream
     {
         $events = $this->events;
         $this->events = [];
-        return Events::from($events);
+        return EventsArray::from($events);
     }
 }

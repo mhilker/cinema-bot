@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\Group;
 
 use CinemaBot\Application\CQRS\EventPublisher;
-use CinemaBot\Application\CQRS\Events;
+use CinemaBot\Application\CQRS\EventsArray;
 use CinemaBot\Application\EventStore\EventStore;
-use CinemaBot\Application\EventStore\StorableEvents;
+use CinemaBot\Application\EventStore\StorableEventsArray;
 
 final class EventSourcedGroupRepository implements GroupRepository
 {
@@ -23,7 +23,7 @@ final class EventSourcedGroupRepository implements GroupRepository
     public function load(GroupID $id, callable $callable): GroupUseCase
     {
         $storableEvents = $this->eventStore->load($id);
-        $events = Events::from($storableEvents);
+        $events = EventsArray::from($storableEvents);
 
         return $callable($events);
     }
@@ -32,7 +32,7 @@ final class EventSourcedGroupRepository implements GroupRepository
     {
         $events = $group->extractEvents();
 
-        $storableEvents = StorableEvents::from($events);
+        $storableEvents = StorableEventsArray::from($events);
         $this->eventStore->save($storableEvents);
 
         $this->eventPublisher->publish($events);
