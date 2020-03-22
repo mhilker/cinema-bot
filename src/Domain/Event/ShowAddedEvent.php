@@ -56,7 +56,7 @@ final class ShowAddedEvent implements Event, StorableEvent
         $payload = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 
         return new self(
-            CinemaID::from($payload['cinemaID']),
+            CinemaID::from($payload['id']),
             MovieName::from($payload['name']),
             ShowTime::fromString($payload['time'])
         );
@@ -65,7 +65,7 @@ final class ShowAddedEvent implements Event, StorableEvent
     public function asJSON(): string
     {
         return json_encode([
-            'cinemaID'   => $this->id->asString(),
+            'id'   => $this->id->asString(),
             'name' => $this->name->asString(),
             'time' => $this->time->asString(),
         ], JSON_THROW_ON_ERROR);

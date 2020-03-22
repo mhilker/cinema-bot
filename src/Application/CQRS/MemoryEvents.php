@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace CinemaBot\Application\EventStore;
+namespace CinemaBot\Application\CQRS;
 
 use ArrayIterator;
 use Traversable;
 
-final class StorableEventsArray implements StorableEvents
+final class MemoryEvents implements Events
 {
-    /** @var StorableEvent[] */
+    /** @var Event[] */
     private array $events = [];
 
     private function __construct(iterable $events)
@@ -19,18 +19,18 @@ final class StorableEventsArray implements StorableEvents
         }
     }
 
-    public static function from(iterable $events): StorableEvents
+    public static function from(iterable $events): self
     {
         return new self($events);
     }
 
-    private function add(StorableEvent $event): void
+    private function add(Event $event): void
     {
         $this->events[] = $event;
     }
 
     /**
-     * @return Traversable | StorableEvent[]
+     * @return Traversable | Event[]
      */
     public function getIterator(): Traversable
     {

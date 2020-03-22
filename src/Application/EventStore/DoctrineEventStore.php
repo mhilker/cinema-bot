@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CinemaBot\Application\EventStore;
 
+use CinemaBot\Application\CQRS\Event;
 use CinemaBot\Application\EventStream\EventStreamID;
 use Doctrine\DBAL\Driver\Connection;
 use Exception;
@@ -39,11 +40,7 @@ final class DoctrineEventStore implements EventStore
             $events = [];
 
             while ($row = $statement->fetch()) {
-                $topic = $row['topic'] ?? null;
-                $payload = $row['payload'] ?? null;
-
-                $class = $this->eventMap[$topic] ?? null;
-                $events[] = $class::fromJSON($payload);
+                $events[] = $this->createEvent($row);
             }
         } catch (Exception $exception) {
             throw new EventStoreException('Could not load events', 0, $exception);
@@ -53,7 +50,7 @@ final class DoctrineEventStore implements EventStore
             throw new EventStoreException('No events for aggregate found');
         }
 
-        return StorableEventsArray::from($events);
+        return MemoryStorableEvents::from($events);
     }
 
     /**
@@ -94,6 +91,12 @@ final class DoctrineEventStore implements EventStore
      */
     public function loadAll(): StorableEvents
     {
+//        $this->connection->exec('delete from "events";');
+//        $this->connection->exec(file_get_contents('/app/data1.sql'));
+//        $this->connection->exec(file_get_contents('/app/data2.sql'));
+//        $this->connection->exec(file_get_contents('/app/data3.sql'));
+//        $this->connection->exec(file_get_contents('/app/data4.sql'));
+
         try {
             $sql = <<< SQL
             SELECT * FROM "events"; 
@@ -102,19 +105,22 @@ final class DoctrineEventStore implements EventStore
             $statement = $this->connection->prepare($sql);
             $statement->execute([]);
 
-            $events = [];
-
-            while ($row = $statement->fetch()) {
-                $topic = $row['topic'] ?? null;
-                $payload = $row['payload'] ?? null;
-
-                $class = $this->eventMap[$topic] ?? null;
-                $events[] = $class::fromJSON($payload);
-            }
+            return StreamedStorableEvents::from(function () use ($statement) {
+                while ($row = $statement->fetch()) {
+                    yield $this->createEvent($row);
+                }
+            });
         } catch (Exception $exception) {
             throw new EventStoreException('Could not load events', 0, $exception);
         }
+    }
 
-        return StorableEventsArray::from($events);
+    private function createEvent(array $row): Event
+    {
+        $topic = $row['topic'] ?? null;
+        $payload = $row['payload'] ?? null;
+
+        $class = $this->eventMap[$topic] ?? null;
+        return $class::fromJSON($payload);
     }
 }

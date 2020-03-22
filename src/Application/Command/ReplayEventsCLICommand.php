@@ -6,6 +6,7 @@ namespace CinemaBot\Application\Command;
 
 use CinemaBot\Application\CQRS\EventDispatcher;
 use CinemaBot\Application\CQRS\EventPublisher;
+use CinemaBot\Application\CQRS\StreamedEvents;
 use CinemaBot\Application\EventStore\EventStore;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,6 +34,8 @@ final class ReplayEventsCLICommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $events = $this->eventStore->loadAll();
+        $events = StreamedEvents::from($events);
+
         $this->eventPublisher->publish($events);
         $this->eventDispatcher->dispatch();
 
