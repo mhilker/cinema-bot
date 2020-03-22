@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CinemaBot\Domain\Cinema;
 
 use CinemaBot\Application\CQRS\EventPublisher;
-use CinemaBot\Application\CQRS\MemoryEvents;
+use CinemaBot\Application\CQRS\StreamedEvents;
 use CinemaBot\Application\EventStore\EventStore;
 use CinemaBot\Application\EventStore\MemoryStorableEvents;
 
@@ -23,7 +23,7 @@ final class EventSourcedCinemaRepository implements CinemaRepository
     public function load(CinemaID $id, callable $callable): CinemaUseCase
     {
         $storableEvents = $this->eventStore->load($id);
-        $events = MemoryEvents::from($storableEvents);
+        $events = StreamedEvents::from($storableEvents);
 
         return $callable($events);
     }

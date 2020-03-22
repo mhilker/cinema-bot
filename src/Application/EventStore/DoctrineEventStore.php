@@ -37,20 +37,14 @@ final class DoctrineEventStore implements EventStore
                 'id' => $id->asString(),
             ]);
 
-            $events = [];
-
-            while ($row = $statement->fetch()) {
-                $events[] = $this->createEvent($row);
-            }
+            return StreamedStorableEvents::from(function () use ($statement) {
+                while ($row = $statement->fetch()) {
+                    yield $this->createEvent($row);
+                }
+            });
         } catch (Exception $exception) {
             throw new EventStoreException('Could not load events', 0, $exception);
         }
-
-        if (count($events) === 0) {
-            throw new EventStoreException('No events for aggregate found');
-        }
-
-        return MemoryStorableEvents::from($events);
     }
 
     /**
