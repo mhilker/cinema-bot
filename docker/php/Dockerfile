@@ -48,6 +48,3 @@ COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 USER app
 COPY --chown=app:app --from=build /app/ /app/
 COPY --chown=app:app . /app/
-COPY ./docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["php-fpm"]
