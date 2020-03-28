@@ -24,11 +24,11 @@ jobs:
       - name: Build containers
         run: docker-compose build
 
-      - name: Test crontab format
-        run: docker-compose run cron supercronic -test /etc/cron.d/crontab
-
       - name: Create telegram secret
         run: echo "" > telegram-token.local
+
+      - name: Test crontab format
+        run: docker-compose run cron supercronic -test /etc/cron.d/crontab
 
       - name: Run containers
         run: docker-compose up -d web php
