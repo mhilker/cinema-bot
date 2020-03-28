@@ -36,7 +36,7 @@ jobs:
       - name: Wait for startup
         run: sleep 10
 
-      - name: Change permissions
+      - name: Change permissions for database directory
         run: chmod 777 database/
 
       - name: Execute migrations
