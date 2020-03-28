@@ -21,6 +21,7 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+      target: php
       args:
         - COMPOSER_AUTH=${COMPOSER_AUTH}
     environment:
@@ -32,13 +33,13 @@ services:
       - cinema-bot-telegram-token
 
   cron:
-    image: mhilker/private:cinema-bot-php
+    image: mhilker/private:cinema-bot-cron
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+      target: cron
       args:
         - COMPOSER_AUTH=${COMPOSER_AUTH}
-    command: supercronic -json /etc/cron.d/crontab
     environment:
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_PATH=/app/database/data.db
