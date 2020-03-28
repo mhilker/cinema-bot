@@ -1,10 +1,8 @@
 #!/bin/sh
 set -e
 
-chown -R app:app $(dirname "$DB_PATH")
-
 if [ $(id -u) -eq 0 ]; then
-   env >> /etc/environment
+   /usr/bin/env >> /etc/environment
 fi
 
 # first arg is `-f` or `--some-option`

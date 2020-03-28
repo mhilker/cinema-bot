@@ -1,44 +1,36 @@
-########################################################################################################################
-# Stage: composer
-########################################################################################################################
+FROM composer:1.10.1 AS composer
 
-FROM composer:1.10.1 as composer
+################################################################################
 
-########################################################################################################################
-# Stage: base
-########################################################################################################################
+FROM php:7.4-fpm-alpine AS base
 
-FROM php:7.4.3-fpm-buster as base
-RUN apt-get update \
- && apt-get install -y libicu-dev cron \
- && rm -rf /var/lib/apt/lists/* \
- && docker-php-ext-install -j$(nproc) intl pdo
-
+RUN apk add --no-cache icu-dev \
+ && docker-php-source extract \
+ && docker-php-ext-install -j$(nproc) opcache intl pdo \
+ && docker-php-source delete
 COPY ./docker/php/crontab /etc/cron.d/crontab
-RUN chmod 644 /etc/cron.d/crontab
-RUN crontab /etc/cron.d/crontab
-
+RUN chmod 644 /etc/cron.d/crontab \
+ && crontab /etc/cron.d/crontab
 RUN adduser --disabled-password --home /app/ --gecos '' app
 WORKDIR /app/
 
-########################################################################################################################
-# Stage: build
-########################################################################################################################
+################################################################################
 
-FROM base as build
-RUN apt-get update \
- && apt-get install -y libicu-dev git unzip \
- && rm -rf /var/lib/apt/lists/*
+FROM base AS build
+ARG COMPOSER_AUTH
+
+RUN apk add --no-cache git zip
 COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY --chown=app:app ./composer* /app/
 USER app
-COPY --chown=app:app composer.* /app/
-RUN composer install --no-cache --no-progress --prefer-dist --no-dev
+RUN composer global require hirak/prestissimo \
+ && COMPOSER_AUTH=${COMPOSER_AUTH} composer install --no-progress --prefer-dist --no-dev \
+ && rm -rf /app/.composer/
 
-########################################################################################################################
-# Stage: production
-########################################################################################################################
+################################################################################
 
-FROM base as production
+FROM base AS final
+
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 COPY --chown=app:app --from=build /app/ /app/
