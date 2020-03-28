@@ -33,6 +33,9 @@ jobs:
       - name: Wait for startup
         run: sleep 10
 
+      - name: Change permissions
+        run: chmod 777 database/
+
       - name: Execute migrations
         run: docker-compose run --rm php /app/vendor/bin/doctrine-migrations migrations:migrate --configuration /app/migrations.php --db-configuration /app/doctrine.php --no-interaction latest
 
