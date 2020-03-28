@@ -23,7 +23,6 @@ services:
       dockerfile: docker/php/Dockerfile
       args:
         - COMPOSER_AUTH=${COMPOSER_AUTH}
-    user: app
     environment:
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_PATH=/app/database/data.db
@@ -39,8 +38,7 @@ services:
       dockerfile: docker/php/Dockerfile
       args:
         - COMPOSER_AUTH=${COMPOSER_AUTH}
-    user: app
-    command: crond -f
+    command: supercronic -json /etc/cron.d/crontab
     environment:
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_PATH=/app/database/data.db

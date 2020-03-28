@@ -1,16 +1,19 @@
 # Cinema Bot
 
-```
-echo "YOUR_TELEGRAM_TOKEN" > telegram-token.local
-```
-
-### Create Migration
+## Run
 
 ``` bash
-docker-compose run --user app --rm php /app/vendor/bin/doctrine-migrations migrations:generate --configuration /app/migrations.php --db-configuration /app/doctrine.php
+echo "YOUR_TELEGRAM_TOKEN" > telegram-token.local
+docker-compose up
 ```
 
-### Migrate
+## Create Migration
+
+``` bash
+docker-compose run --rm php /app/vendor/bin/doctrine-migrations migrations:generate --configuration /app/migrations.php --db-configuration /app/doctrine.php
+```
+
+## Migrate
 
 ``` bash
 docker-compose run --rm php /app/vendor/bin/doctrine-migrations migrations:migrate --configuration /app/migrations.php --db-configuration /app/doctrine.php --no-interaction latest
