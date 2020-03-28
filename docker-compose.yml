@@ -40,7 +40,7 @@ services:
       args:
         - COMPOSER_AUTH=${COMPOSER_AUTH}
     user: app
-    command: cron -f
+    command: crond -f
     environment:
       - TELEGRAM_TOKEN_FILE=/run/secrets/cinema-bot-telegram-token
       - DB_PATH=/app/database/data.db
