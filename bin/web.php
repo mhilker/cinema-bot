@@ -10,18 +10,20 @@ use CinemaBot\Infrastructure\ContainerConfig;
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 
-require __DIR__ . '/../vendor/autoload.php';
+(static function () {
+    require __DIR__ . '/../vendor/autoload.php';
 
-$builder = new ContainerBuilder();
-$builder->addDefinitions(new ContainerConfig());
-$container = $builder->build();
+    $builder = new ContainerBuilder();
+    $builder->addDefinitions(new ContainerConfig());
+    $container = $builder->build();
 
-$app = AppFactory::create();
-$app->addRoutingMiddleware();
-$app->addBodyParsingMiddleware();
-$app->addErrorMiddleware(true, true, true);
-$app->get('/', $container->get(HomeAction::class));
-$app->post('/webhook/telegram', $container->get(TelegramWebHookAction::class));
-$app->put('/cinema', $container->get(CreateCinemaAction::class));
-$app->put('/group', $container->get(CreateGroupAction::class));
-$app->run();
+    $app = AppFactory::create();
+    $app->addRoutingMiddleware();
+    $app->addBodyParsingMiddleware();
+    $app->addErrorMiddleware(true, true, true);
+    $app->get('/', $container->get(HomeAction::class));
+    $app->post('/webhook/telegram', $container->get(TelegramWebHookAction::class));
+    $app->put('/cinema', $container->get(CreateCinemaAction::class));
+    $app->put('/group', $container->get(CreateGroupAction::class));
+    $app->run();
+})();
