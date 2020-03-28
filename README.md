@@ -1,5 +1,7 @@
 # Cinema Bot
 
+![build](https://github.com/mhilker/cinema-bot/workflows/build/badge.svg)
+
 ## Run
 
 ``` bash
