@@ -6,7 +6,7 @@
 
 ``` bash
 echo "YOUR_TELEGRAM_TOKEN" > telegram-token.local
-docker-compose up
+make run
 ```
 
 ## Create Migration
